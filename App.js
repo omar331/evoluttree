@@ -20,7 +20,7 @@ class SortableComponent extends React.Component {
         this.state = {
             items: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6']
         }
-        //this.onSortEnd = this.onSortEnd.bind(this);
+        this.onSortEnd = this.onSortEnd.bind(this);
     }
     onSortEnd({oldIndex, newIndex}){
         console.log(' oldIndex =%o    newIndex=%o', oldIndex, newIndex );
@@ -30,7 +30,16 @@ class SortableComponent extends React.Component {
     };
     render() {
         return (
-            <SortableList items={this.state.items} onSortEnd={this.onSortEnd} />
+            <div>
+                <h2>ISO9001 - V6</h2>
+
+                <p>Arraste para organizar...</p>
+                <SortableList items={this.state.items} onSortEnd={this.onSortEnd} />
+
+                <hr />
+
+                <p>Evolutto</p>
+            </div>
         )
     }
 }
