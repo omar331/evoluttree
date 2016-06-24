@@ -8,10 +8,11 @@ module.exports = {
     },
     devServer: {
         inline: true,
+        hot: true,
         port: 7000,
         host: "0.0.0.0",
         watchOptions: {
-            poll: true
+            poll: 500
         }
 
     },

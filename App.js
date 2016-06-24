@@ -1,27 +1,38 @@
-import React from 'react';
+import React, {Component} from 'react';
+import {render} from 'react-dom';
+import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
 
-class App extends React.Component {
+const SortableItem = SortableElement(({value}) => <li>{value}</li>);
+
+const SortableList = SortableContainer(({items}) => {
+    return (
+        <ul>
+            {items.map((value, index) =>
+                    <SortableItem key={`item-${index}`} index={index} value={value} />
+            )}
+        </ul>
+    );
+});
+
+class SortableComponent extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            items: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6']
+        }
+        //this.onSortEnd = this.onSortEnd.bind(this);
+    }
+    onSortEnd({oldIndex, newIndex}){
+        console.log(' oldIndex =%o    newIndex=%o', oldIndex, newIndex );
+        this.setState({
+            items: arrayMove(this.state.items, oldIndex, newIndex)
+        });
+    };
     render() {
-        return <div>
-                    <h3>Produto ISO 9001 - Conteudos</h3>
-                    <ul>
-                        <li>a ..... xxxxx </li>
-                        <li>b</li>
-                        <li>cssssxxxxxxxqqq</li>
-                        <li>a ..... xxxxx </li>
-                        <li>b</li>
-                        <li>cssssxxxxxxxqqq</li>
-                        <li>d ------</li>
-                        <li>e</li>
-                        <li>f lalalalala</li>
-                        <li>g qqqqqq wwq aaaaaaaaawww--------xxxxxxx</li>
-                        <li>g qqqqqq wwq sss aaaaaaaaawww--------xxxxxxx</li>
-                    </ul>
-
-                    <h2>Subtitulo do produto</h2>
-                    <h2>Titulo 2 xxxxxxxxxxx</h2>
-                </div>
+        return (
+            <SortableList items={this.state.items} onSortEnd={this.onSortEnd} />
+        )
     }
 }
 
-export default App
+export default SortableComponent;
