@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es5",
+    "sourceMap": true,
+    "jsx": "react"
+  },
+  "files": [
+    "src/main.tsx",
+    "typings/classnames/classnames.d.ts",
+    "typings/es6-promise/es6-promise.d.ts",
+    "typings/react/react.d.ts",
+    "typings/react-bootstrap/react-bootstrap.d.ts",
+    "typings/react/react-dom.d.ts",
+    "typings/react-router/react-router.d.ts"
+  ],
+  "filesGlob": [
+    "src/**/*.tsx",
+    "src/**/*.ts",
+    "typings/**/*d.ts"
+  ],
+  "exclude": []
+}
