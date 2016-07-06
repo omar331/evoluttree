@@ -7,7 +7,9 @@ export default class ProductListComponent extends React.Component<{ children: an
     render() {
         return(
         <div>
-        ** LISTA DE PRODUTOS ** <br/>
+        ** LISTA DE PRODUTOS 1 ** <br/>
+        ** LISTA DE PRODUTOS 2 ** <br/>
+        ** LISTA DE PRODUTOS 3 ** <br/>
         </div>);
     }
 }

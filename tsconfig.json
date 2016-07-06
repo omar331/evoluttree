@@ -12,6 +12,7 @@
     "typings/react/react.d.ts",
     "typings/react-bootstrap/react-bootstrap.d.ts",
     "typings/react/react-dom.d.ts",
+    "typings/react-redux/react-redux.d.ts",
     "typings/react-router/react-router.d.ts"
   ],
   "filesGlob": [

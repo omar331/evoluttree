@@ -36,7 +36,7 @@ var DEFAULT_PARAMS = {
         port: 7000,
         host: "0.0.0.0",
         watchOptions: {
-            poll: 500
+            poll: true
         }
     },
     debug: true,

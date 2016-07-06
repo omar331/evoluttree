@@ -8,6 +8,8 @@ export default class NewProductComponent extends React.Component<{ children: any
         return(
         <div>
         ** NOVO PRODUTO ** <br/>
+        ** NOVO PRODUTO ** <br/>
+        ** NOVO PRODUTO ** <br/>
         </div>);
     }
 }
