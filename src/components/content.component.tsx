@@ -15,13 +15,15 @@ export default class ContentComponent extends React.Component<{ content: any }, 
         }
 
         return(
-            <li>
-                { content.title }
+            <li className="content-item-holder">
+                <div className="content-item">
+                    <div className="content-title">
+                        { content.title }
+                    </div>
+                </div>
                 { children }
             </li>
         );
     }
 }
-
-
 
