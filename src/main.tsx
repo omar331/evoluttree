@@ -12,44 +12,44 @@ const initialState = {
     editing: {
         productId: 123,
         title: 'Novo produto',
-        contents: [
+        pages: [
             {
                 id: 1,
-                title: 'Conteudo 1',
-                contents: [
-                    {id: 11,title: 'Conteúdo 1a'},
+                title: 'Página 1',
+                pages: [
+                    {id: 11, title: 'Página 1a'},
                     {
                         id: 12,
-                        title: 'Conteúdo 1b',
-                        contents: [
-                            {id: 121,title: 'Conteúdo 1ba'},
+                        title: 'Página 1b',
+                        pages: [
+                            {id: 121, title: 'Página 1ba'},
                             {
                                 id: 122,
-                                title: 'Conteúdo 1bb',
-                                contents: [
-                                    {id: 1221,title: 'Conteúdo 1bba'},
-                                    {id: 1222,title: 'Conteúdo 1bbb'},
-                                    {id: 1223,title: 'Conteúdo 1bbc'}
+                                title: 'Página 1bb',
+                                pages: [
+                                    {id: 1221, title: 'Página 1bba'},
+                                    {id: 1222, title: 'Página 1bbb'},
+                                    {id: 1223, title: 'Página 1bbc'}
                                 ]
                             },
-                            {id: 123,title: 'Conteúdo 1bc'}
+                            {id: 123, title: 'Página 1bc'}
                         ]
                     },
-                    {id: 13,title: 'Conteúdo 1c'}
+                    {id: 13, title: 'Página 1c'}
                 ]
             },
             {
                 id: 2,
-                title: 'Conteudo 2',
-                contents: [
-                    {id: 21,title: 'Conteúdo 2a'},
-                    {id: 22,title: 'Conteúdo 2b'},
-                    {id: 23,title: 'Conteúdo 2c'}
+                title: 'Página 2',
+                pages: [
+                    {id: 21, title: 'Página 2a'},
+                    {id: 22, title: 'Página 2b'},
+                    {id: 23, title: 'Página 2c'}
                 ]
             },
             {
                 id: 3,
-                title: 'Conteudo 3'
+                title: 'Página 3'
             }
         ]
     }
