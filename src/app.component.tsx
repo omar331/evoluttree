@@ -1,7 +1,5 @@
 import * as React from 'react';
-
-import ProductEditComponent from './components/product.edit.component';
-
+import ProductEdit from './components/product.edit';
 
 
 export default class App extends React.Component<{}, {}> {
@@ -11,7 +9,7 @@ export default class App extends React.Component<{}, {}> {
     render() {
         return(
             <div>
-                <ProductEditComponent />
+                <ProductEdit />
             </div>
         );
     }

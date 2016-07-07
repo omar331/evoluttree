@@ -18,7 +18,23 @@ const initialState = {
                 title: 'Conteudo 1',
                 contents: [
                     {id: 11,title: 'Conteúdo 1a'},
-                    {id: 12,title: 'Conteúdo 1b'},
+                    {
+                        id: 12,
+                        title: 'Conteúdo 1b',
+                        contents: [
+                            {id: 121,title: 'Conteúdo 1ba'},
+                            {
+                                id: 122,
+                                title: 'Conteúdo 1bb',
+                                contents: [
+                                    {id: 1221,title: 'Conteúdo 1bba'},
+                                    {id: 1222,title: 'Conteúdo 1bbb'},
+                                    {id: 1223,title: 'Conteúdo 1bbc'}
+                                ]
+                            },
+                            {id: 123,title: 'Conteúdo 1bc'}
+                        ]
+                    },
                     {id: 13,title: 'Conteúdo 1c'}
                 ]
             },

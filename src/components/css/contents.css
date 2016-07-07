@@ -1,0 +1,17 @@
+.content-list {
+}
+
+.content-list .content-list {
+}
+
+
+.content-list .page-item-holder {
+    list-style-type: none;
+
+}
+
+.content-list .page-item {
+    border: 0.1em #cecece solid;
+    padding: 0.5em;
+    background: #fefefe;
+}
