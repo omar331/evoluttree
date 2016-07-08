@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --inline --hot --poll --TARGET=DEV"
+    "start": "webpack-dev-server --hot --poll --TARGET=DEV"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "classnames": "^2.2.5",
     "lodash": "^4.13.1",
     "react": "^15.2.0",
     "react-bootstrap": "^0.29.5",

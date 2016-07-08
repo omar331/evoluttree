@@ -5,6 +5,9 @@ import { DragSource } from 'react-dnd';
 
 import { ItemTypes } from '../constants';
 
+import InsertStuffArea from './insert-stuff-area';
+
+
 const newElementSource = {
     beginDrag(props) {
         console.log(' comecou arrastar PAGINA DO CONTEUDO ');
@@ -47,6 +50,7 @@ class PageListing extends React.Component<{connectDragSource: any, isDragging: a
                             { page.title }
                         </div>
                     </div>
+                    <InsertStuffArea ownerPage={page}/>
                     { children }
                 </li>
             </div>

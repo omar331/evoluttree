@@ -15,6 +15,21 @@
 
 .content-list .page-item {
     border: 0.1em #cecece solid;
-    padding: 0.5em;
+    padding: 0.2em;
     background: #fefefe;
 }
+
+.insert-stuff-area {
+    height: 0.1em;
+    background-color: #7f7f7f;
+    width: 100%;
+    border: none;
+}
+
+
+.insert-stuff-area-over {
+    height: 1em;
+    background-color: #0b97c4;
+}
+
+
