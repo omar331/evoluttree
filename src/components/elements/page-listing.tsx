@@ -8,9 +8,9 @@ import { ItemTypes } from '../constants';
 import InsertStuffArea from './insert-stuff-area';
 
 
-const newElementSource = {
+const pageListingSource = {
     beginDrag(props) {
-        console.log(' comecou arrastar PAGINA DO CONTEUDO ');
+        console.log(' comecou arrastar PAGINA DO CONTEUDO %d', props.id );
         return {};
     }
 };
@@ -26,17 +26,22 @@ function collect(connect, monitor) {
 /**
  * Represents a page item in product content hierarchy
  */
-class PageListing extends React.Component<{connectDragSource: any, isDragging: any, page: any}, {}> {
+class PageListing extends React.Component<{connectDragSource: any, isDragging: any, pageInfo: any}, {pageInfo: any}> {
     constructor(props) {
         super(props);
+
+        this.state = {
+            pageInfo: props.pageInfo
+        };
     }
     render() {
-        const { connectDragSource, isDragging, page } = this.props;
+        const { connectDragSource, isDragging } = this.props;
+        const { pageInfo } = this.state;
 
         // does this node have children nodes?
         let children = null;
-        if ( page.hasOwnProperty('pages') ) {
-            children = <Pages pages={page.pages}/>;
+        if ( pageInfo.hasOwnProperty('pages') ) {
+            children = <Pages pages={pageInfo.pages}/>;
         }
 
         return connectDragSource(
@@ -47,10 +52,10 @@ class PageListing extends React.Component<{connectDragSource: any, isDragging: a
                 <li className="page-item-holder">
                     <div className="page-item">
                         <div className="page-title">
-                            { page.title }
+                            { pageInfo.title }
                         </div>
                     </div>
-                    <InsertStuffArea ownerPage={page}/>
+                    <InsertStuffArea ownerPage={pageInfo}/>
                     { children }
                 </li>
             </div>
@@ -58,5 +63,5 @@ class PageListing extends React.Component<{connectDragSource: any, isDragging: a
     }
 }
 
-export default DragSource(ItemTypes.MOVE_PAGE, newElementSource, collect)(PageListing);
+export default DragSource(ItemTypes.MOVE_PAGE, pageListingSource, collect)(PageListing);
 

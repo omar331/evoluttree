@@ -2,22 +2,24 @@ import * as React from 'react';
 
 import PageListing from './page-listing';
 
-export default class Pages extends React.Component<{ pages: any }, {}> {
+export default class Pages extends React.Component<{ pages: any }, {pages: any}> {
     constructor(props) {
         super(props);
+
+        this.state = {
+            pages: props.pages
+        };
     }
     render() {
-        const { pages } = this.props;
+        const { pages } = this.state;
 
         return(
             <ul className="content-list">
                 {pages.map(page =>
-                    <PageListing page={page}/>
+                <PageListing pageInfo={page} id={page.id}/>
                 )}
             </ul>
         );
     }
 }
-
-
 

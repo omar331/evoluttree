@@ -1,8 +1,5 @@
 import * as React from 'react';
 
-import { DragDropContext } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
-
 import { Grid, Row, Col } from 'react-bootstrap';
 
 import './css/contents.css';
@@ -10,40 +7,34 @@ import './css/contents.css';
 import Pages from './elements/pages.component';
 import ComponentsBar from './components.bar';
 
-const pages = [
-    {
-        id: 1,
-        title: 'Página 1'
-    },
-    {
-        id: 2,
-        title: 'Página 2'
-    },
-    {
-        id: 3,
-        title: 'Página 3'
-    }
-];
-
-
-class ProductEditComponent extends React.Component<{}, {}> {
+export default class ProductEditComponent extends React.Component<{productInfo: any}, {productInfo: any}> {
     constructor(props) {
         super(props);
+
+        this.state =
+            {
+                productInfo: props.productInfo
+            }
+        ;
     }
     render() {
+        const { productInfo } = this.state;
+
+        const pages = productInfo.editing.pages;
+
         return(
             <div className="product-editing">
                 <Grid>
                     <Row>
-                        <Col sm={12} md={12}>
-                            <h3>PRODUTO TITULO</h3>
+                        <Col md={12}>
+                            <h3>{productInfo.title}</h3>
                         </Col>
                     </Row>
                     <Row>
-                        <Col sm={12} md={2}>
+                        <Col md={2}>
                             <ComponentsBar />
                         </Col>
-                        <Col sm={12} md={6}>
+                        <Col md={6}>
                             <Pages pages={pages}/>
                         </Col>
                     </Row>
@@ -52,6 +43,3 @@ class ProductEditComponent extends React.Component<{}, {}> {
         );
     }
 }
-
-export default DragDropContext(HTML5Backend)(ProductEditComponent);
-

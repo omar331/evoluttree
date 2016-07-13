@@ -42,11 +42,37 @@ class NewPageElement extends React.Component<{connectDragSource: any, isDragging
         );
     }
 }
-
 const DraggableNewPageElement = DragSource(ItemTypes.NEW_PAGE, newElementSource, collect)(NewPageElement);
 
 
 
+/**
+ * Represents a new task
+ */
+class NewTaskElement extends React.Component<{connectDragSource: any, isDragging: any}, {}> {
+    constructor(props) {
+        super(props);
+    }
+    render() {
+        const { connectDragSource, isDragging } = this.props;
+        return connectDragSource(
+            <div style={{
+        opacity: isDragging ? 0.5 : 1,
+        fontSize: 25,
+        fontWeight: 'bold',
+        cursor: 'move'
+      }}>
+                <Button bsStyle="info"><Glyphicon glyph="plus" /> tarefa</Button>
+            </div>
+        );
+    }
+}
+const DraggableNewTaskElement = DragSource(ItemTypes.NEW_TASK, newElementSource, collect)(NewTaskElement);
+
+
+/**
+ * Elements (content components) bar
+ */
 export default class ComponentsBar extends React.Component<{}, {}> {
     constructor(props) {
         super(props);
@@ -56,6 +82,9 @@ export default class ComponentsBar extends React.Component<{}, {}> {
             <div className="component-bar">
                 <div className="component">
                     <DraggableNewPageElement />
+                </div>
+                <div className="component">
+                    <DraggableNewTaskElement />
                 </div>
             </div>
         );

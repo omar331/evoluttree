@@ -9,14 +9,10 @@ import { ItemTypes } from '../constants';
 
 const dropStuffAreaTarget = {
     canDrop(props) {
-
-        console.log('teste');
-
         // TODO: check what type of object may be dropped here
         return true;
     },
     drop(props) {
-        console.log(' yeah! Dropped ');
     }
 };
 
@@ -46,5 +42,5 @@ class InsertStuffArea extends React.Component<{ownerPage: any, connectDropTarget
 
 
 
-export default DropTarget( [ItemTypes.MOVE_PAGE, ItemTypes.NEW_PAGE] , dropStuffAreaTarget, collect)(InsertStuffArea);
+export default DropTarget( [ItemTypes.MOVE_PAGE, ItemTypes.NEW_PAGE, ItemTypes.NEW_TASK] , dropStuffAreaTarget, collect)(InsertStuffArea);
 

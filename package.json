@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --hot --poll --TARGET=DEV"
+    "start": "webpack-dev-server --watch --inline --hot --TARGET=DEV"
   },
   "keywords": [],
   "author": "",
