@@ -7,7 +7,6 @@ import { ItemTypes } from '../constants';
 
 import InsertStuffArea from './insert-stuff-area';
 
-
 const pageListingSource = {
     beginDrag(props) {
         console.log(' comecou arrastar PAGINA DO CONTEUDO %d', props.id );
@@ -26,22 +25,22 @@ function collect(connect, monitor) {
 /**
  * Represents a page item in product content hierarchy
  */
-class PageListing extends React.Component<{connectDragSource: any, isDragging: any, pageInfo: any}, {pageInfo: any}> {
+class PageItem extends React.Component<{connectDragSource: any, isDragging: any, onTitleChange: any, info: any}, {info: any}> {
     constructor(props) {
         super(props);
 
         this.state = {
-            pageInfo: props.pageInfo
+            info: props.info
         };
     }
     render() {
-        const { connectDragSource, isDragging } = this.props;
-        const { pageInfo } = this.state;
+        const { connectDragSource, isDragging, onTitleChange } = this.props;
+        const { info } = this.state;
 
         // does this node have children nodes?
         let children = null;
-        if ( pageInfo.hasOwnProperty('pages') ) {
-            children = <Pages pages={pageInfo.pages}/>;
+        if ( info.hasOwnProperty('pages') ) {
+            children = <Pages pages={info.pages} onTitleChange={onTitleChange} />;
         }
 
         return connectDragSource(
@@ -51,11 +50,11 @@ class PageListing extends React.Component<{connectDragSource: any, isDragging: a
               }}>
                 <li className="page-item-holder">
                     <div className="page-item">
-                        <div className="page-title">
-                            { pageInfo.title }
+                        <div className="page-title" onClick={ (e) => { onTitleChange(info.localId, "pag novissimo titulo") } }>
+                            { info.title }
                         </div>
                     </div>
-                    <InsertStuffArea ownerPage={pageInfo}/>
+                    <InsertStuffArea />
                     { children }
                 </li>
             </div>
@@ -63,5 +62,5 @@ class PageListing extends React.Component<{connectDragSource: any, isDragging: a
     }
 }
 
-export default DragSource(ItemTypes.MOVE_PAGE, pageListingSource, collect)(PageListing);
+export default DragSource(ItemTypes.MOVE_PAGE, pageListingSource, collect)(PageItem);
 

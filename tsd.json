@@ -37,6 +37,18 @@
     },
     "react-dnd-html5-backend/react-dnd-html5-backend.d.ts": {
       "commit": "7ce2630b07ef481d6c5f262dcafe9c9e2feec446"
+    },
+    "node-uuid/node-uuid.d.ts": {
+      "commit": "5ccabc86eca6cfcda2b7ec83cca31dbd07c8a31b"
+    },
+    "node-uuid/node-uuid-base.d.ts": {
+      "commit": "5ccabc86eca6cfcda2b7ec83cca31dbd07c8a31b"
+    },
+    "node/node.d.ts": {
+      "commit": "5ccabc86eca6cfcda2b7ec83cca31dbd07c8a31b"
+    },
+    "node-uuid/node-uuid-cjs.d.ts": {
+      "commit": "5ccabc86eca6cfcda2b7ec83cca31dbd07c8a31b"
     }
   }
 }

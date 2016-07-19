@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import PageListing from './page-listing';
+import PageItem from './page-item';
 
-export default class Pages extends React.Component<{ pages: any }, {pages: any}> {
+export default class Pages extends React.Component<{ onTitleChange: any, pages: any }, {pages: any}> {
     constructor(props) {
         super(props);
 
@@ -11,12 +11,13 @@ export default class Pages extends React.Component<{ pages: any }, {pages: any}>
         };
     }
     render() {
+        const { onTitleChange } = this.props;
         const { pages } = this.state;
 
         return(
             <ul className="content-list">
-                {pages.map(page =>
-                <PageListing pageInfo={page} id={page.id}/>
+                {pages.map(
+                        page =>  <PageItem info={page} id={page.id} onTitleChange={onTitleChange} />
                 )}
             </ul>
         );

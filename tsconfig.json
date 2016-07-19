@@ -15,6 +15,7 @@
     "typings/react-redux/react-redux.d.ts",
     "typings/react-router/react-router.d.ts",
     "typings/react-dnd/react-dnd.d.ts",
+    "typings/node-uuid/node-uuid.d.ts",
     "typings/react-dnd-html5-backend/react-dnd-html5-backend.d.ts"
   ],
   "filesGlob": [

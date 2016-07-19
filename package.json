@@ -11,7 +11,9 @@
   "license": "ISC",
   "dependencies": {
     "classnames": "^2.2.5",
+    "immutable": "^3.8.1",
     "lodash": "^4.13.1",
+    "node-uuid": "^1.4.7",
     "react": "^15.2.0",
     "react-bootstrap": "^0.29.5",
     "react-dnd": "^2.1.4",

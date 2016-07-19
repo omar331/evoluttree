@@ -4,30 +4,26 @@ import { Grid, Row, Col } from 'react-bootstrap';
 
 import './css/contents.css';
 
-import Pages from './elements/pages.component';
+import GeneralInfoContainer from '../containers/general-info';
+import PagesListContainer from '../containers/pages-list';
+
 import ComponentsBar from './components.bar';
 
-export default class ProductEditComponent extends React.Component<{productInfo: any}, {productInfo: any}> {
+export default class ProductEditComponent extends React.Component<{}, {}> {
     constructor(props) {
         super(props);
 
         this.state =
             {
-                productInfo: props.productInfo
             }
-        ;
     }
     render() {
-        const { productInfo } = this.state;
-
-        const pages = productInfo.editing.pages;
-
         return(
             <div className="product-editing">
-                <Grid>
+                <Grid>  
                     <Row>
                         <Col md={12}>
-                            <h3>{productInfo.title}</h3>
+                            <GeneralInfoContainer />
                         </Col>
                     </Row>
                     <Row>
@@ -35,7 +31,7 @@ export default class ProductEditComponent extends React.Component<{productInfo: 
                             <ComponentsBar />
                         </Col>
                         <Col md={6}>
-                            <Pages pages={pages}/>
+                            <PagesListContainer />
                         </Col>
                     </Row>
                 </Grid>
