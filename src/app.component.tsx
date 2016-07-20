@@ -17,6 +17,7 @@ import productReducer from './reducers/product'
 
 const initialState = fromJS({
     editing: {
+        localId: v4(),
         general: {
             localId: v4(),
             id: 123,
@@ -41,7 +42,19 @@ const initialState = fromJS({
                 title: 'Página 2',
                 pages: [
                     {id: 21, localId: v4(), title: 'Página 2a'},
-                    {id: 22, localId: v4(), title: 'Página 2b'},
+                    {
+                        id: 22,
+                        localId: v4(),
+                        title: 'Página 2b',
+                        pages: [
+                            {id: 11, localId: v4(), title: 'Página 2aa'},
+                            {
+                                id: 12, localId: v4(),
+                                title: 'Página 2ab'
+                            },
+                            {id: 13, localId: v4(), title: 'Página 2ac'}
+                        ]   
+                    },
                     {id: 23, localId: v4(), title: 'Página 2c'}
                 ]
             },

@@ -51,7 +51,7 @@ class PageItem extends React.Component<{connectDragSource: any, isDragging: any,
                 <li className="page-item-holder">
                     <div className="page-item">
                         <div className="page-title" onClick={ (e) => { onTitleChange(info.localId, "pag novissimo titulo") } }>
-                            { info.title }
+                            {info.id} - { info.title }
                         </div>
                     </div>
                     <InsertStuffArea />
