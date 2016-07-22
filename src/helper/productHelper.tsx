@@ -1,12 +1,12 @@
 import { Map } from 'immutable'
 
 /**
- * Get keyPath to a certain page within the state based on its localId
+ * Get keyPath to a certain page within the state
  *
  * @param Map node the root node to page hierarchy
  * @param string localId local id to be found
- * @param integer position position in the current hierachy level (used only for recursion proposes)
- * @param array acc keyPath being generated (used only for recursion proposes)
+ * @param integer position position in the current hierachy level (used only for recursion purposes)
+ * @param array acc keyPath being generated (used only for recursion purposes)
  * @returns {array}
  */
 export const searchPageKeyPath = (node, localId, position = 0, acc = [] ):any => {

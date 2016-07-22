@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 
 import Pages from './pages.component';
 
@@ -7,7 +6,7 @@ import { DragSource } from 'react-dnd';
 
 import { ItemTypes } from '../constants';
 
-import InsertStuffArea from './insert-stuff-area';
+import DropStuffArea from './drop-stuff-area';
 
 import { TitleEdit } from '../misc/title-edit'
 
@@ -29,6 +28,11 @@ function collect(connect, monitor) {
 
 /**
  * Represents a page item in product content hierarchy
+ *
+ * Each page has a DropStuffArea where it's possible do add/assign
+ * new contents to the page. Those contents could be pages, tasks,
+ * notes and so on
+ *
  */
 class PageItem extends React.Component<{connectDragSource: any, isDragging: any, onTitleChange: any, info: any}, {editingTitle: boolean}> {
     constructor(props) {
@@ -54,6 +58,11 @@ class PageItem extends React.Component<{connectDragSource: any, isDragging: any,
         onTitleChange(info.get('localId'), e.target.value )
 
         this.toggleEditingTitle()
+    }
+    handleDropItem(item) {
+        const { info } = this.props
+
+        console.log('drop drop drop')
     }
     render() {
         const { info, connectDragSource, isDragging, onTitleChange } = this.props;
@@ -83,7 +92,7 @@ class PageItem extends React.Component<{connectDragSource: any, isDragging: any,
                             }
                         </div>
                     </div>
-                    <InsertStuffArea />
+                    <DropStuffArea onDrop={this.handleDropItem}/>
                     {children}
                 </li>
             </div>
