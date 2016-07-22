@@ -9,6 +9,9 @@ import { ItemTypes } from '../constants';
 
 import InsertStuffArea from './insert-stuff-area';
 
+import { TitleEdit } from '../misc/title-edit'
+
+
 const pageListingSource = {
     beginDrag(props) {
         console.log(' comecou arrastar PAGINA DO CONTEUDO %d', props.id );
@@ -28,10 +31,6 @@ function collect(connect, monitor) {
  * Represents a page item in product content hierarchy
  */
 class PageItem extends React.Component<{connectDragSource: any, isDragging: any, onTitleChange: any, info: any}, {editingTitle: boolean}> {
-    refs: {
-        [string: string]: any;
-        titleEdit:any;
-    }
     constructor(props) {
         super(props);
 
@@ -76,8 +75,7 @@ class PageItem extends React.Component<{connectDragSource: any, isDragging: any,
                     <div className="page-item">
                         <div className="page-title" onClick={ (e) => { this.toggleEditingTitle() } }>
                             { this.state.editingTitle ?
-                                <TitleEdit ref="titleEdit"
-                                           value={ info.get('title') }
+                                <TitleEdit value={ info.get('title') }
                                            onTitleChange={ this.updateTitle.bind(this) }
                                 />
                                      :
@@ -98,26 +96,6 @@ export default DragSource(ItemTypes.MOVE_PAGE, pageListingSource, collect)(PageI
 
 
 
-class TitleEdit extends React.Component<{value: string, onTitleChange: any}, {}> {
-    refs: {
-        [string: string]: any;
-        textInput:any;
-    }
-    componentDidMount() {
-        this.refs.textInput.focus();
-    }
-    render() {
-        const { value, onTitleChange } = this.props
-
-        return <input type="text"
-                ref="textInput"                      
-               style={ {width: "100%"} }
-               defaultValue={ value }
-               onBlur={ onTitleChange }
-               onClick={ (e) => { e.stopPropagation() } }
-        />
-    }
-}
 
 
 
