@@ -20,7 +20,7 @@ export class TitleEdit extends React.Component<{value: string, onTitleChange: an
 
         return <input type="text"
                       ref="textInput"
-                      style={ {width: "100%"} }
+                      style={ {width: "96%"} }
                       defaultValue={ value }
                       onBlur={ onTitleChange }
                       onClick={ (e) => { e.stopPropagation() } }

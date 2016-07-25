@@ -1,4 +1,5 @@
-import { Map } from 'immutable'
+import { v4 } from 'node-uuid';
+import { Map } from 'immutable';
 
 /**
  * Get keyPath to a certain page within the state
@@ -25,4 +26,27 @@ export const searchPageKeyPath = (node, localId, position = 0, acc = [] ):any =>
 
     return null
 }
+
+
+interface  PageInfo {
+    id: string,
+    localId: string,
+    title: string
+}
+
+/**
+ * Create a new page node
+  * @param info
+ * @returns {any}
+ */
+export const createPageNode  = (info: PageInfo  ) => {
+    return Map(
+        {
+            localId: v4(),
+            id: info.id,
+            title: info.title
+        }        
+    )
+}
+
 

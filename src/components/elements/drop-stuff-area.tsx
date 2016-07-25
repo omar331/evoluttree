@@ -15,8 +15,17 @@ const dropStuffAreaTarget = {
     drop(props, monitor) {
         let item = monitor.getItem()
 
-        console.log(' ------------------------- item = %o', item )
-        props.onDrop()
+        switch (monitor.getItemType()) {
+            case ItemTypes.NEW_PAGE:
+                props.onDrop(ItemTypes.NEW_PAGE, 
+                                {
+                                    ownerPage: props.ownerPage,
+                                    pageOrder: props.pageOrder,
+                                    parentPage: props.parentPage
+                                }
+                            )
+                break
+        }
     }
 };
 
@@ -29,15 +38,33 @@ const collect = (connect, monitor) => {
     }
 };
 
+
+
+
+interface DropAreaProps {
+    ownerPage?: any,
+    parentPage?: any,
+    pageOrder?: number,
+    connectDropTarget: any,
+    isOver: any,
+    canDrop: any,
+    onDrop: any,
+    onNewPage?: any
+}
+
+
+
+
 /**
  * Area where users can place content stuff (pages, tasks and so on)
  */
-class DropStuffArea extends React.Component<{ownerPage: any, connectDropTarget: any, isOver: any, canDrop: any, onDrop: any}, {}> {
+class DropArea extends React.Component<DropAreaProps, {}> {
     constructor(props) {
         super(props);
     }
     render() {
-        const { ownerPage, connectDropTarget, isOver, canDrop } = this.props;
+        const { ownerPage, parentPage, pageOrder, 
+            connectDropTarget, isOver, canDrop, onNewPage } = this.props;
 
         return connectDropTarget(
             <div className={classNames( {'insert-stuff-area': true, 'insert-stuff-area-over': isOver } )}>
@@ -46,7 +73,5 @@ class DropStuffArea extends React.Component<{ownerPage: any, connectDropTarget: 
     }
 }
 
-
-
-export default DropTarget( [ItemTypes.MOVE_PAGE, ItemTypes.NEW_PAGE, ItemTypes.NEW_TASK] , dropStuffAreaTarget, collect)(DropStuffArea);
+export const DropStuffArea = DropTarget( [ItemTypes.MOVE_PAGE, ItemTypes.NEW_PAGE, ItemTypes.NEW_TASK] , dropStuffAreaTarget, collect)(DropArea)
 

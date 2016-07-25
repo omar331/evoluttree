@@ -6,15 +6,17 @@ import { DragSource } from 'react-dnd';
 
 import { ItemTypes } from '../constants';
 
-import DropStuffArea from './drop-stuff-area';
+import { DropStuffArea } from './drop-stuff-area';
 
 import { TitleEdit } from '../misc/title-edit'
 
 
 const pageListingSource = {
     beginDrag(props) {
-        console.log(' comecou arrastar PAGINA DO CONTEUDO %d', props.id );
-        return {};
+        return {
+            localId: props.localId,
+            id: props.id
+        };
     }
 };
 
@@ -34,12 +36,36 @@ function collect(connect, monitor) {
  * notes and so on
  *
  */
-class PageItem extends React.Component<{connectDragSource: any, isDragging: any, onTitleChange: any, info: any}, {editingTitle: boolean}> {
+interface PageItemProps {
+    connectDragSource: any,
+    isDragging: any,
+    onTitleChange: any,
+    onNewPage: any,
+    info: any,
+    collapsed?: boolean,
+    parentPage: any,
+    pageOrder?: number
+}
+
+class PageItem extends React.Component<PageItemProps, {editingTitle?: boolean, collapsed?: boolean}> {
+    public static defaultProps: PageItemProps = {
+        connectDragSource: null,
+        isDragging: false,
+        onTitleChange: null,
+        onNewPage: null,
+        info: {},
+        collapsed: true,
+        parentPage: null
+    }
+
     constructor(props) {
         super(props);
 
+        const { collapsed } = this.props
+        
         this.state = {
-            editingTitle: false
+            editingTitle: false,
+            collapsed: collapsed
         }
     }
     toggleEditingTitle() {
@@ -59,43 +85,75 @@ class PageItem extends React.Component<{connectDragSource: any, isDragging: any,
 
         this.toggleEditingTitle()
     }
-    handleDropItem(item) {
-        const { info } = this.props
 
-        console.log('drop drop drop')
+    /**
+     * Handles a content drop in DropStuffArea
+     * @param itemType
+     * @param item
+     */
+    handleDropItem(itemType, info) {
+        const { onNewPage } = this.props
+        
+        switch (itemType) {
+            case ItemTypes.NEW_PAGE:
+                onNewPage(info.ownerPage, info.parentPage, info.pageOrder )
+                break
+        }
+    }
+    handleExpandCollapse(e) {
+        this.setState({collapsed: (!this.state.collapsed) })
     }
     render() {
-        const { info, connectDragSource, isDragging, onTitleChange } = this.props;
+        const { info, connectDragSource, isDragging, onTitleChange,
+                 onNewPage, parentPage, pageOrder } = this.props;
 
         // does this node have children nodes?
-        let children = null;
-        let pages;
+        let children = null, hasChildren = false;
+        let pages = info.get('pages')
 
-        if ( pages = info.get('pages') ) {
-            children = <Pages pages={pages} onTitleChange={onTitleChange}/>;
+        hasChildren = pages != null
+
+        if ( (!this.state.collapsed) && (hasChildren) ) {
+            children = <Pages pages={pages}
+                              onTitleChange={onTitleChange}
+                              onNewPage={onNewPage}
+                              parentPage={info}
+                        />;
         }
 
+
         return connectDragSource(
-            <div style={{
-                opacity: isDragging ? 0.5 : 1,
-                cursor: 'move'
-              }}>
-                <li className="page-item-holder">
-                    <div className="page-item">
-                        <div className="page-title" onClick={ (e) => { this.toggleEditingTitle() } }>
-                            { this.state.editingTitle ?
-                                <TitleEdit value={ info.get('title') }
-                                           onTitleChange={ this.updateTitle.bind(this) }
-                                />
-                                     :
-                                info.get('title')
-                            }
-                        </div>
-                    </div>
-                    <DropStuffArea onDrop={this.handleDropItem}/>
-                    {children}
-                </li>
-            </div>
+            <li className="page-item-holder" style={{ opacity: isDragging ? 0.5 : 1 }}>
+                <div className="page-item">
+                  <div style={{width: '3%', float: 'left'}} onClick={this.handleExpandCollapse.bind(this)}>
+                      {  hasChildren ? (
+                              this.state.collapsed ?
+                              '+' :
+                              '-'
+                          ) : <span style={{opacity:0}}>*</span>
+                      }
+                  </div>
+
+                  <div style={{width: '80%'}}>
+                      <div className="page-title" onClick={ (e) => { this.toggleEditingTitle() } }>
+                          { this.state.editingTitle ?
+                              <TitleEdit value={ info.get('title') }
+                                         onTitleChange={ this.updateTitle.bind(this) }
+                              />
+                              :
+                              info.get('title')
+                          }
+                      </div>
+                  </div>
+                </div>
+                <DropStuffArea
+                            ownerPage={ info }
+                            parentPage={ parentPage }
+                            onDrop={this.handleDropItem.bind(this)}
+                            pageOrder={pageOrder}
+                />
+                {children}
+            </li>
         );
     }
 }
