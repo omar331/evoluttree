@@ -4,4 +4,5 @@ export interface PagesProps {
     onTitleChange?: any,
     onNewPage?: any,
     parentPage?: any
+    onMovePage?: any
 }

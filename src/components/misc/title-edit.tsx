@@ -1,5 +1,8 @@
 import * as React from 'react';
 
+/**
+ * Generic title editing control
+ */
 export class TitleEdit extends React.Component<{value: string, onTitleChange: any}, {}> {
     refs: {
         [string: string]: any;

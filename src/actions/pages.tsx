@@ -8,11 +8,17 @@ export const changePageTitle = (localId, newTitle) => {
 
 
 
-export const newPage = (ownerPage, parentPage, order) => {
+export const newPage = (ownerPageLocalId, position) => {
     return {
         type: 'NEW_PAGE',
-        ownerPage, parentPage, order
+        ownerPageLocalId, position
     }
 }
 
 
+export const movePage = (sourcePageLocalId, destinationParentPageLocalId, position) => {
+    return {
+        type: 'MOVE_PAGE',
+        sourcePageLocalId, destinationParentPageLocalId, position
+    }
+}

@@ -8,7 +8,7 @@ export default class Pages extends React.Component<PagesProps, {}> {
         super(props);
     }
     render() {
-        const { pages, generalInfo, parentPage, onTitleChange, onNewPage } = this.props;
+        const { pages, generalInfo, parentPage, onTitleChange, onNewPage, onMovePage } = this.props;
 
         let order = -1;
 
@@ -23,7 +23,8 @@ export default class Pages extends React.Component<PagesProps, {}> {
                                       id={page.get('id')}
                                       pageOrder={order}
                                       onTitleChange={onTitleChange}
-                                      onNewPage={onNewPage}                                             
+                                      onNewPage={onNewPage}
+                                      onMovePage={onMovePage}
                             />
                         }
 

@@ -25,6 +25,22 @@ const dropStuffAreaTarget = {
                                 }
                             )
                 break
+            case ItemTypes.MOVE_PAGE:
+                let destinationId = null
+
+                if ( props.parentPage != null ) {
+                    console.log('xpp = %o', props.parentPage )
+                    destinationId = props.parentPage.get('localId')
+                }
+
+                props.onDrop(ItemTypes.MOVE_PAGE,
+                                {
+                                    sourceLocalId: item.localId,
+                                    destinationParentPageLocalId: destinationId,
+                                    position: props.pageOrder + 1
+                                }
+                            )
+                break
         }
     }
 };

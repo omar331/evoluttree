@@ -39,8 +39,9 @@ interface  PageInfo {
   * @param info
  * @returns {any}
  */
-export const createPageNode  = (info: PageInfo  ) => {
-    if ( ! info.hasOwnProperty('localId') ) info.localId = v4()
+export const createPageNode:(info:PageInfo)=>any = (info:PageInfo) => {
+    if (!info.hasOwnProperty('localId')) info.localId = v4();
+
     return Map(info)
 }
 
@@ -48,13 +49,13 @@ export const createPageNode  = (info: PageInfo  ) => {
 /**
  * 
  * @param state
- * @param ownerPageLocaId
+ * @param ownerPageLocalId
  * @param position
  * @param pageNode
  * @returns {any}
  */
-export const insertPage = (state, ownerPageLocaId, position, pageNode) => {
-    const ownerPageKeyPath = searchPageKeyPath(state.get('editing'), ownerPageLocaId );
+export const insertPage = (state, ownerPageLocalId, position, pageNode) => {
+    const ownerPageKeyPath = searchPageKeyPath(state.get('editing'), ownerPageLocalId );
 
     let pagesNode
     let keyPathApply = ['editing'].concat(ownerPageKeyPath)
@@ -66,4 +67,43 @@ export const insertPage = (state, ownerPageLocaId, position, pageNode) => {
     const newPagesList = pagesList.insert( position, pageNode)
 
     return state.setIn( keyPathApply, newPagesList )
+}
+
+
+export const movePage = (state, sourcePageLocalId, destinationParentPageLocalId, position) =>
+{
+    console.log(' MOVE PAGE  ' +
+        ' sourcePageLocalId = %s' +
+        ' destinationParentPageLocalId = %s' +
+        ' position = %d ',
+        sourcePageLocalId,
+        destinationParentPageLocalId,
+        position
+    )
+
+    // get the source page
+    const sourcePageNode = getPageByLocalId( state, sourcePageLocalId )
+
+
+    // ---> insert the page into its new location
+    const newState = insertPage(state, destinationParentPageLocalId, position, sourcePageNode )
+
+    
+
+
+
+    return newState
+}
+
+
+/**
+ * Gets a page by its localId
+ * @param localId
+ * @returns {any}
+ */
+export const getPageByLocalId = ( state, localId : string ) => {
+    let sourcePageKeyPath = searchPageKeyPath(state.get('editing'), localId)
+    let sourceKeyPath = ['editing'].concat(sourcePageKeyPath)
+
+    return state.getIn( sourceKeyPath )
 }

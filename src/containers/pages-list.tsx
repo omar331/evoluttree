@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import Pages from '../components/elements/pages.component'
-import {changePageTitle, newPage} from "../actions/pages";
+import {changePageTitle, newPage, movePage } from "../actions/pages";
 
 const mapStateToProps = (state) => {
     return {
@@ -13,8 +13,11 @@ const mapDispatchToProps = (dispatch) => {
         onTitleChange: (id,newTitle) => {
             dispatch( changePageTitle(id, newTitle) );
         },
-        onNewPage: (ownerPage, parentPage, order) => {
-            dispatch( newPage(ownerPage, parentPage, order) )
+        onNewPage: (ownerPageLocalId, position) => {
+            dispatch( newPage(ownerPageLocalId,  position) )
+        },
+        onMovePage: (sourcePageLocalId, destinationParentPageLocalId, position) => {
+            dispatch( movePage(sourcePageLocalId, destinationParentPageLocalId, position) )
         }
     }
 }

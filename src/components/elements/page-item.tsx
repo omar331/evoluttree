@@ -9,13 +9,15 @@ import { ItemTypes } from '../constants';
 import { DropStuffArea } from './drop-stuff-area';
 
 import { TitleEdit } from '../misc/title-edit'
+import { TitleDisplay } from '../misc/title-display'
 
 
 const pageListingSource = {
     beginDrag(props) {
         return {
-            localId: props.localId,
-            id: props.id
+            localId: props.info.get('localId'),
+            id: props.info.get('id'),
+            pageOrder: props.info.get('pageOrder')
         };
     }
 };
@@ -40,7 +42,8 @@ interface PageItemProps {
     connectDragSource: any,
     isDragging: any,
     onTitleChange: any,
-    onNewPage: any,
+    onNewPage?: any,
+    onMovePage?:any,
     info: any,
     collapsed?: boolean,
     parentPage: any,
@@ -53,6 +56,7 @@ class PageItem extends React.Component<PageItemProps, {editingTitle?: boolean, c
         isDragging: false,
         onTitleChange: null,
         onNewPage: null,
+        onMovePage: null,
         info: {},
         collapsed: true,
         parentPage: null
@@ -92,11 +96,14 @@ class PageItem extends React.Component<PageItemProps, {editingTitle?: boolean, c
      * @param item
      */
     handleDropItem(itemType, info) {
-        const { onNewPage } = this.props
-        
+        const { onNewPage, onMovePage } = this.props
+
         switch (itemType) {
             case ItemTypes.NEW_PAGE:
-                onNewPage(info.ownerPage, info.parentPage, info.pageOrder )
+                onNewPage(info.ownerPage.get('localId'), info.pageOrder + 1 )
+                break
+            case ItemTypes.MOVE_PAGE:
+                onMovePage( info.sourceLocalId, info.destinationParentPageLocalId, info.position )
                 break
         }
     }
@@ -105,18 +112,19 @@ class PageItem extends React.Component<PageItemProps, {editingTitle?: boolean, c
     }
     render() {
         const { info, connectDragSource, isDragging, onTitleChange,
-                 onNewPage, parentPage, pageOrder } = this.props;
+                 onNewPage, onMovePage, parentPage, pageOrder } = this.props;
 
         // does this node have children nodes?
-        let children = null, hasChildren = false;
-        let pages = info.get('pages')
+        let children = null;
+        let pages:any = info.get('pages');
 
-        hasChildren = pages != null
+        let hasChildren:boolean = pages != null
 
         if ( (!this.state.collapsed) && (hasChildren) ) {
             children = <Pages pages={pages}
                               onTitleChange={onTitleChange}
                               onNewPage={onNewPage}
+                              onMovePage={onMovePage}
                               parentPage={info}
                         />;
         }
@@ -141,7 +149,7 @@ class PageItem extends React.Component<PageItemProps, {editingTitle?: boolean, c
                                          onTitleChange={ this.updateTitle.bind(this) }
                               />
                               :
-                              info.get('title')
+                              <TitleDisplay value={ info.get('title') + ' ... ' + info.get('localId').substr(0,5)     } />
                           }
                       </div>
                   </div>
