@@ -6,6 +6,8 @@ export const changePageTitle = (localId, newTitle) => {
     }
 }
 
+
+
 export const newPage = (ownerPage, parentPage, order) => {
     return {
         type: 'NEW_PAGE',

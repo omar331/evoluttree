@@ -1,4 +1,4 @@
-import { searchPageKeyPath } from '../helper/productHelper'
+import { searchPageKeyPath, createPageNode, insertPage } from '../helper/productHelper'
 
 const productReducer = (state, action) => {
     let newState
@@ -20,30 +20,16 @@ const productReducer = (state, action) => {
 
             return newState
         case 'NEW_PAGE':
-            newState = state
-    
-            console.log(' ACTION =%o ', action)
+            // new page to be created
+            const newPageNode = createPageNode({title: 'página sem titulo'})
 
-            const ownerPage = action.ownerPage
-            const parentPage = action.parentPage
-
-            const ownerPageLocalId = action.ownerPage.get('localId')
-            const ownerPageKeyPath = searchPageKeyPath(state.get('editing'), ownerPageLocalId );
-            
-            console.log(' Owner page    id =%s     path = %o', ownerPageLocalId, ownerPageKeyPath)
-
-            if ( parentPage ) {
-                const parentPageLocalId = parentPage.get('localId')
-                const parentPageKeyPath = searchPageKeyPath(state.get('editing'), parentPageLocalId )
-
-                console.log(' Parent page    id =%s     path = %o', parentPageLocalId, parentPageKeyPath)
-            }
-
-
-
-
-
-            return newState
+            // insert the page
+            return insertPage(
+                              state,
+                              action.ownerPage.get('localId'),
+                              action.order + 1,
+                              newPageNode
+                            )
         default:
             return state
     }

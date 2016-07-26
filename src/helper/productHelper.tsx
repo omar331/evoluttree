@@ -29,8 +29,8 @@ export const searchPageKeyPath = (node, localId, position = 0, acc = [] ):any =>
 
 
 interface  PageInfo {
-    id: string,
-    localId: string,
+    id?: string,
+    localId?: string,
     title: string
 }
 
@@ -40,13 +40,30 @@ interface  PageInfo {
  * @returns {any}
  */
 export const createPageNode  = (info: PageInfo  ) => {
-    return Map(
-        {
-            localId: v4(),
-            id: info.id,
-            title: info.title
-        }        
-    )
+    if ( ! info.hasOwnProperty('localId') ) info.localId = v4()
+    return Map(info)
 }
 
 
+/**
+ * 
+ * @param state
+ * @param ownerPageLocaId
+ * @param position
+ * @param pageNode
+ * @returns {any}
+ */
+export const insertPage = (state, ownerPageLocaId, position, pageNode) => {
+    const ownerPageKeyPath = searchPageKeyPath(state.get('editing'), ownerPageLocaId );
+
+    let pagesNode
+    let keyPathApply = ['editing'].concat(ownerPageKeyPath)
+    keyPathApply.pop()
+
+    pagesNode = state.getIn(keyPathApply)
+
+    const pagesList = pagesNode
+    const newPagesList = pagesList.insert( position, pageNode)
+
+    return state.setIn( keyPathApply, newPagesList )
+}
