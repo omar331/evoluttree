@@ -16,8 +16,8 @@ const mapDispatchToProps = (dispatch) => {
         onNewPage: (ownerPageLocalId, position) => {
             dispatch( newPage(ownerPageLocalId,  position) )
         },
-        onMovePage: (sourcePageLocalId, destinationParentPageLocalId, position) => {
-            dispatch( movePage(sourcePageLocalId, destinationParentPageLocalId, position) )
+        onMovePage: (sourcePageLocalId, destinationPageLocalId, position) => {
+            dispatch( movePage(sourcePageLocalId, destinationPageLocalId, position) )
         }
     }
 }

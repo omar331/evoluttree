@@ -103,7 +103,7 @@ class PageItem extends React.Component<PageItemProps, {editingTitle?: boolean, c
                 onNewPage(info.ownerPage.get('localId'), info.pageOrder + 1 )
                 break
             case ItemTypes.MOVE_PAGE:
-                onMovePage( info.sourceLocalId, info.destinationParentPageLocalId, info.position )
+                onMovePage( info.sourceLocalId, info.destinationPageLocalId, info.position )
                 break
         }
     }
@@ -141,7 +141,6 @@ class PageItem extends React.Component<PageItemProps, {editingTitle?: boolean, c
                           ) : <span style={{opacity:0}}>*</span>
                       }
                   </div>
-
                   <div style={{width: '80%'}}>
                       <div className="page-title" onClick={ (e) => { this.toggleEditingTitle() } }>
                           { this.state.editingTitle ?
@@ -149,7 +148,7 @@ class PageItem extends React.Component<PageItemProps, {editingTitle?: boolean, c
                                          onTitleChange={ this.updateTitle.bind(this) }
                               />
                               :
-                              <TitleDisplay value={ info.get('title') + ' ... ' + info.get('localId').substr(0,5)     } />
+                              <TitleDisplay value={ info.get('title') } />
                           }
                       </div>
                   </div>

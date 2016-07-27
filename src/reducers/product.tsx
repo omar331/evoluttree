@@ -31,7 +31,7 @@ const productReducer = (state, action) => {
                               newPageNode
                             )
         case 'MOVE_PAGE':
-            return movePage(state, action.sourcePageLocalId, action.destinationParentPageLocalId, action.position)
+            return movePage(state, action.sourcePageLocalId, action.destinationPageLocalId, action.position)
         default:
             return state
     }

@@ -28,15 +28,13 @@ const dropStuffAreaTarget = {
             case ItemTypes.MOVE_PAGE:
                 let destinationId = null
 
-                if ( props.parentPage != null ) {
-                    console.log('xpp = %o', props.parentPage )
-                    destinationId = props.parentPage.get('localId')
-                }
+                console.log('xpp ownerPage = %o', props.ownerPage )
+                destinationId = props.ownerPage.get('localId')
 
                 props.onDrop(ItemTypes.MOVE_PAGE,
                                 {
                                     sourceLocalId: item.localId,
-                                    destinationParentPageLocalId: destinationId,
+                                    destinationPageLocalId: destinationId,
                                     position: props.pageOrder + 1
                                 }
                             )

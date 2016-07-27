@@ -70,27 +70,25 @@ export const insertPage = (state, ownerPageLocalId, position, pageNode) => {
 }
 
 
-export const movePage = (state, sourcePageLocalId, destinationParentPageLocalId, position) =>
+export const movePage = (state, sourcePageLocalId, destinationPageLocalId, position) =>
 {
     console.log(' MOVE PAGE  ' +
         ' sourcePageLocalId = %s' +
-        ' destinationParentPageLocalId = %s' +
+        ' destinationPageLocalId = %s' +
         ' position = %d ',
         sourcePageLocalId,
-        destinationParentPageLocalId,
+        destinationPageLocalId,
         position
     )
 
     // get the source page
     const sourcePageNode = getPageByLocalId( state, sourcePageLocalId )
 
+    const newState1 = removePageByLocalId( state, sourcePageLocalId )
+
 
     // ---> insert the page into its new location
-    const newState = insertPage(state, destinationParentPageLocalId, position, sourcePageNode )
-
-    
-
-
+    const newState = insertPage(newState1, destinationPageLocalId, position, sourcePageNode )
 
     return newState
 }
@@ -106,4 +104,13 @@ export const getPageByLocalId = ( state, localId : string ) => {
     let sourceKeyPath = ['editing'].concat(sourcePageKeyPath)
 
     return state.getIn( sourceKeyPath )
+}
+
+
+
+export const removePageByLocalId = ( state, localId : string ) => {
+    let sourcePageKeyPath = searchPageKeyPath(state.get('editing'), localId)
+    let sourceKeyPath = ['editing'].concat(sourcePageKeyPath)
+
+    return state.removeIn( sourceKeyPath )
 }

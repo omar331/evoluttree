@@ -16,9 +16,9 @@ export const newPage = (ownerPageLocalId, position) => {
 }
 
 
-export const movePage = (sourcePageLocalId, destinationParentPageLocalId, position) => {
+export const movePage = (sourcePageLocalId, destinationPageLocalId, position) => {
     return {
         type: 'MOVE_PAGE',
-        sourcePageLocalId, destinationParentPageLocalId, position
+        sourcePageLocalId, destinationPageLocalId, position
     }
 }
