@@ -72,20 +72,10 @@ export const insertPage = (state, ownerPageLocalId, position, pageNode) => {
 
 export const movePage = (state, sourcePageLocalId, destinationPageLocalId, position) =>
 {
-    console.log(' MOVE PAGE  ' +
-        ' sourcePageLocalId = %s' +
-        ' destinationPageLocalId = %s' +
-        ' position = %d ',
-        sourcePageLocalId,
-        destinationPageLocalId,
-        position
-    )
-
     // get the source page
     const sourcePageNode = getPageByLocalId( state, sourcePageLocalId )
 
     const newState1 = removePageByLocalId( state, sourcePageLocalId )
-
 
     // ---> insert the page into its new location
     const newState = insertPage(newState1, destinationPageLocalId, position, sourcePageNode )
@@ -112,5 +102,34 @@ export const removePageByLocalId = ( state, localId : string ) => {
     let sourcePageKeyPath = searchPageKeyPath(state.get('editing'), localId)
     let sourceKeyPath = ['editing'].concat(sourcePageKeyPath)
 
-    return state.removeIn( sourceKeyPath )
+    // decides if the parent 'pages' node must be removed 
+    let removeParentPagesNode = false
+
+    let parentKeyPath = sourceKeyPath.slice(0)
+    parentKeyPath.pop()
+    
+    const parentNode = state.getIn( parentKeyPath )
+    if ( parentNode.size == 1 ) removeParentPagesNode = true
+
+    // remove the page
+    const newState0 = state.removeIn( sourceKeyPath )  
+    
+    // if it's necessary to remove the parent 'pages' node...
+    let newState1 = newState0
+    if ( removeParentPagesNode ) {
+        newState1 = newState0.removeIn(parentKeyPath)        
+    }
+    
+    return newState1
 }
+
+
+export const changePageTreeState = ( state, pageLocalId, newStateInfo ) => {
+    let sourcePageKeyPath = searchPageKeyPath(state.get('editing'), pageLocalId)
+    let sourceKeyPath = ['editing'].concat(sourcePageKeyPath)
+
+    const newState = state.setIn( sourceKeyPath.concat(['collapsed']), newStateInfo.collapsed )
+
+    return newState
+}
+

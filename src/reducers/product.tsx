@@ -1,4 +1,4 @@
-import { searchPageKeyPath, createPageNode, insertPage, movePage } from '../helper/productHelper'
+import { searchPageKeyPath, createPageNode, insertPage, movePage, changePageTreeState } from '../helper/productHelper'
 
 const productReducer = (state, action) => {
     let newState
@@ -32,6 +32,9 @@ const productReducer = (state, action) => {
                             )
         case 'MOVE_PAGE':
             return movePage(state, action.sourcePageLocalId, action.destinationPageLocalId, action.position)
+
+        case 'CHANGE_PAGE_TREE_STATE':
+            return changePageTreeState(state, action.pageLocalId, action.newStateInfo) 
         default:
             return state
     }

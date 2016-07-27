@@ -22,3 +22,13 @@ export const movePage = (sourcePageLocalId, destinationPageLocalId, position) =>
         sourcePageLocalId, destinationPageLocalId, position
     }
 }
+
+
+export const changeTreeState = (pageLocalId, newStateInfo) => {
+    return {
+        type: 'CHANGE_PAGE_TREE_STATE',
+        pageLocalId, newStateInfo
+    }
+}
+
+

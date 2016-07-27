@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import Pages from '../components/elements/pages.component'
-import {changePageTitle, newPage, movePage } from "../actions/pages";
+import {changePageTitle, newPage, movePage, changeTreeState } from "../actions/pages";
 
 const mapStateToProps = (state) => {
     return {
@@ -18,6 +18,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         onMovePage: (sourcePageLocalId, destinationPageLocalId, position) => {
             dispatch( movePage(sourcePageLocalId, destinationPageLocalId, position) )
+        },
+        onChangeTreeState: (pageLocalId, newStateInfo ) => {
+            dispatch( changeTreeState(pageLocalId, newStateInfo) )
         }
     }
 }

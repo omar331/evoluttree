@@ -44,8 +44,8 @@ interface PageItemProps {
     onTitleChange: any,
     onNewPage?: any,
     onMovePage?:any,
+    onChangeTreeState: any,
     info: any,
-    collapsed?: boolean,
     parentPage: any,
     pageOrder?: number
 }
@@ -57,24 +57,19 @@ class PageItem extends React.Component<PageItemProps, {editingTitle?: boolean, c
         onTitleChange: null,
         onNewPage: null,
         onMovePage: null,
+        onChangeTreeState: null,
         info: {},
-        collapsed: true,
         parentPage: null
     }
 
     constructor(props) {
         super(props);
 
-        const { collapsed } = this.props
-        
         this.state = {
-            editingTitle: false,
-            collapsed: collapsed
+            editingTitle: false
         }
     }
     toggleEditingTitle() {
-        const { info, onTitleChange } = this.props;
-
         let currentStateEditing = this.state.editingTitle;
         let newStateEditing = !currentStateEditing
 
@@ -108,34 +103,43 @@ class PageItem extends React.Component<PageItemProps, {editingTitle?: boolean, c
         }
     }
     handleExpandCollapse(e) {
-        this.setState({collapsed: (!this.state.collapsed) })
+        const { onChangeTreeState, info } = this.props
+
+        const newCollapsedState = !this.state.collapsed
+        
+        onChangeTreeState( info.get('localId'), {collapsed: newCollapsedState})        
+        
+        this.setState({collapsed: newCollapsedState })
     }
     render() {
         const { info, connectDragSource, isDragging, onTitleChange,
-                 onNewPage, onMovePage, parentPage, pageOrder } = this.props;
+                 onNewPage, onMovePage, parentPage, pageOrder,
+                onChangeTreeState } = this.props;
 
         // does this node have children nodes?
         let children = null;
         let pages:any = info.get('pages');
 
-        let hasChildren:boolean = pages != null
+        let hasChildren:boolean = (pages != null)
 
-        if ( (!this.state.collapsed) && (hasChildren) ) {
+        const collapsed = info.get('collapsed') || false
+
+        if ( (!collapsed) && (hasChildren) ) {
             children = <Pages pages={pages}
                               onTitleChange={onTitleChange}
                               onNewPage={onNewPage}
                               onMovePage={onMovePage}
                               parentPage={info}
+                              onChangeTreeState={onChangeTreeState}
                         />;
         }
-
 
         return connectDragSource(
             <li className="page-item-holder" style={{ opacity: isDragging ? 0.5 : 1 }}>
                 <div className="page-item">
                   <div style={{width: '3%', float: 'left'}} onClick={this.handleExpandCollapse.bind(this)}>
                       {  hasChildren ? (
-                              this.state.collapsed ?
+                              collapsed ?
                               '+' :
                               '-'
                           ) : <span style={{opacity:0}}>*</span>
@@ -153,6 +157,8 @@ class PageItem extends React.Component<PageItemProps, {editingTitle?: boolean, c
                       </div>
                   </div>
                 </div>
+
+                {/* This is the place where users can insert new pages, tasks and so on */}
                 <DropStuffArea
                             ownerPage={ info }
                             parentPage={ parentPage }

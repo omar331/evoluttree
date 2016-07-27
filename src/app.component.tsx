@@ -53,7 +53,8 @@ const initialState = fromJS({
                                 title: 'Página 2ab'
                             },
                             {id: 13, localId: v4(), title: 'Página 2ac'}
-                        ]   
+                        ],
+                        collapsed: true
                     },
                     {id: 23, localId: v4(), title: 'Página 2c'}
                 ]
