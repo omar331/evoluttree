@@ -110,7 +110,7 @@ export const removePageByLocalId = ( state, localId : string ) => {
     
     const parentNode = state.getIn( parentKeyPath )
     if ( parentNode.size == 1 ) removeParentPagesNode = true
-
+    
     // remove the page
     const newState0 = state.removeIn( sourceKeyPath )  
     
@@ -132,4 +132,15 @@ export const changePageTreeState = ( state, pageLocalId, newStateInfo ) => {
 
     return newState
 }
+
+
+
+export const quickLevelMove = ( state, direction, pageLocalId ) => {
+    console.log('direction =%s   pageLocalId = %s', direction, pageLocalId )
+
+    return state
+}
+
+
+
 

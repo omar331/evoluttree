@@ -8,7 +8,10 @@ export default class Pages extends React.Component<PagesProps, {}> {
         super(props);
     }
     render() {
-        const { pages, generalInfo, parentPage, onTitleChange, onNewPage, onMovePage, onChangeTreeState } = this.props;
+        const { pages, generalInfo, parentPage, onTitleChange,
+                onNewPage, onMovePage, onChangeTreeState,
+                onQuickLevelMove
+        } = this.props;
 
         let order = -1;
 
@@ -26,6 +29,7 @@ export default class Pages extends React.Component<PagesProps, {}> {
                                       onNewPage={onNewPage}
                                       onMovePage={onMovePage}
                                       onChangeTreeState={onChangeTreeState}
+                                      onQuickLevelMove={onQuickLevelMove}
                             />
                         }
 

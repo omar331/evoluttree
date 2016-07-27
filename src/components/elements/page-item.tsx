@@ -4,7 +4,7 @@ import Pages from './pages.component';
 
 import { DragSource } from 'react-dnd';
 
-import { ItemTypes } from '../constants';
+import { QuickLevelMove, ItemTypes } from '../constants';
 
 import { DropStuffArea } from './drop-stuff-area';
 
@@ -13,6 +13,13 @@ import { TitleDisplay } from '../misc/title-display'
 
 
 const pageListingSource = {
+    endDrag(props, monitor, component) {
+        let offset = monitor.getDifferenceFromInitialOffset()
+
+        if ( offset == null ) return;
+
+        component.handleEndDrag( { deltaX: offset.x, deltaY: offset.y } )
+    },
     beginDrag(props) {
         return {
             localId: props.info.get('localId'),
@@ -45,6 +52,7 @@ interface PageItemProps {
     onNewPage?: any,
     onMovePage?:any,
     onChangeTreeState: any,
+    onQuickLevelMove: any,
     info: any,
     parentPage: any,
     pageOrder?: number
@@ -58,6 +66,7 @@ class PageItem extends React.Component<PageItemProps, {editingTitle?: boolean, c
         onNewPage: null,
         onMovePage: null,
         onChangeTreeState: null,
+        onQuickLevelMove: null,
         info: {},
         parentPage: null
     }
@@ -111,10 +120,42 @@ class PageItem extends React.Component<PageItemProps, {editingTitle?: boolean, c
         
         this.setState({collapsed: newCollapsedState })
     }
+    handleEndDrag(dragInfo) {
+        const { info, onQuickLevelMove } = this.props
+
+        let quickLevelMoveInfo = this.getQuickLevelMoveInfo(dragInfo.deltaX, dragInfo.deltaY)
+
+        // Is it a quick level move?
+        if ( quickLevelMoveInfo.direction != QuickLevelMove.DIRECTION_NONE ) {
+            onQuickLevelMove( quickLevelMoveInfo.direction, info.get('localId') )
+        }
+    }
+
+    /**
+     * Detect and calculate Quick Level Move (QLM) parameters
+     * @param deltaX
+     * @param deltaY
+     * @returns {{direction: string}}
+     */
+    getQuickLevelMoveInfo(deltaX, deltaY ) {
+        let direction = QuickLevelMove.DIRECTION_NONE
+        
+        let absDeltaX = Math.abs(deltaX)
+        let absDeltaY = Math.abs(deltaY)
+
+        // decides if it's a Q.L.M. 
+        if ( (absDeltaX > QuickLevelMove.MIN_DELTA_X) && ( absDeltaY < QuickLevelMove.MAX_DELTA_Y ) ) {
+            direction = deltaX > 0 ? QuickLevelMove.DIRECTION_DOWN : QuickLevelMove.DIRECTION_UP
+        }
+        
+        return {
+            direction
+        }   
+    }
     render() {
         const { info, connectDragSource, isDragging, onTitleChange,
                  onNewPage, onMovePage, parentPage, pageOrder,
-                onChangeTreeState } = this.props;
+                onChangeTreeState, onQuickLevelMove } = this.props;
 
         // does this node have children nodes?
         let children = null;
@@ -131,6 +172,7 @@ class PageItem extends React.Component<PageItemProps, {editingTitle?: boolean, c
                               onMovePage={onMovePage}
                               parentPage={info}
                               onChangeTreeState={onChangeTreeState}
+                              onQuickLevelMove={onQuickLevelMove}                              
                         />;
         }
 

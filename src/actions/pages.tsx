@@ -31,4 +31,11 @@ export const changeTreeState = (pageLocalId, newStateInfo) => {
     }
 }
 
+export const quickLevelMove = (direction, pageLocalId) => {
+    return {
+        type: 'QUICK_LEVEL_MOVE',
+        direction, pageLocalId
+    }
+}
+
 

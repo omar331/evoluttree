@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import Pages from '../components/elements/pages.component'
-import {changePageTitle, newPage, movePage, changeTreeState } from "../actions/pages";
+import {changePageTitle, newPage, movePage, changeTreeState,
+        quickLevelMove } from "../actions/pages"
 
 const mapStateToProps = (state) => {
     return {
@@ -21,7 +22,10 @@ const mapDispatchToProps = (dispatch) => {
         },
         onChangeTreeState: (pageLocalId, newStateInfo ) => {
             dispatch( changeTreeState(pageLocalId, newStateInfo) )
-        }
+        },
+        onQuickLevelMove: (direction, localPageId ) => {
+            dispatch( quickLevelMove(direction,localPageId) )
+        }        
     }
 }
 
