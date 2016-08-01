@@ -6,7 +6,6 @@
     "jsx": "react"
   },
   "files": [
-    "src/main.tsx",
     "typings/classnames/classnames.d.ts",
     "typings/es6-promise/es6-promise.d.ts",
     "typings/react/react.d.ts",
@@ -16,6 +15,9 @@
     "typings/react-router/react-router.d.ts",
     "typings/react-dnd/react-dnd.d.ts",
     "typings/node-uuid/node-uuid.d.ts",
+    "typings/expect/expect.d.ts",
+    "typings/mocha/mocha.d.ts",
+    "typings/chai/chai.d.ts",
     "typings/react-dnd-html5-backend/react-dnd-html5-backend.d.ts"
   ],
   "filesGlob": [

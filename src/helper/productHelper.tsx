@@ -1,12 +1,13 @@
-import { v4 } from 'node-uuid';
-import { Map } from 'immutable';
+import { Map } from 'immutable'
+import { v4 } from 'node-uuid'
+
 
 /**
  * Get keyPath to a certain page within the state
  *
  * @param Map node the root node to page hierarchy
  * @param string localId local id to be found
- * @param integer position position in the current hierachy level (used only for recursion purposes)
+ * @param integer position position in the current hierarchy level (used only for recursion purposes)
  * @param array acc keyPath being generated (used only for recursion purposes)
  * @returns {array}
  */
@@ -36,7 +37,7 @@ interface  PageInfo {
 
 /**
  * Create a new page node
-  * @param info
+ * @param info
  * @returns {any}
  */
 export const createPageNode:(info:PageInfo)=>any = (info:PageInfo) => {
@@ -47,7 +48,7 @@ export const createPageNode:(info:PageInfo)=>any = (info:PageInfo) => {
 
 
 /**
- * 
+ *
  * @param state
  * @param ownerPageLocalId
  * @param position
@@ -102,24 +103,24 @@ export const removePageByLocalId = ( state, localId : string ) => {
     let sourcePageKeyPath = searchPageKeyPath(state.get('editing'), localId)
     let sourceKeyPath = ['editing'].concat(sourcePageKeyPath)
 
-    // decides if the parent 'pages' node must be removed 
+    // decides if the parent 'pages' node must be removed
     let removeParentPagesNode = false
 
     let parentKeyPath = sourceKeyPath.slice(0)
     parentKeyPath.pop()
-    
+
     const parentNode = state.getIn( parentKeyPath )
     if ( parentNode.size == 1 ) removeParentPagesNode = true
-    
+
     // remove the page
-    const newState0 = state.removeIn( sourceKeyPath )  
-    
+    const newState0 = state.removeIn( sourceKeyPath )
+
     // if it's necessary to remove the parent 'pages' node...
     let newState1 = newState0
     if ( removeParentPagesNode ) {
-        newState1 = newState0.removeIn(parentKeyPath)        
+        newState1 = newState0.removeIn(parentKeyPath)
     }
-    
+
     return newState1
 }
 
@@ -138,9 +139,11 @@ export const changePageTreeState = ( state, pageLocalId, newStateInfo ) => {
 export const quickLevelMove = ( state, direction, pageLocalId ) => {
     console.log('direction =%s   pageLocalId = %s', direction, pageLocalId )
 
+
+
+
+
     return state
 }
-
-
 
 

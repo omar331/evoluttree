@@ -121,12 +121,12 @@ class PageItem extends React.Component<PageItemProps, {editingTitle?: boolean, c
         this.setState({collapsed: newCollapsedState })
     }
     handleEndDrag(dragInfo) {
-        const { info, onQuickLevelMove } = this.props
+        const { info, pageOrder, onQuickLevelMove } = this.props
 
         let quickLevelMoveInfo = this.getQuickLevelMoveInfo(dragInfo.deltaX, dragInfo.deltaY)
 
         // Is it a quick level move?
-        if ( quickLevelMoveInfo.direction != QuickLevelMove.DIRECTION_NONE ) {
+        if ( quickLevelMoveInfo.direction != QuickLevelMove.DIRECTION_NONE && pageOrder > 0 ) {
             onQuickLevelMove( quickLevelMoveInfo.direction, info.get('localId') )
         }
     }
@@ -165,6 +165,9 @@ class PageItem extends React.Component<PageItemProps, {editingTitle?: boolean, c
 
         const collapsed = info.get('collapsed') || false
 
+        // If this page has children and its node is not
+        // collapsed, render its children components
+        //
         if ( (!collapsed) && (hasChildren) ) {
             children = <Pages pages={pages}
                               onTitleChange={onTitleChange}
@@ -189,7 +192,7 @@ class PageItem extends React.Component<PageItemProps, {editingTitle?: boolean, c
                   </div>
                   <div style={{width: '80%'}}>
                       <div className="page-title" onClick={ (e) => { this.toggleEditingTitle() } }>
-                          { this.state.editingTitle ?
+                         { this.state.editingTitle ?
                               <TitleEdit value={ info.get('title') }
                                          onTitleChange={ this.updateTitle.bind(this) }
                               />
@@ -200,12 +203,11 @@ class PageItem extends React.Component<PageItemProps, {editingTitle?: boolean, c
                   </div>
                 </div>
 
-                {/* This is the place where users can insert new pages, tasks and so on */}
                 <DropStuffArea
-                            ownerPage={ info }
-                            parentPage={ parentPage }
-                            onDrop={this.handleDropItem.bind(this)}
-                            pageOrder={pageOrder}
+                    ownerPage={ info }
+                    parentPage={ parentPage }
+                    onDrop={this.handleDropItem.bind(this)}
+                    pageOrder={pageOrder}
                 />
                 {children}
             </li>

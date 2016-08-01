@@ -49,6 +49,21 @@
     },
     "node-uuid/node-uuid-cjs.d.ts": {
       "commit": "5ccabc86eca6cfcda2b7ec83cca31dbd07c8a31b"
+    },
+    "expect/expect.d.ts": {
+      "commit": "2864d4666436b055aea2e46f53d5ee6bbabcba55"
+    },
+    "mocha/mocha.d.ts": {
+      "commit": "2864d4666436b055aea2e46f53d5ee6bbabcba55"
+    },
+    "chai/chai.d.ts": {
+      "commit": "a92dd568d7aea20ea6ea55c9ddf415fc3bd2c7a2"
+    },
+    "assertion-error/assertion-error.d.ts": {
+      "commit": "a92dd568d7aea20ea6ea55c9ddf415fc3bd2c7a2"
+    },
+    "requirejs/require.d.ts": {
+      "commit": "46ed88240c5954186ae49729ad740801d1825a35"
     }
   }
 }
