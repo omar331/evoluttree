@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import Pages from './pages.component';
+import PagesList from './pages-list';
 
 import { DragSource } from 'react-dnd';
 
@@ -169,13 +169,13 @@ class PageItem extends React.Component<PageItemProps, {editingTitle?: boolean, c
         // collapsed, render its children components
         //
         if ( (!collapsed) && (hasChildren) ) {
-            children = <Pages pages={pages}
-                              onTitleChange={onTitleChange}
-                              onNewPage={onNewPage}
-                              onMovePage={onMovePage}
-                              parentPage={info}
-                              onChangeTreeState={onChangeTreeState}
-                              onQuickLevelMove={onQuickLevelMove}                              
+            children = <PagesList pages={pages}
+                                  onTitleChange={onTitleChange}
+                                  onNewPage={onNewPage}
+                                  onMovePage={onMovePage}
+                                  parentPage={info}
+                                  onChangeTreeState={onChangeTreeState}
+                                  onQuickLevelMove={onQuickLevelMove}
                         />;
         }
 

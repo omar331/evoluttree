@@ -25,7 +25,7 @@ describe('ProductHelper', () => {
     afterEach( () => {
     })
 
-    describe('Find a certain page by its localId', () => {
+    describe('Find a certain page keypath by its localId', () => {
         it('getting page keypath for page localId = ' + TEST_FIND_PAGE_KEYPATH_LOCAL_ID, () => {
             let pageKeyPath = productHelper.searchPageKeyPath(state.get('editing'), TEST_FIND_PAGE_KEYPATH_LOCAL_ID )
             expect( pageKeyPath )
@@ -33,7 +33,6 @@ describe('ProductHelper', () => {
                 .deep.equal( TEST_FIND_PAGE_KEYPATH_EXPECTED )
         })
     })
-
 
     describe('Find a certain page by its localId', () => {
         it('finding a page node by its localId ' + TEST_FIND_PAGE_LOCAL_ID, () => {
@@ -48,5 +47,6 @@ describe('ProductHelper', () => {
     })
 
 
+    
 })
 

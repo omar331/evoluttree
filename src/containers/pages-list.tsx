@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import Pages from '../components/elements/pages.component'
+import Pages from '../components/elements/pages-list'
 import {changePageTitle, newPage, movePage, changeTreeState,
         quickLevelMove } from "../actions/pages"
 

@@ -3,7 +3,7 @@ import * as React from 'react';
 import PageItem from './page-item';
 import {PagesProps} from '../model/PagesProps'
 
-export default class Pages extends React.Component<PagesProps, {}> {
+export default class PagesList extends React.Component<PagesProps, {}> {
     constructor(props) {
         super(props);
     }
