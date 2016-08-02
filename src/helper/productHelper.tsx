@@ -1,6 +1,8 @@
 import { Map } from 'immutable'
 import { v4 } from 'node-uuid'
 
+import { QuickLevelMove } from '../components/constants.tsx'
+
 
 /**
  * Get keyPath to a certain page within the state
@@ -208,6 +210,7 @@ export const changePageTreeState = ( state, pageLocalId, newStateInfo ) => {
 export const quickLevelMove = ( state, direction, pageLocalId ) => {
     console.log('direction =%s   pageLocalId = %s', direction, pageLocalId )
 
+    
 
 
 

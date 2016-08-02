@@ -6,9 +6,9 @@ chai.use(chaiImmutable);
 import * as productHelper  from '../../helper/productHelper'
 import {  generateState } from './assets/generateState'
 
-let { expect } = chai
+import { QuickLevelMove } from '../../components/constants'
 
-let data
+let { expect } = chai
 
 const TEST_FIND_PAGE_KEYPATH_LOCAL_ID = 'pagina2a'
 const TEST_FIND_PAGE_KEYPATH_EXPECTED = [ 'pages', 1, 'pages', 0 ]
@@ -90,6 +90,43 @@ describe('ProductHelper', () => {
     } )
 
 
-    
+
+    /*
+         ---> QLM (Quick level move)
+     */
+    it('Quick Level Move (QLM)', () => {
+        let data = [
+            {
+                'refLocalId': 'pagina2ab',
+                'direction': QuickLevelMove.DIRECTION_DOWN,
+                'parentAfterMoveLocalId': 'pagina2aa',
+                'predecessorAfterMoveLocalId': null
+            },
+            {
+                'refLocalId': 'pagina1b',
+                'direction': QuickLevelMove.DIRECTION_UP,
+                'parentAfterMoveLocalId': 'novoproduto',
+                'predecessorAfterMoveLocalId': 'pagina1'
+            },
+        ];
+
+        data.map( (dataItem) => {
+            let {
+                      direction, refLocalId,
+                      predecessorAfterMoveLocalId,
+                      parentAfterMoveLocalId
+                } = dataItem
+
+            // do the move
+            const newState = productHelper.quickLevelMove(state, direction, refLocalId )
+
+            let predecessorAfter = productHelper.findPagePredecessor(newState, refLocalId )
+            expect(predecessorAfter).to.equal(predecessorAfterMoveLocalId)
+            
+            let parentAfter = productHelper.findPageParent(newState, refLocalId )
+           expect(parentAfter).to.equal(parentAfterMoveLocalId)
+        } )
+    })
+
 })
 
