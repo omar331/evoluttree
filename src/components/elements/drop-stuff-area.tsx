@@ -58,6 +58,7 @@ const collect = (connect, monitor) => {
 interface DropAreaProps {
     ownerPage?: any,
     parentPage?: any,
+    previousPage?: any,
     pageOrder?: number,
     connectDropTarget: any,
     isOver: any,
@@ -78,7 +79,9 @@ class DropArea extends React.Component<DropAreaProps, {}> {
     }
     render() {
         const { ownerPage, parentPage, pageOrder, 
-            connectDropTarget, isOver, canDrop, onNewPage } = this.props;
+            connectDropTarget, isOver, canDrop, onNewPage,
+            previousPage        
+        } = this.props;
 
         return connectDropTarget(
             <div className={classNames( {'insert-stuff-area': true, 'insert-stuff-area-over': isOver } )}>

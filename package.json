@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --watch --inline --hot --TARGET=DEV",
-    "test": "mocha './src/tests/**/*.spec.ts' --compilers ts:ts-node/register --watch"
+    "test": "mocha --colors './src/tests/**/*.spec.ts' --compilers ts:ts-node/register",
+    "test:watch": "watch-run -i -p './src/**' npm run test"
   },
   "keywords": [],
   "author": "",
@@ -42,6 +43,7 @@
     "tslint": "^3.13.0",
     "typescript": "^1.8.10",
     "typescript-require": "^0.2.9-1",
+    "watch-run": "^1.2.4",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1"
   }

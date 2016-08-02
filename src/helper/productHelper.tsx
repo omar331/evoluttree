@@ -48,6 +48,67 @@ export const createPageNode:(info:PageInfo)=>any = (info:PageInfo) => {
 
 
 /**
+ * Find the page predecessor
+ *
+ * @param state
+ * @param localId
+ * @param asObject
+ * @returns Map|string|null
+ */
+export const findPagePredecessor = (state, localId, asObject = false) => {
+    let pageKeypath = searchPageKeyPath( state.get('editing'), localId )
+
+    // page not found
+    if ( pageKeypath == null ) return null
+    
+    let pageIndex = pageKeypath.pop()
+    
+    // page has no predecessor
+    if ( pageIndex == 0 ) return null
+    
+    // determine predecessor keyPath
+    let predecessorIndex = --pageIndex
+    pageKeypath.push( predecessorIndex )
+
+    pageKeypath = ['editing'].concat(pageKeypath)
+    let pageNode = state.getIn( pageKeypath )
+
+    if ( pageNode == null ) return null
+
+    // return a node (map) object or just the page's localId ?
+    return asObject ? pageNode : pageNode.get('localId')
+}
+
+
+
+/**
+ * Find parent's page
+ * @param state
+ * @param localId
+ * @param asObject
+ * @returns {any}
+ */
+export const findPageParent = (state, localId, asObject = false ) => {
+    let pageKeypath = searchPageKeyPath( state.get('editing'), localId )
+
+    // page not found
+    if ( pageKeypath == null ) return null
+
+    pageKeypath.splice(-2, 2)
+
+    pageKeypath = ['editing'].concat(pageKeypath)
+    let pageNode = state.getIn( pageKeypath )
+
+    if ( pageNode == null ) return null
+
+    // return a node (map) object or just the page's localId ?
+    return asObject ? pageNode : pageNode.get('localId')
+}
+
+
+
+
+/**
  *
  * @param state
  * @param ownerPageLocalId
@@ -125,6 +186,14 @@ export const removePageByLocalId = ( state, localId : string ) => {
 }
 
 
+/**
+ * ...
+ * is the page node collapsed or not?
+ * @param state
+ * @param pageLocalId
+ * @param newStateInfo
+ * @returns {any}
+ */
 export const changePageTreeState = ( state, pageLocalId, newStateInfo ) => {
     let sourcePageKeyPath = searchPageKeyPath(state.get('editing'), pageLocalId)
     let sourceKeyPath = ['editing'].concat(sourcePageKeyPath)

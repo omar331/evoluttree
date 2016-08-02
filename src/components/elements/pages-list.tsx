@@ -15,22 +15,33 @@ export default class PagesList extends React.Component<PagesProps, {}> {
 
         let order = -1;
 
+        let previousPage = null
+        let pageComponentRes
+
+
         return(
             <div>
                 <ul className="content-list">
                     {pages.map(
                         page => {
                             order++
-                            return <PageItem info={page}
-                                      parentPage={parentPage}
-                                      id={page.get('id')}
-                                      pageOrder={order}
-                                      onTitleChange={onTitleChange}
-                                      onNewPage={onNewPage}
-                                      onMovePage={onMovePage}
-                                      onChangeTreeState={onChangeTreeState}
-                                      onQuickLevelMove={onQuickLevelMove}
-                            />
+
+                            pageComponentRes = <PageItem info={page}
+                                                      parentPage={parentPage}
+                                                      previousPage={previousPage}
+                                                      id={page.get('id')}
+                                                      pageOrder={order}
+                                                      onTitleChange={onTitleChange}
+                                                      onNewPage={onNewPage}
+                                                      onMovePage={onMovePage}
+                                                      onChangeTreeState={onChangeTreeState}
+                                                      onQuickLevelMove={onQuickLevelMove}
+                                            />
+
+
+                            previousPage = page
+
+                            return pageComponentRes
                         }
 
                     )}

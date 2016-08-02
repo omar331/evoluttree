@@ -39,8 +39,8 @@ export const generateState = () => {
                         {id: 21, localId: 'pagina2a', title: 'Página 2a'},
                         {
                             id: 22,
-                            localId: 'pagina2b',
-                            title: 'Página 2b',
+                            localId: 'pagina2a',
+                            title: 'Página 2a',
                             pages: [
                                 {
                                     id: 11,

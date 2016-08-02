@@ -55,6 +55,7 @@ interface PageItemProps {
     onQuickLevelMove: any,
     info: any,
     parentPage: any,
+    previousPage: any,
     pageOrder?: number
 }
 
@@ -68,7 +69,8 @@ class PageItem extends React.Component<PageItemProps, {editingTitle?: boolean, c
         onChangeTreeState: null,
         onQuickLevelMove: null,
         info: {},
-        parentPage: null
+        parentPage: null,
+        previousPage: null
     }
 
     constructor(props) {
@@ -154,8 +156,9 @@ class PageItem extends React.Component<PageItemProps, {editingTitle?: boolean, c
     }
     render() {
         const { info, connectDragSource, isDragging, onTitleChange,
-                 onNewPage, onMovePage, parentPage, pageOrder,
-                onChangeTreeState, onQuickLevelMove } = this.props;
+                 onNewPage, onMovePage, parentPage, previousPage,
+                pageOrder, onChangeTreeState, onQuickLevelMove
+        } = this.props;
 
         // does this node have children nodes?
         let children = null;
@@ -206,6 +209,7 @@ class PageItem extends React.Component<PageItemProps, {editingTitle?: boolean, c
                 <DropStuffArea
                     ownerPage={ info }
                     parentPage={ parentPage }
+                    previousPage={ previousPage }
                     onDrop={this.handleDropItem.bind(this)}
                     pageOrder={pageOrder}
                 />
