@@ -1,5 +1,7 @@
 import { searchPageKeyPath, createPageNode, insertPage, 
-          movePage, changePageTreeState, quickLevelMove }
+          movePage, changePageTreeState, quickLevelMove,
+          removePageByLocalId
+        }
     from '../helper/productHelper'
 
 const productReducer = (state, action) => {
@@ -39,9 +41,11 @@ const productReducer = (state, action) => {
             return changePageTreeState(state, action.pageLocalId, action.newStateInfo)
 
         case 'QUICK_LEVEL_MOVE':
-            console.log(' direction = %s     page = %s', action.direction, action.pageLocalId)
-
             return quickLevelMove(state, action.direction, action.pageLocalId)
+        case 'DELETE_PAGE':
+            console.log(' delete page = %s', action.pageLocalId)
+
+            return removePageByLocalId( state, action.pageLocalId )
         default:
             return state
     }

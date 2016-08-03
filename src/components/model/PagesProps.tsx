@@ -5,6 +5,7 @@ export interface PagesProps {
     onNewPage?: any,
     onChangeTreeState?: any,
     onQuickLevelMove?: any,
-    parentPage?: any
+    onDeletePage?: any,
+    parentPage?: any,
     onMovePage?: any
 }

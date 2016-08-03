@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import PagesList from './pages-list';
+import PageItemToolbar from './page-item-toolbar'
 
 import { DragSource } from 'react-dnd';
 
@@ -10,6 +11,8 @@ import { DropStuffArea } from './drop-stuff-area';
 
 import { TitleEdit } from '../misc/title-edit'
 import { TitleDisplay } from '../misc/title-display'
+
+import SyntheticEvent = __React.SyntheticEvent;
 
 
 const pageListingSource = {
@@ -53,13 +56,21 @@ interface PageItemProps {
     onMovePage?:any,
     onChangeTreeState: any,
     onQuickLevelMove: any,
+    onDeletePage: any,
     info: any,
     parentPage: any,
     previousPage: any,
     pageOrder?: number
 }
 
-class PageItem extends React.Component<PageItemProps, {editingTitle?: boolean, collapsed?: boolean}> {
+interface PageItemState {
+    editingTitle?: boolean,
+    collapsed?: boolean,
+    toolbarVisible?: boolean
+}
+
+
+class PageItem extends React.Component<PageItemProps, PageItemState> {
     public static defaultProps: PageItemProps = {
         connectDragSource: null,
         isDragging: false,
@@ -68,6 +79,7 @@ class PageItem extends React.Component<PageItemProps, {editingTitle?: boolean, c
         onMovePage: null,
         onChangeTreeState: null,
         onQuickLevelMove: null,
+        onDeletePage: null,
         info: {},
         parentPage: null,
         previousPage: null
@@ -77,7 +89,8 @@ class PageItem extends React.Component<PageItemProps, {editingTitle?: boolean, c
         super(props);
 
         this.state = {
-            editingTitle: false
+            editingTitle: false,
+            toolbarVisible: false
         }
     }
     toggleEditingTitle() {
@@ -154,14 +167,36 @@ class PageItem extends React.Component<PageItemProps, {editingTitle?: boolean, c
             direction
         }   
     }
+
+
+    handleMouseEnter(e:SyntheticEvent) {
+        this.setState({toolbarVisible: true})
+
+        e.stopPropagation()
+        e.nativeEvent.stopImmediatePropagation()
+    }
+
+    handleMouseLeave(e:SyntheticEvent) {
+        this.setState({toolbarVisible: false})
+
+        e.stopPropagation()
+        e.nativeEvent.stopImmediatePropagation()
+    }
+
     render() {
         const { info, connectDragSource, isDragging, onTitleChange,
                  onNewPage, onMovePage, parentPage, previousPage,
-                pageOrder, onChangeTreeState, onQuickLevelMove
+                pageOrder, onChangeTreeState, onQuickLevelMove,
+                onDeletePage
         } = this.props;
 
+        let { toolbarVisible } = this.state
+
+
+
         // does this node have children nodes?
-        let children = null;
+        let children = null
+        let toolbar = null
         let pages:any = info.get('pages');
 
         let hasChildren:boolean = (pages != null)
@@ -179,12 +214,25 @@ class PageItem extends React.Component<PageItemProps, {editingTitle?: boolean, c
                                   parentPage={info}
                                   onChangeTreeState={onChangeTreeState}
                                   onQuickLevelMove={onQuickLevelMove}
+                                  onDeletePage={onDeletePage}
                         />;
         }
 
+        // is toolbar visible?
+        if ( toolbarVisible ) {
+            toolbar = <PageItemToolbar
+                                pageInfo={ info }
+                                onDelete={ onDeletePage }
+                        />
+        }
+
         return connectDragSource(
-            <li className="page-item-holder" style={{ opacity: isDragging ? 0.5 : 1 }}>
-                <div className="page-item">
+            <li className="page-item-holder"
+                style={{ opacity: isDragging ? 0.5 : 1 }}
+                onMouseEnter={ this.handleMouseEnter.bind(this) }
+                onMouseLeave={ this.handleMouseLeave.bind(this) }
+            >
+                <div className="page-item" style={{float: 'none'}}>
                   <div style={{width: '3%', float: 'left'}} onClick={this.handleExpandCollapse.bind(this)}>
                       {  hasChildren ? (
                               collapsed ?
@@ -193,7 +241,7 @@ class PageItem extends React.Component<PageItemProps, {editingTitle?: boolean, c
                           ) : <span style={{opacity:0}}>*</span>
                       }
                   </div>
-                  <div style={{width: '80%'}}>
+                  <div style={{width: '80%', float: 'left'}}>
                       <div className="page-title" onClick={ (e) => { this.toggleEditingTitle() } }>
                          { this.state.editingTitle ?
                               <TitleEdit value={ info.get('title') }
@@ -203,6 +251,11 @@ class PageItem extends React.Component<PageItemProps, {editingTitle?: boolean, c
                               <TitleDisplay value={ info.get('title') } />
                           }
                       </div>
+                  </div>
+                  <div style={{width: '10%', float: 'left'}}>
+                      { toolbar }
+                  </div>
+                  <div style={{width: '0.5%', clear: 'both'}}>
                   </div>
                 </div>
 
