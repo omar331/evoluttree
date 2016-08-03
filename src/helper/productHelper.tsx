@@ -1,4 +1,4 @@
-import { Map } from 'immutable'
+import { Map, List } from 'immutable'
 import { v4 } from 'node-uuid'
 
 import { QuickLevelMove } from '../components/constants.tsx'
@@ -50,6 +50,35 @@ export const createPageNode:(info:PageInfo)=>any = (info:PageInfo) => {
 
 
 /**
+ * Add a page to a page node as child
+ * 
+ * @param state
+ * @param parentPageLocalId
+ * @param pageToInsert
+ * @returns {any}
+ * 
+ * 
+ */
+export const addChildToPage = (state, parentPageLocalId, pageToInsert) => {
+    // TODO: add 'position' parameter
+
+    let page = getPageByLocalId( state, parentPageLocalId )
+    let pageKeyPath = searchPageKeyPath( state.get('editing'), parentPageLocalId)
+
+    let childPages = page.get('pages')
+
+    if ( ! childPages ) page = page.set('pages', List() )
+
+    page = page.set('pages',  page.get('pages').push(pageToInsert) )
+
+    const newState = state.setIn(['editing'].concat(pageKeyPath), page)
+
+    return newState
+} 
+
+
+
+/**
  * Find the page predecessor
  *
  * @param state
@@ -90,7 +119,7 @@ export const findPagePredecessor = (state, localId, asObject = false) => {
  * @param asObject
  * @returns {any}
  */
-export const findPageParent = (state, localId, asObject = false ) => {
+export const findParentPage = (state, localId, asObject = false ) => {
     let pageKeypath = searchPageKeyPath( state.get('editing'), localId )
 
     // page not found
@@ -115,10 +144,10 @@ export const findPageParent = (state, localId, asObject = false ) => {
  * @param state
  * @param ownerPageLocalId
  * @param position
- * @param pageNode
+ * @param pageNodeToInsert
  * @returns {any}
  */
-export const insertPage = (state, ownerPageLocalId, position, pageNode) => {
+export const insertPage = (state, ownerPageLocalId, position, pageNodeToInsert) => {
     const ownerPageKeyPath = searchPageKeyPath(state.get('editing'), ownerPageLocalId );
 
     let pagesNode
@@ -128,7 +157,7 @@ export const insertPage = (state, ownerPageLocalId, position, pageNode) => {
     pagesNode = state.getIn(keyPathApply)
 
     const pagesList = pagesNode
-    const newPagesList = pagesList.insert( position, pageNode)
+    const newPagesList = pagesList.insert( position, pageNodeToInsert)
 
     return state.setIn( keyPathApply, newPagesList )
 }
@@ -136,12 +165,13 @@ export const insertPage = (state, ownerPageLocalId, position, pageNode) => {
 
 export const movePage = (state, sourcePageLocalId, destinationPageLocalId, position) =>
 {
-    // get the source page
+    // get the source page and clone it
     const sourcePageNode = getPageByLocalId( state, sourcePageLocalId )
 
+    // remove the page from the state
     const newState1 = removePageByLocalId( state, sourcePageLocalId )
 
-    // ---> insert the page into its new location
+    // ---> insert the cloned page into new location
     const newState = insertPage(newState1, destinationPageLocalId, position, sourcePageNode )
 
     return newState
@@ -206,16 +236,48 @@ export const changePageTreeState = ( state, pageLocalId, newStateInfo ) => {
 }
 
 
+/**
+ * Get the position (order) of the page in the level where
+ * it's located.
+ * 
+ */
+export const getPageOrderInLevel = (state, pageLocalId) => {
+    let pageKeypath = searchPageKeyPath( state.get('editing'), pageLocalId )
+
+    if ( ! pageKeypath ) return null
+
+    return pageKeypath.pop()
+}
+
+
 
 export const quickLevelMove = ( state, direction, pageLocalId ) => {
-    console.log('direction =%s   pageLocalId = %s', direction, pageLocalId )
+    switch (direction) {
+        case QuickLevelMove.DIRECTION_UP:
+            let parentLocalId = findParentPage( state, pageLocalId )
 
-    
+            if ( !parentLocalId ) return state
 
+            let parentOrderInLevel = getPageOrderInLevel(state, parentLocalId)
 
+            state = movePage(state,pageLocalId, parentLocalId, parentOrderInLevel + 1 )
 
+            return state
+        case QuickLevelMove.DIRECTION_DOWN:
+            let predecessor = findPagePredecessor(state, pageLocalId )
 
-    return state
+            // there's no predecessor...
+            if ( ! predecessor ) return state
+
+            let pageMoving = getPageByLocalId(state, pageLocalId)
+
+            // remove from its original position
+            state = removePageByLocalId(state, pageLocalId)
+
+            return addChildToPage(state, predecessor, pageMoving )
+        default:
+            return state
+    }
 }
 
 

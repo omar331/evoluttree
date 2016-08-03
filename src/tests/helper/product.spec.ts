@@ -83,11 +83,34 @@ describe('ProductHelper', () => {
 
         data.map( (dataItem) => {
 
-            let parentLocalId = productHelper.findPageParent(state, dataItem.refLocalId)
+            let parentLocalId = productHelper.findParentPage(state, dataItem.refLocalId)
 
             expect(parentLocalId).to.equal(dataItem.parentLocalId)
         } )
     } )
+
+
+
+    it('Append a page to a node as child', () => {
+        // Future parent node. New page will be inserted as its child
+        let parentNodeLocalId = 'pagina1b'
+
+        // create a new page
+        let pageToInsertLocalId = 'my_new_page'
+        let newPageNode = productHelper.createPageNode(
+            {
+                localId: pageToInsertLocalId,
+                title: pageToInsertLocalId
+            }
+        )
+
+        // append the new page into the parent
+        const newState = productHelper.addChildToPage(state, parentNodeLocalId, newPageNode)
+
+        // checks if the new page was correctly placed
+        let parentAfter = productHelper.findParentPage(newState, pageToInsertLocalId )
+        expect(parentAfter).to.equal(parentNodeLocalId)
+    })
 
 
 
@@ -96,12 +119,12 @@ describe('ProductHelper', () => {
      */
     it('Quick Level Move (QLM)', () => {
         let data = [
-            {
-                'refLocalId': 'pagina2ab',
-                'direction': QuickLevelMove.DIRECTION_DOWN,
-                'parentAfterMoveLocalId': 'pagina2aa',
-                'predecessorAfterMoveLocalId': null
-            },
+            // {
+            //     'refLocalId': 'pagina2ab',
+            //     'direction': QuickLevelMove.DIRECTION_DOWN,
+            //     'parentAfterMoveLocalId': 'pagina2aa',
+            //     'predecessorAfterMoveLocalId': null
+            // },
             {
                 'refLocalId': 'pagina1b',
                 'direction': QuickLevelMove.DIRECTION_UP,
@@ -122,8 +145,8 @@ describe('ProductHelper', () => {
 
             let predecessorAfter = productHelper.findPagePredecessor(newState, refLocalId )
             expect(predecessorAfter).to.equal(predecessorAfterMoveLocalId)
-            
-            let parentAfter = productHelper.findPageParent(newState, refLocalId )
+
+            let parentAfter = productHelper.findParentPage(newState, refLocalId )
            expect(parentAfter).to.equal(parentAfterMoveLocalId)
         } )
     })

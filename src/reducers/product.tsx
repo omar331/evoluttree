@@ -22,10 +22,10 @@ const productReducer = (state, action) => {
 
             return newState
         case 'NEW_PAGE':
-            // page being created
+            // creates the page
             const newPageNode = createPageNode({title: null})
 
-            // inserts the page
+            // inserts it
             return insertPage(
                               state,
                               action.ownerPageLocalId,
@@ -38,8 +38,8 @@ const productReducer = (state, action) => {
         case 'CHANGE_PAGE_TREE_STATE':
             return changePageTreeState(state, action.pageLocalId, action.newStateInfo)
 
-
         case 'QUICK_LEVEL_MOVE':
+            console.log(' direction = %s     page = %s', action.direction, action.pageLocalId)
 
             return quickLevelMove(state, action.direction, action.pageLocalId)
         default:

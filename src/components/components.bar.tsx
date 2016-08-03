@@ -83,9 +83,11 @@ export default class ComponentsBar extends React.Component<{}, {}> {
                 <div className="component">
                     <DraggableNewPageElement />
                 </div>
+                {/*
                 <div className="component">
                     <DraggableNewTaskElement />
                 </div>
+                */}
             </div>
         );
     }
