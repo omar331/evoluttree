@@ -128,7 +128,7 @@ class PageItem extends React.Component<PageItemProps, {editingTitle?: boolean, c
         let quickLevelMoveInfo = this.getQuickLevelMoveInfo(dragInfo.deltaX, dragInfo.deltaY)
 
         // Is it a quick level move?
-        if ( quickLevelMoveInfo.direction != QuickLevelMove.DIRECTION_NONE && pageOrder > 0 ) {
+        if ( quickLevelMoveInfo.direction != QuickLevelMove.DIRECTION_NONE ) {
             onQuickLevelMove( quickLevelMoveInfo.direction, info.get('localId') )
         }
     }
