@@ -250,7 +250,20 @@ export const getPageOrderInLevel = (state, pageLocalId) => {
 }
 
 
-
+/**
+ * Move the page to a level up or down in hierarchy. It's related to 
+ * dragging slightly the page node to left or right.
+ *
+ * The movements happens the following ways:
+ *
+ * - if the direction is down the node is moved to be its predecessor child
+ * - if the direction is up it will be placed as its parent successor
+ *
+ * @param state
+ * @param direction
+ * @param pageLocalId
+ * @returns {any}
+ */
 export const quickLevelMove = ( state, direction, pageLocalId ) => {
     switch (direction) {
         case QuickLevelMove.DIRECTION_UP:
@@ -281,5 +294,18 @@ export const quickLevelMove = ( state, direction, pageLocalId ) => {
 }
 
 
+/**
+ * Changes properties of a certain page
+ * @param state
+ * @param localPageId
+ * @param modifiedProperties
+ * @returns {any}
+ */
+export const changePageInfo = (state, localPageId, modifiedProperties ) => {
+    const pageKeyPath = searchPageKeyPath(state.get('editing'), localPageId )
 
+    let page = getPageByLocalId(state, localPageId)
+    page = page.merge( Map(modifiedProperties) )
 
+    return  state.setIn( ['editing'].concat(pageKeyPath), page )
+}

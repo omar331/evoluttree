@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 
 import { Grid, Row, Col } from 'react-bootstrap';
 
@@ -12,15 +13,12 @@ import ComponentsBar from './components.bar';
 export default class ProductEditComponent extends React.Component<{}, {}> {
     constructor(props) {
         super(props);
-
-        this.state =
-            {
-            }
     }
     render() {
         return(
             <div className="product-editing">
-                <Grid>  
+                <div id="product-editor-modal"></div>
+                <Grid>
                     <Row>
                         <Col md={12}>
                             <GeneralInfoContainer />

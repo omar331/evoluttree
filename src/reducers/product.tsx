@@ -1,6 +1,6 @@
 import { searchPageKeyPath, createPageNode, insertPage, 
           movePage, changePageTreeState, quickLevelMove,
-          removePageByLocalId
+          removePageByLocalId, changePageInfo
         }
     from '../helper/productHelper'
 
@@ -15,14 +15,7 @@ const productReducer = (state, action) => {
 
             )
         case 'PAGE_CHANGE_TITLE':
-            const pageKeyPath = searchPageKeyPath(state.get('editing'), action.localId );
-
-            // get keyPath to desired page node
-            let keyPath = ['editing'].concat( pageKeyPath ).concat( ['title'] )
-
-            newState = state.setIn( keyPath, action.newTitle )
-
-            return newState
+            return changePageInfo(state, action.localId, {title: action.newTitle} )
         case 'NEW_PAGE':
             // creates the page
             const newPageNode = createPageNode({title: null})
@@ -42,9 +35,9 @@ const productReducer = (state, action) => {
 
         case 'QUICK_LEVEL_MOVE':
             return quickLevelMove(state, action.direction, action.pageLocalId)
+        case 'CHANGE_PAGE_INFO':
+            return changePageInfo(state, action.localPageId, action.pageInfo )
         case 'DELETE_PAGE':
-            console.log(' delete page = %s', action.pageLocalId)
-
             return removePageByLocalId( state, action.pageLocalId )
         default:
             return state

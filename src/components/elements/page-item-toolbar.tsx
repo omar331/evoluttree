@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { Glyphicon } from 'react-bootstrap'
+import { Glyphicon, Modal, Button } from 'react-bootstrap'
 
 interface PageItemToolbarProps {
     pageInfo: any,
-    onDelete?: any
+    onDelete?: any,
+    onEditClicked: any
 }
-
-
 
 export default class PageItemToolbar extends React.Component<PageItemToolbarProps, {}> {
     constructor(props) {
@@ -14,9 +13,13 @@ export default class PageItemToolbar extends React.Component<PageItemToolbarProp
     }
 
    render() {
-        const { onDelete, pageInfo } = this.props
+        const { pageInfo, onEditClicked, onDelete } = this.props
 
         return <div>
+                    <a>
+                        <Glyphicon glyph="edit" onClick={ () => { onEditClicked() } } />
+                    </a>
+                    &nbsp;&nbsp;&nbsp;
                     <a onClick={ () => { onDelete( pageInfo.get('localId') ) } }>
                         <Glyphicon glyph="trash" />
                     </a>

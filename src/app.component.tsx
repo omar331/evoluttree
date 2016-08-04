@@ -45,7 +45,8 @@ const initialState = fromJS({
                     {
                         id: 22,
                         localId: v4(),
-                        title: 'Página 2b',
+                        title: 'Página 2b Yeah!',
+                        body: 'Lorem Ipsum Yeah, mother fucker!',
                         pages: [
                             {id: 11, localId: v4(), title: 'Página 2aa'},
                             {

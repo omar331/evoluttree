@@ -19,7 +19,7 @@ const TEST_FIND_PAGE_ID = 12
 
 
 describe('ProductHelper', () => {
-    let state
+    let state, data
 
     beforeEach( () => {
         state = generateState()
@@ -74,17 +74,14 @@ describe('ProductHelper', () => {
     /*
         ---> finds the page's parent
      */
-    it('Finds a page\'s parent', () => {
-        let data = [
-            {'refLocalId': 'pagina1', 'parentLocalId': 'novoproduto'},
-            {'refLocalId': 'pagina2ac', 'parentLocalId': 'pagina2a'},
-            {'refLocalId': 'pagina1b', 'parentLocalId': 'pagina1'},
-        ];
-
-        data.map( (dataItem) => {
-
+    data = [
+        {'refLocalId': 'pagina1', 'parentLocalId': 'novoproduto'},
+        {'refLocalId': 'pagina2ac', 'parentLocalId': 'pagina2a'},
+        {'refLocalId': 'pagina1b', 'parentLocalId': 'pagina1'},
+    ];
+    data.map( (dataItem) => {
+        it('Finds a page\'s parent   localId = ' + dataItem.refLocalId, () => {
             let parentLocalId = productHelper.findParentPage(state, dataItem.refLocalId)
-
             expect(parentLocalId).to.equal(dataItem.parentLocalId)
         } )
     } )
@@ -117,29 +114,30 @@ describe('ProductHelper', () => {
     /*
          ---> QLM (Quick level move)
      */
-    it('Quick Level Move (QLM)', () => {
-        let data = [
-            // {
-            //     'refLocalId': 'pagina2ab',
-            //     'direction': QuickLevelMove.DIRECTION_DOWN,
-            //     'parentAfterMoveLocalId': 'pagina2aa',
-            //     'predecessorAfterMoveLocalId': null
-            // },
-            {
-                'refLocalId': 'pagina1b',
-                'direction': QuickLevelMove.DIRECTION_UP,
-                'parentAfterMoveLocalId': 'novoproduto',
-                'predecessorAfterMoveLocalId': 'pagina1'
-            },
-        ];
+    data = [
+        {
+            'refLocalId': 'pagina2ab',
+            'direction': QuickLevelMove.DIRECTION_DOWN,
+            'parentAfterMoveLocalId': 'pagina2aa',
+            'predecessorAfterMoveLocalId': null
+        },
+        {
+            'refLocalId': 'pagina1b',
+            'direction': QuickLevelMove.DIRECTION_UP,
+            'parentAfterMoveLocalId': 'novoproduto',
+            'predecessorAfterMoveLocalId': 'pagina1'
+        },
+    ];
 
-        data.map( (dataItem) => {
-            let {
-                      direction, refLocalId,
-                      predecessorAfterMoveLocalId,
-                      parentAfterMoveLocalId
-                } = dataItem
+    data.map( (dataItem) => {
+        let {
+            direction, refLocalId,
+            predecessorAfterMoveLocalId,
+            parentAfterMoveLocalId
+        } = dataItem
 
+
+        it('Quick Level Move (QLM) - refLocalId = ' + refLocalId, () => {
             // do the move
             const newState = productHelper.quickLevelMove(state, direction, refLocalId )
 
@@ -147,9 +145,39 @@ describe('ProductHelper', () => {
             expect(predecessorAfter).to.equal(predecessorAfterMoveLocalId)
 
             let parentAfter = productHelper.findParentPage(newState, refLocalId )
-           expect(parentAfter).to.equal(parentAfterMoveLocalId)
-        } )
+            expect(parentAfter).to.equal(parentAfterMoveLocalId)
+
+        })
+    } )
+
+
+    /*
+     * Change page info
+     */
+    data = [
+        {
+            refLocalPageId: 'pagina1b',
+            newTitle: 'my new page title'
+        },
+        {
+            refLocalPageId: 'pagina1a',
+            newTitle: 'my new page title 2222'
+        },
+    ]
+
+    data.map( (item) => {
+        const { refLocalPageId, newTitle } = item
+
+        it('Change page info   localId = ' + refLocalPageId, () => {
+            let newState = productHelper.changePageInfo(state, refLocalPageId, {title: newTitle})
+
+            // now the title must has been modified
+            let changedPage = productHelper.getPageByLocalId(newState, refLocalPageId)
+
+            expect( newTitle  ).to.equal( changedPage.get('title') )
+        })
     })
+
 
 })
 

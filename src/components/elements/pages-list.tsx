@@ -10,7 +10,7 @@ export default class PagesList extends React.Component<PagesProps, {}> {
     render() {
         const { pages, generalInfo, parentPage, onTitleChange,
                 onNewPage, onMovePage, onChangeTreeState,
-                onQuickLevelMove, onDeletePage
+                onQuickLevelMove, onChangePageInfo, onDeletePage
         } = this.props;
 
         let order = -1;
@@ -36,6 +36,7 @@ export default class PagesList extends React.Component<PagesProps, {}> {
                                                       onMovePage={onMovePage}
                                                       onChangeTreeState={onChangeTreeState}
                                                       onQuickLevelMove={onQuickLevelMove}
+                                                      onChangePageInfo={onChangePageInfo}
                                                       onDeletePage={onDeletePage}
                                             />
 

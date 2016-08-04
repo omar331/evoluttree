@@ -38,6 +38,14 @@ export const quickLevelMove = (direction, pageLocalId) => {
     }
 }
 
+export const changePageInfo = (localPageId, pageInfo) => {
+
+    return {
+        type: 'CHANGE_PAGE_INFO',
+        localPageId, pageInfo
+    }
+}
+
 export const deletePage = (pageLocalId) => {
     return {
         type: 'DELETE_PAGE',

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import Pages from '../components/elements/pages-list'
 import {changePageTitle, newPage, movePage, changeTreeState,
-        quickLevelMove, deletePage } from "../actions/pages"
+        quickLevelMove, changePageInfo, deletePage } from "../actions/pages"
 
 const mapStateToProps = (state) => {
     return {
@@ -25,6 +25,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         onQuickLevelMove: (direction, localPageId ) => {
             dispatch( quickLevelMove(direction,localPageId) )
+        },
+        onChangePageInfo: ( localPageId, pageInfo ) => {
+            dispatch( changePageInfo(localPageId, pageInfo) )
         },
         onDeletePage: (localPageId ) => {
             dispatch( deletePage(localPageId) )

@@ -1,7 +1,11 @@
 import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+
 
 import PagesList from './pages-list';
 import PageItemToolbar from './page-item-toolbar'
+
+import PageEditor from './page-editor'
 
 import { DragSource } from 'react-dnd';
 
@@ -56,6 +60,7 @@ interface PageItemProps {
     onMovePage?:any,
     onChangeTreeState: any,
     onQuickLevelMove: any,
+    onChangePageInfo: any,
     onDeletePage: any,
     info: any,
     parentPage: any,
@@ -66,7 +71,8 @@ interface PageItemProps {
 interface PageItemState {
     editingTitle?: boolean,
     collapsed?: boolean,
-    toolbarVisible?: boolean
+    toolbarVisible?: boolean,
+    showPageBodyEditor?: boolean
 }
 
 
@@ -79,6 +85,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         onMovePage: null,
         onChangeTreeState: null,
         onQuickLevelMove: null,
+        onChangePageInfo: null,
         onDeletePage: null,
         info: {},
         parentPage: null,
@@ -90,7 +97,8 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
 
         this.state = {
             editingTitle: false,
-            toolbarVisible: false
+            toolbarVisible: false,
+            showPageBodyEditor: false
         }
     }
     toggleEditingTitle() {
@@ -183,16 +191,39 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         e.nativeEvent.stopImmediatePropagation()
     }
 
+    handleShowBodyEditor(e:SyntheticEvent) {
+        const { info } = this.props
+
+        this.setState({showPageBodyEditor: true})
+
+        // ---> render page editor, if it's necessary
+        let pageBodyEditor = <PageEditor
+                                    pageInfo={info}
+                                    onClose={ this.handleCloseBodyEditor.bind(this) }
+                                    onSave={ this.handleSavePage.bind(this) }
+                                />
+
+        ReactDOM.render(pageBodyEditor, document.getElementById('product-editor-modal') )
+    }
+
+    handleSavePage(pageLocalId, info) {
+        const { onChangePageInfo } = this.props
+
+        onChangePageInfo(pageLocalId, info )
+    }
+
+    handleCloseBodyEditor(e:SyntheticEvent) {
+        document.getElementById('product-editor-modal').innerHTML = ''
+    }
+    
     render() {
         const { info, connectDragSource, isDragging, onTitleChange,
                  onNewPage, onMovePage, parentPage, previousPage,
                 pageOrder, onChangeTreeState, onQuickLevelMove,
-                onDeletePage
+                onChangePageInfo, onDeletePage
         } = this.props;
 
         let { toolbarVisible } = this.state
-
-
 
         // does this node have children nodes?
         let children = null
@@ -214,6 +245,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                                   parentPage={info}
                                   onChangeTreeState={onChangeTreeState}
                                   onQuickLevelMove={onQuickLevelMove}
+                                  onChangePageInfo={onChangePageInfo}
                                   onDeletePage={onDeletePage}
                         />;
         }
@@ -223,6 +255,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
             toolbar = <PageItemToolbar
                                 pageInfo={ info }
                                 onDelete={ onDeletePage }
+                                onEditClicked={ this.handleShowBodyEditor.bind(this) }
                         />
         }
 
