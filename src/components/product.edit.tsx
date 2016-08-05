@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 
 import { Grid, Row, Col } from 'react-bootstrap';
 
@@ -20,7 +19,9 @@ export default class ProductEditComponent extends React.Component<{}, {}> {
                 <div id="product-editor-modal"></div>
                 <Grid>
                     <Row>
-                        <Col md={12}>
+                        <Col md={2}>
+                        </Col>
+                        <Col md={10}>
                             <GeneralInfoContainer />
                         </Col>
                     </Row>
@@ -28,7 +29,7 @@ export default class ProductEditComponent extends React.Component<{}, {}> {
                         <Col md={2}>
                             <ComponentsBar />
                         </Col>
-                        <Col md={6}>
+                        <Col md={10}>
                             <PagesListContainer />
                         </Col>
                     </Row>

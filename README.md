@@ -42,25 +42,25 @@ The state is stored as a immutablejs map. Here's a sample showed as a simple JSO
                     id: 1,
                     localId: 'page1',
                     title: 'My first page',
-                    content: 'Lorem Ipsum lorem'
+                    body: 'Lorem Ipsum lorem'
                 },
                 {
                     id: 2,
                     localId: 'page2',
                     title: 'My second page',
-                    content: 'Lorem Ipsum lorem',
+                    body: 'Lorem Ipsum lorem',
                     pages: [
                         {
                             id: 21,
                             localId: 'page21',
                             title: 'First child of my second page',
-                            content: 'Lorem Ipsum lorem'
+                            body: 'Lorem Ipsum lorem'
                         },
                         {
                             id: 22,
                             localId: 'page22',
                             title: 'Second child of my second page',
-                            content: 'Lorem Ipsum lorem'
+                            body: 'Lorem Ipsum lorem'
                         }
                     ]
                 }

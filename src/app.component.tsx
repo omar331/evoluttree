@@ -70,12 +70,11 @@ const initialState = fromJS({
 
 
 let store = createStore(productReducer, initialState)
-console.log(' store = %o', store );
 
-
-class App extends React.Component<{productInfo: any}, {}> {
+class App extends React.Component<{config?: any}, {}> {
     constructor(props) {
         super(props);
+        console.log("config = %o", props.config )
     }
     render() {
         return(
@@ -86,5 +85,11 @@ class App extends React.Component<{productInfo: any}, {}> {
     }
 }
 
-export default DragDropContext(HTML5Backend)(App);
+export default DragDropContext(HTML5Backend)(
+    React.createClass({
+        render: function () {
+            return <App {...this.props} />;
+        }
+    })    
+);
 

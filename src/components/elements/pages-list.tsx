@@ -2,15 +2,32 @@ import * as React from 'react';
 
 import PageItem from './page-item';
 import {PagesProps} from '../model/PagesProps'
+import { Map, List } from 'immutable'
+
 
 export default class PagesList extends React.Component<PagesProps, {}> {
+    public static defaultProps: PagesProps = {
+        pages: List(),
+        generalInfo: {},
+        onTitleChange: null,
+        onNewPage: null,
+        onChangeTreeState: null,
+        onQuickLevelMove: null,
+        onChangePageInfo: null,
+        onDeletePage: null,
+        parentPage: null,
+        onMovePage: null,
+        depth: 0
+    }
+
     constructor(props) {
         super(props);
     }
     render() {
         const { pages, generalInfo, parentPage, onTitleChange,
                 onNewPage, onMovePage, onChangeTreeState,
-                onQuickLevelMove, onChangePageInfo, onDeletePage
+                onQuickLevelMove, onChangePageInfo, onDeletePage,
+                depth
         } = this.props;
 
         let order = -1;
@@ -21,7 +38,7 @@ export default class PagesList extends React.Component<PagesProps, {}> {
 
         return(
             <div>
-                <ul className="content-list">
+                <div className="content-list">
                     {pages.map(
                         page => {
                             order++
@@ -38,6 +55,7 @@ export default class PagesList extends React.Component<PagesProps, {}> {
                                                       onQuickLevelMove={onQuickLevelMove}
                                                       onChangePageInfo={onChangePageInfo}
                                                       onDeletePage={onDeletePage}
+                                                      depth={ depth }
                                             />
 
 
@@ -47,7 +65,7 @@ export default class PagesList extends React.Component<PagesProps, {}> {
                         }
 
                     )}
-                </ul>
+                </div>
             </div>
         );
     }

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
+import { Grid, Row, Col } from 'react-bootstrap';
 
 import PagesList from './pages-list';
 import PageItemToolbar from './page-item-toolbar'
@@ -65,7 +66,8 @@ interface PageItemProps {
     info: any,
     parentPage: any,
     previousPage: any,
-    pageOrder?: number
+    pageOrder?: number,
+    depth?: number
 }
 
 interface PageItemState {
@@ -89,7 +91,8 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         onDeletePage: null,
         info: {},
         parentPage: null,
-        previousPage: null
+        previousPage: null,
+        depth: 0
     }
 
     constructor(props) {
@@ -210,9 +213,14 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         const { onChangePageInfo } = this.props
 
         onChangePageInfo(pageLocalId, info )
+        this.closeBodyEditor()
     }
 
     handleCloseBodyEditor(e:SyntheticEvent) {
+        this.closeBodyEditor()
+    }
+
+    closeBodyEditor() {
         document.getElementById('product-editor-modal').innerHTML = ''
     }
     
@@ -220,7 +228,8 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         const { info, connectDragSource, isDragging, onTitleChange,
                  onNewPage, onMovePage, parentPage, previousPage,
                 pageOrder, onChangeTreeState, onQuickLevelMove,
-                onChangePageInfo, onDeletePage
+                onChangePageInfo, onDeletePage,
+                depth
         } = this.props;
 
         let { toolbarVisible } = this.state
@@ -247,6 +256,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                                   onQuickLevelMove={onQuickLevelMove}
                                   onChangePageInfo={onChangePageInfo}
                                   onDeletePage={onDeletePage}
+                                  depth={ depth + 1 }
                         />;
         }
 
@@ -259,22 +269,29 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                         />
         }
 
+        let depthLeftMargin = depth * 5 + '%'
+
+
         return connectDragSource(
-            <li className="page-item-holder"
+            <div className="page-item-holder"
                 style={{ opacity: isDragging ? 0.5 : 1 }}
-                onMouseEnter={ this.handleMouseEnter.bind(this) }
-                onMouseLeave={ this.handleMouseLeave.bind(this) }
             >
-                <div className="page-item" style={{float: 'none'}}>
-                  <div style={{width: '3%', float: 'left'}} onClick={this.handleExpandCollapse.bind(this)}>
+
+
+                <Row className="page-item"
+                        style={{marginLeft: depthLeftMargin}}
+                         onMouseEnter={ this.handleMouseEnter.bind(this) }
+                         onMouseLeave={ this.handleMouseLeave.bind(this) }
+                >
+                  <Col md={1} onClick={this.handleExpandCollapse.bind(this)} style={{width: "2em", textAlign: "center"}}>
                       {  hasChildren ? (
                               collapsed ?
                               '+' :
                               '-'
                           ) : <span style={{opacity:0}}>*</span>
                       }
-                  </div>
-                  <div style={{width: '80%', float: 'left'}}>
+                  </Col>
+                  <Col md={8}>
                       <div className="page-title" onClick={ (e) => { this.toggleEditingTitle() } }>
                          { this.state.editingTitle ?
                               <TitleEdit value={ info.get('title') }
@@ -284,13 +301,11 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                               <TitleDisplay value={ info.get('title') } />
                           }
                       </div>
-                  </div>
-                  <div style={{width: '10%', float: 'left'}}>
+                  </Col>
+                  <Col md={3}>
                       { toolbar }
-                  </div>
-                  <div style={{width: '0.5%', clear: 'both'}}>
-                  </div>
-                </div>
+                  </Col>
+                </Row>
 
                 <DropStuffArea
                     ownerPage={ info }
@@ -300,9 +315,10 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                     pageOrder={pageOrder}
                 />
                 {children}
-            </li>
+            </div>
         );
     }
+
 }
 export default DragSource(ItemTypes.MOVE_PAGE, pageListingSource, collect)(PageItem);
 

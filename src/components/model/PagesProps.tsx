@@ -8,5 +8,6 @@ export interface PagesProps {
     onChangePageInfo?: any,
     onDeletePage?: any,
     parentPage?: any,
-    onMovePage?: any
+    onMovePage?: any,
+    depth?: number
 }

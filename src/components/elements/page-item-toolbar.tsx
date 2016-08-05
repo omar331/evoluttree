@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Glyphicon, Modal, Button } from 'react-bootstrap'
+import { Glyphicon, Label } from 'react-bootstrap'
 
 interface PageItemToolbarProps {
     pageInfo: any,
@@ -17,11 +17,15 @@ export default class PageItemToolbar extends React.Component<PageItemToolbarProp
 
         return <div>
                     <a>
-                        <Glyphicon glyph="edit" onClick={ () => { onEditClicked() } } />
+                        <Label bsStyle="primary">
+                            <Glyphicon glyph="edit" onClick={ () => { onEditClicked() } } />
+                        </Label>
                     </a>
-                    &nbsp;&nbsp;&nbsp;
+                    &nbsp;
                     <a onClick={ () => { onDelete( pageInfo.get('localId') ) } }>
-                        <Glyphicon glyph="trash" />
+                        <Label bsStyle="danger">
+                            <Glyphicon glyph="trash" />
+                        </Label>
                     </a>
                </div>
     }
