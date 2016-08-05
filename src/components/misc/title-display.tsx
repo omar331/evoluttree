@@ -7,11 +7,16 @@ export class TitleDisplay extends React.Component<{value: string}, {}> {
     render() {
         const { value } = this.props
 
-        let style = {}
+        let containerStyle = {overflow: "hidden", width: "100%"}
+        let textStyle = {whiteSpace: "nowrap"}
 
-        if ( this.isEmptyValue() ) style['fontStyle'] = 'italic';
+        if ( this.isEmptyValue() ) textStyle['fontStyle'] = 'italic';
 
-        return <span style={ style }>{ !this.isEmptyValue() ? value : 'untitled page'}</span>
+        let displayText = !this.isEmptyValue() ? value : 'untitled page'
+
+        return <div className="title-display" style={ containerStyle } title={ displayText }>
+                     <span style={ textStyle }>{ displayText }</span>
+                </div>
     }
 
     isEmptyValue() {

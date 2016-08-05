@@ -14,9 +14,8 @@
 }
 
 .content-list .page-item {
-    border: 0.1em #cecece solid;
-    padding: 0.2em;
-    background: #eeeeee;
+    padding: 0.4em 0.1em;
+    background: #efefef;
 }
 
 .insert-stuff-area {

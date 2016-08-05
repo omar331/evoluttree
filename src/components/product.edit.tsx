@@ -29,7 +29,7 @@ export default class ProductEditComponent extends React.Component<{}, {}> {
                         <Col md={2}>
                             <ComponentsBar />
                         </Col>
-                        <Col md={10}>
+                        <Col md={6}>
                             <PagesListContainer />
                         </Col>
                     </Row>

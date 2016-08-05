@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import { Grid, Row, Col } from 'react-bootstrap';
+import { Glyphicon, Row, Col } from 'react-bootstrap';
 
 import PagesList from './pages-list';
 import PageItemToolbar from './page-item-toolbar'
@@ -283,12 +283,10 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                          onMouseEnter={ this.handleMouseEnter.bind(this) }
                          onMouseLeave={ this.handleMouseLeave.bind(this) }
                 >
-                  <Col md={1} onClick={this.handleExpandCollapse.bind(this)} style={{width: "2em", textAlign: "center"}}>
-                      {  hasChildren ? (
-                              collapsed ?
-                              '+' :
-                              '-'
-                          ) : <span style={{opacity:0}}>*</span>
+                  <Col md={1} onClick={this.handleExpandCollapse.bind(this)} style={{width: "1em", textAlign: "center"}}>
+                      {  hasChildren ?
+                                this.renderCollapseControl(collapsed)
+                                : <span style={{opacity:0}}>*</span>
                       }
                   </Col>
                   <Col md={8}>
@@ -302,7 +300,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                           }
                       </div>
                   </Col>
-                  <Col md={3}>
+                  <Col md={3} className="text-right">
                       { toolbar }
                   </Col>
                 </Row>
@@ -319,6 +317,16 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         );
     }
 
+    renderCollapseControl(collapsed) {
+        let content = collapsed ?
+            <Glyphicon glyph="plus" style={{cursor: 'hand'}}/>
+            :
+            <Glyphicon glyph="minus" style={{cursor: 'hand'}}/>
+
+        return <span style={{cursor: 'pointer'}}>
+            { content }
+        </span>
+    }
 }
 export default DragSource(ItemTypes.MOVE_PAGE, pageListingSource, collect)(PageItem);
 
