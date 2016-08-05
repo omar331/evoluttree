@@ -1,7 +1,19 @@
-import { Map, List } from 'immutable'
+import { Map, List, fromJS } from 'immutable'
 import { v4 } from 'node-uuid'
 
 import { QuickLevelMove } from '../components/constants.tsx'
+
+
+/**
+ * Prepare the substate of product being edited
+ */
+export const prepareEditingProduct = (productInfo) => {
+
+        
+    return fromJS(productInfo)
+}
+
+
 
 
 /**

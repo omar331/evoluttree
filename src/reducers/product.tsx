@@ -1,18 +1,15 @@
-import { searchPageKeyPath, createPageNode, insertPage, 
+import { prepareEditingProduct, createPageNode, insertPage, 
           movePage, changePageTreeState, quickLevelMove,
           removePageByLocalId, changePageInfo
         }
     from '../helper/productHelper'
 
 const productReducer = (state, action) => {
-    let newState
-
     switch (action.type) {
         case 'PRODUCT_CHANGE_TITLE':
             return state.setIn(
                 ['editing', 'general', 'title'],
                 action.newTitle
-
             )
         case 'PAGE_CHANGE_TITLE':
             return changePageInfo(state, action.localId, {title: action.newTitle} )

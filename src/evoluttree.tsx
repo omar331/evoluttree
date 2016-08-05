@@ -14,6 +14,7 @@ import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import productReducer from './reducers/product'
 
+import * as productHelper from './helper/productHelper'
 
 const initialState = fromJS({
     editing: {
@@ -68,14 +69,27 @@ const initialState = fromJS({
     }
 });
 
-
 let store = createStore(productReducer, initialState)
 
-class App extends React.Component<{config?: any}, {}> {
-    constructor(props) {
-        super(props);
-        console.log("config = %o", props.config )
+interface AppProps {
+    config?: any,
+    editingProduct?: any
+}
+
+export class App extends React.Component<AppProps, {}> {
+    public static defaultProps: AppProps = {
+        config: {},
+        editingProduct: null
     }
+
+    constructor(props:AppProps) {
+        super(props);
+
+        const editingProduct = productHelper.prepareEditingProduct(props.editingProduct)
+
+        console.log("-> config = %o    editing or = %o   editing imm = %o", props.config, props.editingProduct, editingProduct.toJS()  )
+    }
+
     render() {
         return(
             <Provider store={store}>
@@ -85,11 +99,15 @@ class App extends React.Component<{config?: any}, {}> {
     }
 }
 
-export default DragDropContext(HTML5Backend)(
+
+/**
+ *
+ * @type {ContextComponentClass<{config?: any}>}
+ */
+export const Evoluttree =  DragDropContext<{config?: any, editingProduct?: any}>(HTML5Backend)(
     React.createClass({
         render: function () {
             return <App {...this.props} />;
         }
-    })    
+    })
 );
-

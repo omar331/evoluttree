@@ -1,13 +1,17 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import App from './app.component';
+import { Evoluttree } from './evoluttree';
 
-var confs ={a:1}
+declare var evltree_config: any;
+declare var evltree_editing_product: any;
 
 ReactDOM.render(
     (
-        <App />
+        <Evoluttree config={evltree_config} editingProduct={evltree_editing_product}/>
     ),
-document.getElementById('content'));
+    document.getElementById('content')
+);
+
+
 

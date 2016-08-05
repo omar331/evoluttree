@@ -15,5 +15,57 @@
     <body>
         <div id="content"></div>
     </body>
+    <script>
+        var evltree_config = {
+                                yeah: 'science, bitch'
+        };
+
+        var evltree_editing_product = {
+            general: {
+                id: 123,
+                title: 'Novo produto'
+            },
+            pages: [
+                {
+                    id: 1,
+                    title: 'Página 1',
+                    pages: [
+                        {id: 11, title: 'Página 1a'},
+                        {
+                            id: 12,
+                            title: 'Página 1b'
+                        },
+                        {id: 13, title: 'Página 1c'}
+                    ]
+                },
+                {
+                    id: 2,
+                    title: 'Página 2',
+                    pages: [
+                        {id: 21, title: 'Página 2a'},
+                        {
+                            id: 22,
+                            title: 'Página 2b Yeah!',
+                            body: 'Lorem Ipsum Yeah, mother fucker!',
+                            pages: [
+                                {id: 11, title: 'Página 2aa'},
+                                {
+                                    id: 12,
+                                    title: 'Página 2ab'
+                                },
+                                {id: 13, title: 'Página 2ac'}
+                            ],
+                            collapsed: true
+                        },
+                        {id: 23, title: 'Página 2c'}
+                    ]
+                },
+                {
+                    id: 3,
+                    title: 'Página 3'
+                }
+            ]
+        };
+    </script>
     <script src="main.js"></script>
 </html>
