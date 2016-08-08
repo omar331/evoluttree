@@ -5,13 +5,43 @@ import { QuickLevelMove } from '../components/constants.tsx'
 
 
 /**
- * Prepare the substate of product being edited
+ * Prepare the product being edited
+ * Add a localId to each node of editing product tree.
+ *
+ * Every node in the state must have an localId.
+ *
+ * In this stage, editing product must be just a plai javascript object.
+ *
  */
 export const prepareEditingProduct = (productInfo) => {
+    let editing = productInfo
 
-        
-    return fromJS(productInfo)
+    editing.general.localId = v4()
+    editing = addLocalIdToPage(editing)
+
+    return editing;
 }
+
+
+/**
+ * Add a local id to page and to its children pages
+ *
+ * @param page
+ * @returns {any}
+ */
+const addLocalIdToPage = (page) => {
+    page.localId = v4()
+
+    if ( page.pages && page.pages.length > 0 ) {
+        for(let i = 0; i < page.pages.length; i++) {
+            page.pages[i] = addLocalIdToPage(page.pages[i])
+        }
+    }
+
+    return page
+}
+
+
 
 
 

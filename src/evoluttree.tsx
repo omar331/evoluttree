@@ -16,67 +16,25 @@ import productReducer from './reducers/product'
 
 import * as productHelper from './helper/productHelper'
 
-const initialState = fromJS({
-    editing: {
-        localId: v4(),
-        general: {
-            localId: v4(),
-            id: 123,
-            title: 'Novo produto'
-        },
-        pages: [
-            {
-                id: 1,
-                localId: v4(),
-                title: 'Página 1',
-                pages: [
-                    {id: 11, localId: v4(), title: 'Página 1a'},
-                    {
-                        id: 12, localId: v4(),
-                        title: 'Página 1b'
-                    },
-                    {id: 13, localId: v4(), title: 'Página 1c'}
-                ]
-            },
-            {
-                id: 2, localId: v4(),
-                title: 'Página 2',
-                pages: [
-                    {id: 21, localId: v4(), title: 'Página 2a'},
-                    {
-                        id: 22,
-                        localId: v4(),
-                        title: 'Página 2b Yeah!',
-                        body: 'Lorem Ipsum Yeah, mother fucker!',
-                        pages: [
-                            {id: 11, localId: v4(), title: 'Página 2aa'},
-                            {
-                                id: 12, localId: v4(),
-                                title: 'Página 2ab'
-                            },
-                            {id: 13, localId: v4(), title: 'Página 2ac'}
-                        ],
-                        collapsed: true
-                    },
-                    {id: 23, localId: v4(), title: 'Página 2c'}
-                ]
-            },
-            {
-                id: 3, localId: v4(),
-                title: 'Página 3'
-            }
-        ]
-    }
-});
-
-let store = createStore(productReducer, initialState)
+import * as sampleSettings from './misc/sampleSettings.tsx'
 
 interface AppProps {
     config?: any,
     editingProduct?: any
 }
 
+
+/**
+ * Root react component for evoluttree.
+ *
+ *
+ *
+ *
+ *
+ */
 export class App extends React.Component<AppProps, {}> {
+    store: any;
+
     public static defaultProps: AppProps = {
         config: {},
         editingProduct: null
@@ -85,14 +43,25 @@ export class App extends React.Component<AppProps, {}> {
     constructor(props:AppProps) {
         super(props);
 
-        const editingProduct = productHelper.prepareEditingProduct(props.editingProduct)
+        let editingProduct = props.editingProduct
 
-        console.log("-> config = %o    editing or = %o   editing imm = %o", props.config, props.editingProduct, editingProduct.toJS()  )
+        // ---> if no editing information are provided, get the sample
+        if ( editingProduct == null ) editingProduct = sampleSettings.editingProduct
+
+        // ensure every editing product has a local id
+        editingProduct = productHelper.prepareEditingProduct(editingProduct)
+
+        // populates initial state with editing product
+        const initialState = fromJS({
+            editing: editingProduct
+        })
+
+        this.store = createStore(productReducer, initialState)
     }
 
     render() {
         return(
-            <Provider store={store}>
+            <Provider store={this.store}>
                 <ProductEdit />
             </Provider>
         );
