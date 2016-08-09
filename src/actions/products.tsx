@@ -4,3 +4,10 @@ export const changeProductTitle = (newTitle) => {
         newTitle
     }
 }
+
+export const replaceState = (newState) => {
+    return {
+        type: 'REPLACE_STATE',
+        newState
+    }
+}

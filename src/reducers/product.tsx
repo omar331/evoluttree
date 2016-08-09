@@ -6,6 +6,8 @@ import { prepareEditingProduct, createPageNode, insertPage,
 
 const productReducer = (state, action) => {
     switch (action.type) {
+        case 'REPLACE_STATE':
+            return action.newState
         case 'PRODUCT_CHANGE_TITLE':
             return state.setIn(
                 ['editing', 'general', 'title'],

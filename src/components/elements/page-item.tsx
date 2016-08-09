@@ -63,6 +63,7 @@ interface PageItemProps {
     onQuickLevelMove: any,
     onChangePageInfo: any,
     onDeletePage: any,
+    onStartEditPageBody: any,
     info: any,
     parentPage: any,
     previousPage: any,
@@ -89,6 +90,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         onQuickLevelMove: null,
         onChangePageInfo: null,
         onDeletePage: null,
+        onStartEditPageBody: null,
         info: {},
         parentPage: null,
         previousPage: null,
@@ -104,6 +106,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
             showPageBodyEditor: false
         }
     }
+    
     toggleEditingTitle() {
         let currentStateEditing = this.state.editingTitle;
         let newStateEditing = !currentStateEditing
@@ -194,8 +197,13 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         e.nativeEvent.stopImmediatePropagation()
     }
 
+    // page body editor TEXTAREA element ID
+    bodyEditorElementId() {
+        return 'evltr_text_element_container'
+    }
+    
     handleShowBodyEditor(e:SyntheticEvent) {
-        const { info } = this.props
+        const { info, onStartEditPageBody } = this.props
 
         this.setState({showPageBodyEditor: true})
 
@@ -204,9 +212,19 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                                     pageInfo={info}
                                     onClose={ this.handleCloseBodyEditor.bind(this) }
                                     onSave={ this.handleSavePage.bind(this) }
+                                    textEditorElementId={this.bodyEditorElementId()}
                                 />
 
-        ReactDOM.render(pageBodyEditor, document.getElementById('product-editor-modal') )
+        ReactDOM.render(pageBodyEditor, 
+            document.getElementById('product-editor-modal'),
+            () => {
+                if ( onStartEditPageBody != null ) {
+                    onStartEditPageBody(this.bodyEditorElementId(), info.toJS() )
+                }
+            }
+        )
+        
+        
     }
 
     handleSavePage(pageLocalId, info) {
@@ -223,12 +241,11 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
     closeBodyEditor() {
         document.getElementById('product-editor-modal').innerHTML = ''
     }
-    
     render() {
         const { info, connectDragSource, isDragging, onTitleChange,
                  onNewPage, onMovePage, parentPage, previousPage,
                 pageOrder, onChangeTreeState, onQuickLevelMove,
-                onChangePageInfo, onDeletePage,
+                onChangePageInfo, onDeletePage, onStartEditPageBody,
                 depth
         } = this.props;
 
@@ -256,6 +273,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                                   onQuickLevelMove={onQuickLevelMove}
                                   onChangePageInfo={onChangePageInfo}
                                   onDeletePage={onDeletePage}
+                                  onStartEditPageBody={onStartEditPageBody}
                                   depth={ depth + 1 }
                         />;
         }

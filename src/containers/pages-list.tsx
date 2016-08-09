@@ -1,7 +1,13 @@
 import { connect } from 'react-redux'
+
+import {PagesProps} from '../components/model/PagesProps'
+
 import Pages from '../components/elements/pages-list'
 import {changePageTitle, newPage, movePage, changeTreeState,
         quickLevelMove, changePageInfo, deletePage } from "../actions/pages"
+
+
+
 
 const mapStateToProps = (state) => {
     return {
@@ -35,9 +41,28 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export const PagesList = connect<{},{},{}>(
+const mergeProps = (stateProps, dispatchProps, ownProps) => {
+    let ret = {}
+
+    for( let k in ownProps ) {
+        ret[k] = ownProps[k]
+    }
+
+    for( let k in stateProps ) {
+        ret[k] = stateProps[k]
+    }
+
+    for( let k in dispatchProps ) {
+        ret[k] = dispatchProps[k]
+    }
+
+    return  ret
+}
+
+export const PagesList = connect<{},{},PagesProps>(
     mapStateToProps,
-    mapDispatchToProps
+    mapDispatchToProps,
+    mergeProps
 )(Pages)
 
 export default PagesList;

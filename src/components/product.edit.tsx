@@ -9,11 +9,20 @@ import PagesListContainer from '../containers/pages-list';
 
 import ComponentsBar from './components.bar';
 
-export default class ProductEditComponent extends React.Component<{}, {}> {
+
+interface ProductEditProps {
+    onStartEditPageBody?: any
+}
+
+
+export default class ProductEditComponent extends React.Component<ProductEditProps, {}> {
     constructor(props) {
         super(props);
     }
     render() {
+
+        const { onStartEditPageBody } = this.props
+
         return(
             <div className="product-editing">
                 <div id="product-editor-modal"></div>
@@ -30,7 +39,9 @@ export default class ProductEditComponent extends React.Component<{}, {}> {
                             <ComponentsBar />
                         </Col>
                         <Col md={6}>
-                            <PagesListContainer />
+                            <PagesListContainer 
+                                    onStartEditPageBody={onStartEditPageBody}
+                            />
                         </Col>
                     </Row>
                 </Grid>

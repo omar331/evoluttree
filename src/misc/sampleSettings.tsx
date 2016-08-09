@@ -1,3 +1,7 @@
+/**
+ * Product being edited
+ * @type {{general: {id: number, title: string}, pages: {id: number, title: string, pages: {id: number, title: string}[]}|{id: number, title: string, pages: {id: number, title: string}|{id: number, title: string, body: string}[]}|{id: number, title: string}[]}}
+ */
 export const editingProduct = {
         general: {
             id: 123,
@@ -37,7 +41,7 @@ export const editingProduct = {
             },
             {
                 id: 3,
-                title: 'Página 3'
+                title: 'Page Three'
             }
         ]
     }

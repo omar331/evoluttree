@@ -1,5 +1,5 @@
 export interface PagesProps {
-    pages: any,
+    pages?: any,
     generalInfo?: any,
     onTitleChange?: any,
     onNewPage?: any,
@@ -7,6 +7,7 @@ export interface PagesProps {
     onQuickLevelMove?: any,
     onChangePageInfo?: any,
     onDeletePage?: any,
+    onStartEditPageBody?: any,
     parentPage?: any,
     onMovePage?: any,
     depth?: number

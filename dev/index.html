@@ -9,6 +9,8 @@
         <!-- Optional theme -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap-theme.min.css">
 
+        <script src="./ckeditor/ckeditor.js"></script>
+
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     </head>
@@ -18,19 +20,23 @@
     <script>
         // general application settings
         var evltree_config = {
-                                yeah: 'science, bitch'
+                onStartEditPageBody: function(elementId, pageInfo) {
+                    var ckEditorInstance = CKEDITOR.replace(elementId);
+
+                    ckEditorInstance.on('blur', function(e) {
+                        window.evoluttree.api.modifyPage( pageInfo.localId, {body: ckEditorInstance.getData()} )
+                    });
+                }
         };
 
         // product being edited
         var evltree_editing_product = null;
-
-
-        // TODO: callbacks to certain events, like
-        // TODO: - start editing one page (for injecting a external editor, por example)
-
-
-        // TODO: available products
-
+//
+//        // TODO: callbacks to certain events, like
+//        // TODO: - start editing one page (for injecting a external editor, por example)
+//
+//        // TODO: available products
+//
     </script>
     <script src="main.js"></script>
 </html>

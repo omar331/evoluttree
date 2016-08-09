@@ -3,8 +3,6 @@ import * as React from 'react'
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 
-import { v4 } from 'node-uuid';
-
 import { fromJS } from 'immutable';
 
 import ProductEdit from './components/product.edit'
@@ -12,11 +10,23 @@ import ProductEdit from './components/product.edit'
 import { Provider } from 'react-redux'
 
 import { createStore } from 'redux'
+
+import { replaceState } from "./actions/products"
+
+
 import productReducer from './reducers/product'
 
 import * as productHelper from './helper/productHelper'
 
 import * as sampleSettings from './misc/sampleSettings.tsx'
+
+import * as clientApi from './client-api.tsx'
+
+let store = createStore(productReducer)
+
+// Expose client API externally
+clientApi.expose(store)
+
 
 interface AppProps {
     config?: any,
@@ -26,10 +36,6 @@ interface AppProps {
 
 /**
  * Root react component for evoluttree.
- *
- *
- *
- *
  *
  */
 export class App extends React.Component<AppProps, {}> {
@@ -56,13 +62,18 @@ export class App extends React.Component<AppProps, {}> {
             editing: editingProduct
         })
 
-        this.store = createStore(productReducer, initialState)
+        store.dispatch( replaceState(initialState) )
     }
-
     render() {
+        const { config } = this.props
+        let { onStartEditPageBody } = config
+
         return(
-            <Provider store={this.store}>
-                <ProductEdit />
+            <Provider store={store}>
+                <ProductEdit
+                    onStartEditPageBody={onStartEditPageBody}
+                
+                />
             </Provider>
         );
     }
@@ -77,6 +88,6 @@ export const Evoluttree =  DragDropContext<{config?: any, editingProduct?: any}>
     React.createClass({
         render: function () {
             return <App {...this.props} />;
-        }
+        },
     })
 );
