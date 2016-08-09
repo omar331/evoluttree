@@ -69,3 +69,8 @@ The state is stored as a immutablejs map. Here's a sample showed as a simple JSO
     }
 
 ```
+
+
+## Recipes
+
+- [Integrating with CkEditor](./docs/ckeditor.MD)
