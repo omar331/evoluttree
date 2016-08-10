@@ -5,7 +5,7 @@ import { TitleEdit } from './title-edit'
 
 // TODO: criar interface para "info"
 // TODO: criar interface para "onTitleChange"
-export default class GeneralInfo extends React.Component<{info: any, onTitleChange: any}, {editingTitle: boolean}> {
+export default class GeneralInfo extends React.Component<{info?: any, onTitleChange?: any}, {editingTitle: boolean}> {
     constructor(props) {
         super(props);
 
