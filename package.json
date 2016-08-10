@@ -1,7 +1,7 @@
 {
   "name": "product-builder",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.1.0",
+  "description": "A ReactJs based, backend agnostic, drag and drop, tree-structured content management system.",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --watch --inline --hot --TARGET=DEV",
@@ -13,7 +13,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "alloyeditor": "1.2.3",
     "classnames": "2.2.5",
     "immutable": "^3.8.1",
     "lodash": "^4.13.1",
