@@ -59,7 +59,7 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
     return  ret
 }
 
-export const PagesList = connect<{},{},PagesProps>(
+export const PagesList = connect(
     mapStateToProps,
     mapDispatchToProps,
     mergeProps
