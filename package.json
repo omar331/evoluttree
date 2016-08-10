@@ -6,7 +6,8 @@
   "scripts": {
     "start": "webpack-dev-server --watch --inline --hot --TARGET=DEV",
     "test": "mocha --colors './src/tests/**/*.spec.ts' --compilers ts:ts-node/register",
-    "test:watch": "watch-run -i -p './src/**' npm run test"
+    "test:watch": "watch-run -i -p './src/**' npm run test",
+    "postinstall": "typings install"
   },
   "keywords": [],
   "author": "",
