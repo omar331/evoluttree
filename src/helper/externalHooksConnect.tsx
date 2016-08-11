@@ -3,10 +3,32 @@
  * 
  * @param store
  */
-export const connect = store => next => action =>  {
-    console.log('HOOK EXTERNAL. Action = %o', action)
 
+
+let config
+
+
+export const connect = (config) => {
+
+    this.config = config
+
+    return externalHooksMiddleware 
+} 
+
+
+
+
+
+
+const externalHooksMiddleware = store => next => action =>  {
     next(action)
+
+    if ( this.config.hookActionsToExternal != null ) {
+        if ( action.type.match(/HOOK_/) ) {
+            this.config.hookActionsToExternal(action)
+        }
+    }
+
 
     switch (action.type) {
         case 'HOOK_NEW_PAGE':
@@ -30,8 +52,10 @@ export const connect = store => next => action =>  {
         default:
             break
 
-    }
 
+
+
+    }
 }
 
 

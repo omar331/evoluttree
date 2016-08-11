@@ -20,6 +20,12 @@
     <script>
         // general application settings
         var evltree_config = {
+                // --> called when anyone do changes in content thru frontend
+                hookActionsToExternal: function(action) {
+                    console.log(' EXTERNAL HOOK action = %o CALLED', action);
+                },
+
+                // --> called when one starts editing a page
                 onStartEditPageBody: function(elementId, pageInfo) {
                     var ckEditorInstance = CKEDITOR.replace(elementId);
 
@@ -31,12 +37,6 @@
 
         // product being edited
         var evltree_editing_product = null;
-//
-//        // TODO: callbacks to certain events, like
-//        // TODO: - start editing one page (for injecting a external editor, por example)
-//
-//        // TODO: available products
-//
     </script>
     <script src="main.js"></script>
 </html>

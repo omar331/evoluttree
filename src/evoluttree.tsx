@@ -23,16 +23,6 @@ import * as sampleSettings from './misc/sampleSettings.tsx'
 
 import * as clientApi from './client-api.tsx'
 
-let store = createStore(
-    productReducer,
-    {},
-    applyMiddleware(mapActionToAPIParameters, externalHooksConnect.connect)
-)
-
-// Expose client API externally
-clientApi.expose(store)
-
-
 interface AppProps {
     config?: any,
     editingProduct?: any
@@ -55,7 +45,16 @@ export class App extends React.Component<AppProps, {}> {
     constructor(props:AppProps) {
         super(props);
 
+        const { config } = this.props
+
         let editingProduct = props.editingProduct
+        let hookActionsToExternal = null
+
+
+        // ---> hook frontend actions to a external function?
+        if ( config.hasOwnProperty('hookActionsToExternal') ) {
+            hookActionsToExternal = config.hookActionsToExternal
+        }
 
         // ---> if no editing information are provided, get the sample
         if ( editingProduct == null ) editingProduct = sampleSettings.editingProduct
@@ -68,14 +67,24 @@ export class App extends React.Component<AppProps, {}> {
             editing: editingProduct
         })
 
-        store.dispatch( replaceState(initialState) )
+
+        this.store = createStore(
+            productReducer,
+            {},
+            applyMiddleware(mapActionToAPIParameters, externalHooksConnect.connect( {hookActionsToExternal} ))
+        )
+
+        // Expose client API externally
+        clientApi.expose(this.store)
+        
+        this.store.dispatch( replaceState(initialState) )
     }
     render() {
         const { config } = this.props
         let { onStartEditPageBody } = config
 
         return(
-            <Provider store={store}>
+            <Provider store={this.store}>
                 <ProductEdit
                     onStartEditPageBody={onStartEditPageBody}
                 
