@@ -31,7 +31,16 @@ export const editingProduct = {
                     {
                         id: 22,
                         title: 'Page Two B',
-                        body: 'Lorem Ipsum Yeah'
+                        body: 'Lorem Ipsum Yeah',
+                        pages: [
+                            {id: 221,
+                                title: 'Page Two B One'
+                            },
+                            {
+                                id: 222,
+                                title: 'Page Two B Two'
+                            }
+                        ]
                     },
                     {
                         id: 23,

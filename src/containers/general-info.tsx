@@ -3,8 +3,12 @@ import Info from '../components/misc/general-info'
 import {changeProductTitle} from "../actions/products";
 
 const mapStateToProps = (state) => {
+    let general = {}
+
+        general = state.get('editing').get('general')
+
     return {
-        info: state.get('editing').get('general')
+        info: general
     }
 }
 

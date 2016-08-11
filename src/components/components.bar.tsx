@@ -7,7 +7,6 @@ import { ItemTypes } from './constants';
 
 const newElementSource = {
     beginDrag(props) {
-        console.log(' comecou arrastar ');
         return {};
     }
 };

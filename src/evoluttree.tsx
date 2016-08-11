@@ -9,20 +9,25 @@ import ProductEdit from './components/product.edit'
 
 import { Provider } from 'react-redux'
 
-import { createStore } from 'redux'
+import { createStore, applyMiddleware,compose } from 'redux'
 
 import { replaceState } from "./actions/products"
-
 
 import productReducer from './reducers/product'
 
 import * as productHelper from './helper/productHelper'
+import * as externalHooksConnect from './helper/externalHooksConnect'
+import { mapActionToAPIParameters } from './helper/mapToExternalHooks'
 
 import * as sampleSettings from './misc/sampleSettings.tsx'
 
 import * as clientApi from './client-api.tsx'
 
-let store = createStore(productReducer)
+let store = createStore(
+    productReducer,
+    {},
+    applyMiddleware(mapActionToAPIParameters, externalHooksConnect.connect)
+)
 
 // Expose client API externally
 clientApi.expose(store)
@@ -35,7 +40,8 @@ interface AppProps {
 
 
 /**
- * Root react component for evoluttree.
+ * Main Evoluttree component
+ * (actually it'll be wrapped by dnd's DragDropContext)
  *
  */
 export class App extends React.Component<AppProps, {}> {
