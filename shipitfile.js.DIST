@@ -18,6 +18,11 @@ module.exports = function (shipit) {
         production: {
             servers: 'prod@myserver.com',
             branch: 'production'
+        },
+        development: {
+            servers: 'vagrant@localhost',
+            deployTo: '/var/www/evoluttree/',
+            branch: 'development'
         }
     });
 

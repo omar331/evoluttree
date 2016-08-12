@@ -1,6 +1,6 @@
 {
   "name": "evoluttree",
-  "version": "0.1.2",
+  "version": "0.1.2b",
   "description": "A ReactJs based, backend agnostic, drag and drop, tree-structured content management system.",
   "main": "index.js",
   "repository": {
@@ -13,14 +13,15 @@
     "test:watch": "watch-run -i -p './src/**' npm run test",
     "postinstall": "typings install",
 
+    "deploy:development": "./node_modules/shipit-cli/bin/shipit development deploy",
     "deploy:staging": "./node_modules/shipit-cli/bin/shipit staging deploy",
     "deploy:production": "./node_modules/shipit-cli/bin/shipit production deploy",
 
     "make:dist": "webpack --TARGET=DIST"
   },
-  "keywords": [],
+  "keywords": ["cms", "content management", "react", "tree", "drag and drop", "typescript"],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "classnames": "2.2.5",
     "immutable": "^3.8.1",
