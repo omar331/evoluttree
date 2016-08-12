@@ -4,15 +4,20 @@ module.exports = function (shipit) {
     shipit.initConfig({
         default: {
             workspace: '/tmp/github-monitor',
-            deployTo: '/home/templum/evoluttree/',
+            deployTo: '/var/www/mysite/evoluttree/',
             repositoryUrl: 'git@github.com:omar331/evoluttree.git',
             ignores: ['.git', 'node_modules'],
             rsync: ['--del'],
-            keepReleases: 10,
+            keepReleases: 5,
             shallowClone: true
         },
         staging: {
-            servers: 'templum@amz08.templum.com.br'
+            servers: 'staging@staging.myserver.com',
+            branch: 'stage'
+        },
+        production: {
+            servers: 'prod@myserver.com',
+            branch: 'production'
         }
     });
 
