@@ -16,7 +16,7 @@
     "deploy:staging": "./node_modules/shipit-cli/bin/shipit staging deploy",
     "deploy:production": "./node_modules/shipit-cli/bin/shipit production deploy",
 
-    "make:dist": "webpack-dev-server --TARGET=DIST"
+    "make:dist": "webpack --TARGET=DIST"
   },
   "keywords": [],
   "author": "",

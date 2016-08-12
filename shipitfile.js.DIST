@@ -1,0 +1,23 @@
+module.exports = function (shipit) {
+    require('shipit-deploy')(shipit);
+
+    shipit.initConfig({
+        default: {
+            workspace: '/tmp/github-monitor',
+            deployTo: '/home/templum/evoluttree/',
+            repositoryUrl: 'git@github.com:omar331/evoluttree.git',
+            ignores: ['.git', 'node_modules'],
+            rsync: ['--del'],
+            keepReleases: 10,
+            shallowClone: true
+        },
+        staging: {
+            servers: 'templum@amz08.templum.com.br'
+        }
+    });
+
+    shipit.task('pwd', function () {
+        return shipit.remote('pwd');
+    });
+};
+
