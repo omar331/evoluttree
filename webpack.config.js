@@ -24,7 +24,6 @@ var DEFAULT_PARAMS = {
         loaders: [
             {test: /\.tsx?$/, loader: 'react-hot!ts-loader?jsx=true', exclude: /(\.test.ts$|node_modules)/},
             {test: /\.css$/, loader: 'style!css'},
-            {test: /\.tpl.html/, loader: 'html'},
             {test: /\.(ico|png|jpg|gif|svg|eot|ttf|woff|woff2)(\?.+)?$/, loader: 'url?limit=50000'}
         ]
     },
@@ -34,10 +33,7 @@ var DEFAULT_PARAMS = {
         contentBase: 'dev/',
         hot: true,
         port: 7000,
-        host: "0.0.0.0",
-        watchOptions: {
-            poll: 2000
-        }
+        host: "0.0.0.0"
     },
     debug: true,
     progress: true,
@@ -77,6 +73,11 @@ var PARAMS_PER_TARGET = {
 };
 
 var target = _resolveBuildTarget(DEFAULT_TARGET);
+
+
+
+
+
 var params = _.merge(DEFAULT_PARAMS, PARAMS_PER_TARGET[target], _mergeArraysCustomizer);
 
 _printBuildInfo(target, params);
@@ -85,6 +86,7 @@ module.exports = params;
 
 function _resolveBuildTarget(defaultTarget) {
     var target = minimist(process.argv.slice(2)).TARGET;
+
     if (!target) {
         console.log('No build target provided, using default target instead\n\n');
         target = defaultTarget;
