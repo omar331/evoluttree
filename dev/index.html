@@ -25,10 +25,12 @@
                     console.log(' EXTERNAL HOOK action = %o CALLED', action);
                 },
 
-                // --> called when one starts editing a page
+                // --> this callback is invoked when one starts editing a page
                 onStartEditPageBody: function(elementId, pageInfo) {
+                    // in this case we replace the standard textarea input by ckeditor
                     var ckEditorInstance = CKEDITOR.replace(elementId);
 
+                    // update component's state when cursor leaves ckeditor
                     ckEditorInstance.on('blur', function(e) {
                         window.evoluttree.api.modifyPage( pageInfo.localId, {body: ckEditorInstance.getData()} )
                     });

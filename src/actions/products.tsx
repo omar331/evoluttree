@@ -1,7 +1,7 @@
-export const changeProductTitle = (newTitle) => {
+export const changeProductTitle = (newTitle, preventExternalHooks = false) => {
     return {
         type: 'PRODUCT_CHANGE_TITLE',
-        newTitle
+        newTitle, preventExternalHooks
     }
 }
 

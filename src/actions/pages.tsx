@@ -38,11 +38,10 @@ export const quickLevelMove = (direction, pageLocalId) => {
     }
 }
 
-export const changePageInfo = (localPageId, pageInfo) => {
-
+export const changePageInfo = (localPageId, pageInfo, preventExternalHooks = false) => {
     return {
         type: 'CHANGE_PAGE_INFO',
-        localPageId, pageInfo
+        localPageId, pageInfo, preventExternalHooks
     }
 }
 

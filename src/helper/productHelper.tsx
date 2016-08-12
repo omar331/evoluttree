@@ -42,6 +42,19 @@ const addLocalIdToPage = (page) => {
 }
 
 
+/**
+ * Changes title of product currently being edited
+ * @param state
+ * @param newTitle
+ * @returns {Map<K, V>|Cursor|List<T>}
+ */
+export const changeProductTitle = (state, newTitle ) => {
+    return state.setIn(
+        ['editing', 'general', 'title'],
+        newTitle
+    )
+}
+
 
 
 

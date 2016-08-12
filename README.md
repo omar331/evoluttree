@@ -70,6 +70,11 @@ The state is stored as a immutablejs map. Here's a sample showed as a simple JSO
 
 ```
 
+## API documentation
+
+Evoluttree allows to change its state. Checkout out our [API](./docs/API.MD)
+
+
 
 ## Recipes
 

@@ -17,6 +17,12 @@ export const mapActionToAPIParameters = store => next => action =>  {
 
     next(action)
 
+    /*
+        Sometimes calling hooks are no desired. To prevent external hooks action
+        just add preventExternalHooks == true   to action
+     */
+    if ( action.hasOwnProperty("preventExternalHooks") && action.preventExternalHooks === true ) return
+
     switch (action.type) {
         case 'PRODUCT_CHANGE_TITLE':
             const productId = currentState.getIn(['editing', 'general', 'id'])
@@ -108,6 +114,11 @@ export const mapActionToAPIParameters = store => next => action =>  {
                 case QuickLevelMove.DIRECTION_DOWN:
                     let predecessorPage = productHelper.findPagePredecessor(currentState, sourcePage.get('localId'), true )
 
+                    if ( ! predecessorPage ) {
+                        newAction = null
+                        break
+                    }
+
                     newAction['destinationReferencedPageId'] = predecessorPage.get('id')
                     newAction['placement'] = 'child'
 
@@ -132,13 +143,5 @@ export const mapActionToAPIParameters = store => next => action =>  {
         default:
             break
     }
-    
-
-
-
-
-
-
-
 
 }
