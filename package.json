@@ -1,8 +1,8 @@
 {
   "name": "evoluttree",
-  "version": "0.1.2b",
-  "description": "A ReactJs based, backend agnostic, drag and drop, tree-structured content management system.",
-  "main": "index.js",
+  "version": "0.1.2-f",
+  "description": "A ReactJs based, drag and drop, tree-structured content management system.",
+  "main": "./dist/main.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/omar331/evoluttree.git"
@@ -11,7 +11,10 @@
     "start": "webpack-dev-server --watch --inline --hot --TARGET=DEV",
     "test": "mocha --colors './src/tests/**/*.spec.ts' --compilers ts:ts-node/register",
     "test:watch": "watch-run -i -p './src/**' npm run test",
+
     "postinstall": "typings install",
+
+    "prepublish": "npm run make:dist",
 
     "deploy:development": "./node_modules/shipit-cli/bin/shipit development deploy",
     "deploy:staging": "./node_modules/shipit-cli/bin/shipit staging deploy",
