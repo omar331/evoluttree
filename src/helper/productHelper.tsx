@@ -3,6 +3,8 @@ import { v4 } from 'node-uuid'
 
 import { QuickLevelMove } from '../components/constants.tsx'
 
+import { PageInfo } from '../components/model/PageInfo'
+
 
 /**
  * Prepare the product being edited
@@ -86,11 +88,6 @@ export const searchPageKeyPath = (node, localId, position = 0, acc = [] ):any =>
 }
 
 
-interface  PageInfo {
-    id?: string,
-    localId?: string,
-    title: string
-}
 
 /**
  * Create a new page node

@@ -9,10 +9,7 @@ import PagesListContainer from '../containers/pages-list';
 
 import ComponentsBar from './components.bar';
 
-
-interface ProductEditProps {
-    onStartEditPageBody?: any
-}
+import { ProductEditProps } from './model/ProductEditProps'
 
 
 export default class ProductEditComponent extends React.Component<ProductEditProps, {}> {

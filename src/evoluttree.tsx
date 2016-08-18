@@ -23,10 +23,7 @@ import * as sampleSettings from './misc/sampleSettings.tsx'
 
 import * as clientApi from './client-api.tsx'
 
-interface AppProps {
-    config?: any,
-    editingProduct?: any
-}
+import { AppProps } from './components/model/AppProps'
 
 
 /**

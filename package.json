@@ -1,8 +1,8 @@
 {
   "name": "evoluttree",
-  "version": "0.1.2-f",
+  "version": "0.1.2-i",
   "description": "A ReactJs based, drag and drop, tree-structured content management system.",
-  "main": "./dist/main.js",
+  "main": "./dist/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/omar331/evoluttree.git"
@@ -14,7 +14,9 @@
 
     "postinstall": "typings install",
 
-    "prepublish": "npm run make:dist",
+    "generate:dts": "dts-generator --name evoluttree --baseDir . --out typings/evoluttree.d.ts src/main_DIST.tsx",
+
+    "prepublish": "npm run generate:dts ; npm run make:dist",
 
     "deploy:development": "./node_modules/shipit-cli/bin/shipit development deploy",
     "deploy:staging": "./node_modules/shipit-cli/bin/shipit staging deploy",

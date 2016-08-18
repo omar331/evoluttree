@@ -6,6 +6,7 @@
     "jsx": "react"
   },
   "files": [
+    "typings/evoluttree.d.ts",
     "typings/globals/classnames/index.d.ts",
     "typings/modules/es6-promise/index.d.ts",
     "typings/globals/react/index.d.ts",
