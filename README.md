@@ -123,7 +123,7 @@ Evoluttree allows to change its state. Checkout out our [API](./docs/API.MD)
 
 ## Contributing
 
-Want to get involved? Welcome!
+Get involved. Welcome!
 
 - [Developers notes](./docs/developers.MD)
 
