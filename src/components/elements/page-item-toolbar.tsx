@@ -1,14 +1,10 @@
 import * as React from 'react';
 import { Glyphicon, Label } from 'react-bootstrap'
+import { PageItemToolbarProps } from '../model/PageItemToolbarProps'
 
-interface PageItemToolbarProps {
-    pageInfo: any,
-    onDelete?: any,
-    onEditClicked: any
-}
 
 export default class PageItemToolbar extends React.Component<PageItemToolbarProps, {}> {
-    constructor(props) {
+    constructor(props:any) {
         super(props);
     }
 

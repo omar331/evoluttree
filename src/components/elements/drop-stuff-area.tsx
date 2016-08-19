@@ -8,11 +8,11 @@ import { ItemTypes } from '../constants';
 
 
 const dropStuffAreaTarget = {
-    canDrop(props) {
+    canDrop(props:any) {
         // TODO: check what type of object may be dropped here
         return true;
     },
-    drop(props, monitor) {
+    drop(props:any, monitor:any) {
         let item = monitor.getItem()
 
         switch (monitor.getItemType()) {
@@ -26,7 +26,7 @@ const dropStuffAreaTarget = {
                             )
                 break
             case ItemTypes.MOVE_PAGE:
-                let destinationId = null
+                let destinationId:string = null
 
                 destinationId = props.ownerPage.get('localId')
 
@@ -43,7 +43,7 @@ const dropStuffAreaTarget = {
 };
 
 
-const collect = (connect, monitor) => {
+const collect = (connect:any, monitor:any) => {
     return {
         connectDropTarget: connect.dropTarget(),
         isOver: monitor.isOver(),
@@ -73,7 +73,7 @@ interface DropAreaProps {
  * Area where users can place content stuff (pages, tasks and so on)
  */
 class DropArea extends React.Component<DropAreaProps, {}> {
-    constructor(props) {
+    constructor(props:any) {
         super(props);
     }
     render() {

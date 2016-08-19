@@ -4,7 +4,7 @@ import { changeProductTitle, createPageNode, insertPage,
         }
     from '../helper/productHelper'
 
-const productReducer = (state, action) => {
+const productReducer = (state:any, action:any) => {
     switch (action.type) {
         case 'REPLACE_STATE':
             return action.newState

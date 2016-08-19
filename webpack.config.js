@@ -43,6 +43,9 @@ var DEFAULT_PARAMS = {
 var PARAMS_PER_TARGET = {
 
     DEV: {
+        entry: {
+            main: './src/main_DEV.tsx'
+        },
         devtool: 'inline-source-map',
         output: {
             filename: '[name].js'
@@ -61,6 +64,9 @@ var PARAMS_PER_TARGET = {
     },
 
     DIST: {
+        entry: {
+            main: './src/main_DIST.tsx'
+        },
         debug: false,
         output: {
             path: './dist'

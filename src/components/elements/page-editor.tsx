@@ -2,32 +2,25 @@ import * as React from 'react';
 
 import '../css/general.css';
 
+import * as PageEditorInterfaces from '../model/PageEditor'
+
 import { Glyphicon, Modal, Button, Row, Col, Grid } from 'react-bootstrap'
 import SyntheticEvent = __React.SyntheticEvent;
 
-interface PageEditorProps {
-    pageInfo: any,
-    onClose: any,
-    onSave: any,
-    textEditorElementId: string
-}
 
-interface PageEditorState {
-}
-
-export default class PageEditor extends React.Component<PageEditorProps, PageEditorState> {
+export default class PageEditor extends React.Component<PageEditorInterfaces.Props, PageEditorInterfaces.State> {
     refs: {
         [string: string]: any;
         bodyTextInput:any;
     }
-    constructor(props) {
+    constructor(props:any) {
         super(props);
     }
-    handleClose(e) {
+    handleClose(e:any) {
         const { onClose } = this.props
         onClose()
     }
-    handleSave(e) {
+    handleSave(e:any) {
         const { pageInfo, onSave } = this.props
 
         onSave(

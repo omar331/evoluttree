@@ -21,14 +21,14 @@ import SyntheticEvent = __React.SyntheticEvent;
 
 
 const pageListingSource = {
-    endDrag(props, monitor, component) {
+    endDrag(props:any, monitor:any, component:any) {
         let offset = monitor.getDifferenceFromInitialOffset()
 
         if ( offset == null ) return;
 
         component.handleEndDrag( { deltaX: offset.x, deltaY: offset.y } )
     },
-    beginDrag(props) {
+    beginDrag(props:any) {
         return {
             localId: props.info.get('localId'),
             id: props.info.get('id'),
@@ -37,7 +37,7 @@ const pageListingSource = {
     }
 };
 
-function collect(connect, monitor) {
+function collect(connect:any, monitor:any) {
     return {
         connectDragSource: connect.dragSource(),
         isDragging: monitor.isDragging()
@@ -97,7 +97,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         depth: 0
     }
 
-    constructor(props) {
+    constructor(props:any) {
         super(props);
 
         this.state = {
@@ -116,7 +116,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
 
         this.setState({editingTitle: newStateEditing})
     }
-    updateTitle(e) {
+    updateTitle(e:any) {
         const { info, onTitleChange } = this.props;
         onTitleChange(info.get('localId'), e.target.value )
 
@@ -128,7 +128,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
      * @param itemType
      * @param item
      */
-    handleDropItem(itemType, info) {
+    handleDropItem(itemType:any, info:any) {
         const { onNewPage, onMovePage } = this.props
 
         switch (itemType) {
@@ -140,7 +140,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                 break
         }
     }
-    handleExpandCollapse(e) {
+    handleExpandCollapse(e:any) {
         const { onChangeTreeState, info } = this.props
 
         const newCollapsedState = !this.state.collapsed
@@ -149,7 +149,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         
         this.setState({collapsed: newCollapsedState })
     }
-    handleEndDrag(dragInfo) {
+    handleEndDrag(dragInfo:any) {
         const { info, pageOrder, onQuickLevelMove } = this.props
 
         let quickLevelMoveInfo = this.getQuickLevelMoveInfo(dragInfo.deltaX, dragInfo.deltaY)
@@ -166,7 +166,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
      * @param deltaY
      * @returns {{direction: string}}
      */
-    getQuickLevelMoveInfo(deltaX, deltaY ) {
+    getQuickLevelMoveInfo(deltaX:number, deltaY:number ) {
         let direction = QuickLevelMove.DIRECTION_NONE
         
         let absDeltaX = Math.abs(deltaX)
@@ -227,7 +227,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         
     }
 
-    handleSavePage(pageLocalId, info) {
+    handleSavePage(pageLocalId:string, info:any) {
         const { onChangePageInfo } = this.props
 
         onChangePageInfo(pageLocalId, info )
@@ -252,8 +252,8 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         let { toolbarVisible } = this.state
 
         // does this node have children nodes?
-        let children = null
-        let toolbar = null
+        let children:any = null
+        let toolbar:any = null
         let pages:any = info.get('pages');
 
         let hasChildren:boolean = (pages != null)
@@ -335,7 +335,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         );
     }
 
-    renderCollapseControl(collapsed) {
+    renderCollapseControl(collapsed:boolean) {
         let content = collapsed ?
             <Glyphicon glyph="plus" style={{cursor: 'hand'}}/>
             :

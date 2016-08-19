@@ -1,7 +1,11 @@
 import { Map, List, fromJS } from 'immutable'
 import { v4 } from 'node-uuid'
 
+
+
 import { QuickLevelMove } from '../components/constants.tsx'
+
+import { PageInfo } from '../components/model/PageInfo'
 
 
 /**
@@ -13,7 +17,7 @@ import { QuickLevelMove } from '../components/constants.tsx'
  * In this stage, editing product must be just a plai javascript object.
  *
  */
-export const prepareEditingProduct = (productInfo) => {
+export const prepareEditingProduct = (productInfo:any) => {
     let editing = productInfo
 
     editing.general.localId = v4()
@@ -29,7 +33,7 @@ export const prepareEditingProduct = (productInfo) => {
  * @param page
  * @returns {any}
  */
-const addLocalIdToPage = (page) => {
+const addLocalIdToPage = (page:any) => {
     page.localId = v4()
 
     if ( page.pages && page.pages.length > 0 ) {
@@ -48,7 +52,7 @@ const addLocalIdToPage = (page) => {
  * @param newTitle
  * @returns {Map<K, V>|Cursor|List<T>}
  */
-export const changeProductTitle = (state, newTitle ) => {
+export const changeProductTitle = (state:any, newTitle:string ) => {
     return state.setIn(
         ['editing', 'general', 'title'],
         newTitle
@@ -68,7 +72,7 @@ export const changeProductTitle = (state, newTitle ) => {
  * @param array acc keyPath being generated (used only for recursion purposes)
  * @returns {array}
  */
-export const searchPageKeyPath = (node, localId, position = 0, acc = [] ):any => {
+export const searchPageKeyPath = (node:any, localId:string, position:number = 0, acc:any = [] ):any => {
     // when the node is found...
     if ( node.get('localId') == localId ) return ['pages', position]
 
@@ -86,11 +90,6 @@ export const searchPageKeyPath = (node, localId, position = 0, acc = [] ):any =>
 }
 
 
-interface  PageInfo {
-    id?: string,
-    localId?: string,
-    title: string
-}
 
 /**
  * Create a new page node
@@ -114,7 +113,7 @@ export const createPageNode:(info:PageInfo)=>any = (info:PageInfo) => {
  * 
  * 
  */
-export const addChildToPage = (state, parentPageLocalId, pageToInsert) => {
+export const addChildToPage = (state:any, parentPageLocalId:string, pageToInsert:any) => {
     // TODO: add 'position' parameter
 
     let page = getPageByLocalId( state, parentPageLocalId )
@@ -141,7 +140,7 @@ export const addChildToPage = (state, parentPageLocalId, pageToInsert) => {
  * @param asObject
  * @returns Map|string|null
  */
-export const findPagePredecessor = (state, localId, asObject = false) => {
+export const findPagePredecessor = (state:any, localId:string, asObject:boolean = false) => {
     let pageKeypath = searchPageKeyPath( state.get('editing'), localId )
 
     // page not found
@@ -174,7 +173,7 @@ export const findPagePredecessor = (state, localId, asObject = false) => {
  * @param asObject
  * @returns {any}
  */
-export const findParentPage = (state, localId, asObject = false ) => {
+export const findParentPage = (state:any, localId:string, asObject:boolean = false ) => {
     let pageKeypath = searchPageKeyPath( state.get('editing'), localId )
 
     // page not found
@@ -202,10 +201,10 @@ export const findParentPage = (state, localId, asObject = false ) => {
  * @param pageNodeToInsert
  * @returns {any}
  */
-export const insertPage = (state, ownerPageLocalId, position, pageNodeToInsert) => {
+export const insertPage = (state:any, ownerPageLocalId:string, position:number, pageNodeToInsert:any) => {
     const ownerPageKeyPath = searchPageKeyPath(state.get('editing'), ownerPageLocalId );
 
-    let pagesNode
+    let pagesNode:any
     let keyPathApply = ['editing'].concat(ownerPageKeyPath)
     keyPathApply.pop()
 
@@ -218,7 +217,7 @@ export const insertPage = (state, ownerPageLocalId, position, pageNodeToInsert) 
 }
 
 
-export const movePage = (state, sourcePageLocalId, destinationPageLocalId, position) =>
+export const movePage = (state:any, sourcePageLocalId:string, destinationPageLocalId:string, position:number) =>
 {
     // get the source page and clone it
     const sourcePageNode = getPageByLocalId( state, sourcePageLocalId )
@@ -238,7 +237,7 @@ export const movePage = (state, sourcePageLocalId, destinationPageLocalId, posit
  * @param localId
  * @returns {any}
  */
-export const getPageByLocalId = ( state, localId : string ) => {
+export const getPageByLocalId = ( state:any, localId : string ) => {
     let sourcePageKeyPath = searchPageKeyPath(state.get('editing'), localId)
     let sourceKeyPath = ['editing'].concat(sourcePageKeyPath)
 
@@ -247,7 +246,7 @@ export const getPageByLocalId = ( state, localId : string ) => {
 
 
 
-export const removePageByLocalId = ( state, localId : string ) => {
+export const removePageByLocalId = ( state:any, localId : string ) => {
     let sourcePageKeyPath = searchPageKeyPath(state.get('editing'), localId)
     let sourceKeyPath = ['editing'].concat(sourcePageKeyPath)
 
@@ -281,7 +280,7 @@ export const removePageByLocalId = ( state, localId : string ) => {
  * @param newStateInfo
  * @returns {any}
  */
-export const changePageTreeState = ( state, pageLocalId, newStateInfo ) => {
+export const changePageTreeState = ( state:any, pageLocalId:string, newStateInfo:any ) => {
     let sourcePageKeyPath = searchPageKeyPath(state.get('editing'), pageLocalId)
     let sourceKeyPath = ['editing'].concat(sourcePageKeyPath)
 
@@ -296,7 +295,7 @@ export const changePageTreeState = ( state, pageLocalId, newStateInfo ) => {
  * it's located.
  * 
  */
-export const getPageOrderInLevel = (state, pageLocalId) => {
+export const getPageOrderInLevel = (state:any, pageLocalId:string) => {
     let pageKeypath = searchPageKeyPath( state.get('editing'), pageLocalId )
 
     if ( ! pageKeypath ) return null
@@ -319,7 +318,7 @@ export const getPageOrderInLevel = (state, pageLocalId) => {
  * @param pageLocalId
  * @returns {any}
  */
-export const quickLevelMove = ( state, direction, pageLocalId ) => {
+export const quickLevelMove = ( state:any, direction:string, pageLocalId:string ) => {
     switch (direction) {
         case QuickLevelMove.DIRECTION_UP:
             let parentLocalId = findParentPage( state, pageLocalId )
@@ -356,7 +355,7 @@ export const quickLevelMove = ( state, direction, pageLocalId ) => {
  * @param modifiedProperties
  * @returns {any}
  */
-export const changePageInfo = (state, localPageId, modifiedProperties ) => {
+export const changePageInfo = (state:any, localPageId:string, modifiedProperties:any ) => {
     const pageKeyPath = searchPageKeyPath(state.get('editing'), localPageId )
 
     let page = getPageByLocalId(state, localPageId)

@@ -1,44 +1,44 @@
-<!doctype html>
-<html lang="en">
-    <head>
-        <title>Evolutree</title>
+    <!doctype html>
+    <html lang="en">
+        <head>
+            <title>Evolutree</title>
 
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+            <!-- Latest compiled and minified CSS -->
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
 
-        <!-- Optional theme -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap-theme.min.css">
+            <!-- Optional theme -->
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap-theme.min.css">
 
-        <script src="./ckeditor/ckeditor.js"></script>
+            <script src="./ckeditor/ckeditor.js"></script>
 
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    </head>
-    <body>
-        <div id="content"></div>
-    </body>
-    <script>
-        // general application settings
-        var evltree_config = {
-                // --> called when anyone do changes in content thru frontend
-                hookActionsToExternal: function(action) {
-                    console.log(' EXTERNAL HOOK action = %o CALLED', action);
-                },
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        </head>
+        <body>
+            <div id="content"></div>
+        </body>
+        <script>
+            // general application settings
+            var evltree_config = {
+                    // --> called when anyone do changes in content thru frontend
+                    hookActionsToExternal: function(action) {
+                        console.log(' EXTERNAL HOOK action = %o CALLED', action);
+                    },
 
-                // --> this callback is invoked when one starts editing a page
-                onStartEditPageBody: function(elementId, pageInfo) {
-                    // in this case we replace the standard textarea input by ckeditor
-                    var ckEditorInstance = CKEDITOR.replace(elementId);
+                    // --> this callback is invoked when one starts editing a page
+                    onStartEditPageBody: function(elementId, pageInfo) {
+                        // in this case we replace the standard textarea input by ckeditor
+                        var ckEditorInstance = CKEDITOR.replace(elementId);
 
-                    // update component's state when cursor leaves ckeditor
-                    ckEditorInstance.on('blur', function(e) {
-                        window.evoluttree.api.modifyPage( pageInfo.localId, {body: ckEditorInstance.getData()} )
-                    });
-                }
-        };
+                        // update component's state when cursor leaves ckeditor
+                        ckEditorInstance.on('blur', function(e) {
+                            window.evoluttree.api.modifyPage( pageInfo.localId, {body: ckEditorInstance.getData()} )
+                        });
+                    }
+            };
 
-        // product being edited
-        var evltree_editing_product = null;
-    </script>
-    <script src="main.js"></script>
-</html>
+            // product being edited
+            var evltree_editing_product = null;
+        </script>
+        <script src="main.js"></script>
+    </html>

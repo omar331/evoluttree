@@ -2,8 +2,8 @@ import { connect } from 'react-redux'
 import Info from '../components/misc/general-info'
 import {changeProductTitle} from "../actions/products";
 
-const mapStateToProps = (state) => {
-    let general = {}
+const mapStateToProps = (state:any) => {
+    let general:any
 
         general = state.get('editing').get('general')
 
@@ -12,9 +12,9 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch:any) => {
     return {
-        onTitleChange: (newTitle) => {
+        onTitleChange: (newTitle:string) => {
             dispatch( changeProductTitle(newTitle) );
         }
     }

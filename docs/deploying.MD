@@ -11,9 +11,12 @@ Be sure you have made the distribution folder
 
 and then deploy your application you can use commands like
 
+```npm run deploy:development```   (for a development server)
+
 ```npm run deploy:staging```    (for a staging server)
 
 ```npm run deploy:production```   (for a production server)
+
 
 and so on.
 

@@ -1,11 +1,15 @@
 {
   "compilerOptions": {
+    "declaration": true,
+    "noImplicitAny": true,
     "module": "commonjs",
     "target": "es5",
     "sourceMap": true,
-    "jsx": "react"
+    "jsx": "react",
+    "outDir": "typ"
   },
   "files": [
+    "./src/main_DIST.tsx",
     "typings/globals/classnames/index.d.ts",
     "typings/modules/es6-promise/index.d.ts",
     "typings/globals/react/index.d.ts",
@@ -23,11 +27,5 @@
     "typings/globals/mocha/index.d.ts",
     "typings/globals/chai/index.d.ts",
     "typings/globals/react-dnd-html5-backend/index.d.ts"
-  ],
-  "filesGlob": [
-    "src/**/*.tsx",
-    "src/**/*.ts",
-    "typings/**/*d.ts"
-  ],
-  "exclude": []
+  ]
 }

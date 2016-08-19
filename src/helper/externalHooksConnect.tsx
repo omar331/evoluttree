@@ -5,10 +5,10 @@
  */
 
 
-let config
+let config:any
 
 
-export const connect = (config) => {
+export const connect = (config:any) => {
 
     this.config = config
 
@@ -20,7 +20,7 @@ export const connect = (config) => {
 
 
 
-const externalHooksMiddleware = store => next => action =>  {
+const externalHooksMiddleware = (store:any) => (next:any) => (action:any) =>  {
     next(action)
 
     if ( this.config.hookActionsToExternal != null ) {

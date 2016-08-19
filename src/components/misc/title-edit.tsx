@@ -9,9 +9,8 @@ export class TitleEdit extends React.Component<{value: string, onTitleChange: an
         textInput:any;
     }
     componentDidMount() {
-        this.refs.textInput.focus();
     }
-    handleKeyPress(e) {
+    handleKeyPress(e:any) {
         const { onTitleChange } = this.props
 
         if (e.key === 'Enter') {

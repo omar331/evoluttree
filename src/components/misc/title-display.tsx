@@ -7,8 +7,8 @@ export class TitleDisplay extends React.Component<{value: string}, {}> {
     render() {
         const { value } = this.props
 
-        let containerStyle = {overflow: "hidden", width: "100%"}
-        let textStyle = {whiteSpace: "nowrap"}
+        let containerStyle:any= {overflow: "hidden", width: "100%"}
+        let textStyle:any = {whiteSpace: "nowrap"}
 
         if ( this.isEmptyValue() ) textStyle['fontStyle'] = 'italic';
 

@@ -6,7 +6,7 @@ import { TitleEdit } from './title-edit'
 // TODO: criar interface para "info"
 // TODO: criar interface para "onTitleChange"
 export default class GeneralInfo extends React.Component<{info?: any, onTitleChange?: any}, {editingTitle: boolean}> {
-    constructor(props) {
+    constructor(props:any) {
         super(props);
 
         this.state = {
@@ -24,7 +24,7 @@ export default class GeneralInfo extends React.Component<{info?: any, onTitleCha
 
         this.setState({editingTitle: newStateEditing})
     }
-    updateTitle(e) {
+    updateTitle(e:any) {
         const { info, onTitleChange } = this.props;
         onTitleChange(e.target.value )
 
