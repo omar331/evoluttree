@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Grid, Row, Col } from 'react-bootstrap';
+import { Grid, Row, Col, ButtonToolbar } from 'react-bootstrap';
 
 import './css/contents.css';
 
@@ -38,8 +38,8 @@ export default class ProductEditComponent extends React.Component<ProductEditPro
                         <Col md={2}>
                             <ComponentsBar />
                         </Col>
-                        <Col md={6}>
-                            <PagesListContainer 
+                        <Col md={6} className="pages-container" >
+                            <PagesListContainer
                                     onStartEditPageBody={onStartEditPageBody}
                             />
                         </Col>
