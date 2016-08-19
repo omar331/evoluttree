@@ -17,6 +17,8 @@
     "deploy:staging": "./node_modules/shipit-cli/bin/shipit staging deploy",
     "deploy:production": "./node_modules/shipit-cli/bin/shipit production deploy",
 
+    "prepublish": "npm run make:dist",
+
     "make:dist": "webpack --TARGET=DIST"
   },
   "keywords": ["cms", "content management", "react", "tree", "drag and drop", "typescript"],

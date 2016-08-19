@@ -73,7 +73,7 @@ class MyWebsiteManager extends React.Component<{}, {}> {
             <div>
                 <h1>My incredible website</h1>
 
-                < Evoluttreeconfig={myEvoluttreeConfig} editingProduct={myEditingProduct}/>
+                < Evoluttree config={myEvoluttreeConfig} editingProduct={myEditingProduct}/>
             </div>
         );
     }
