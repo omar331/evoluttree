@@ -8,7 +8,20 @@ welcome! In this document follows some guidelines.
 
 - node and npm
 - webpack and webpack-dev-server installed globally
-- dts-generator
+
+
+## Webpack developer server
+
+If you want to see the development webserver, just go to **evoluttree** root and type
+
+```
+cd node_modules/evoluttree
+npm start
+```
+
+head to your favorite browser and issue the url
+
+**http://localhost:7000**
 
 
 ## Application state / Product structure

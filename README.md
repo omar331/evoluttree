@@ -96,6 +96,11 @@ titles (just click over them), edit and delete pages.
 
 New features comming soon.
 
+### For developers
+
+- run a **webpack-dev-server** and get the page updated as long you update the code
+
+- [Check out developers notes](./docs/developers.MD)
 
 
 ## Some definitions
