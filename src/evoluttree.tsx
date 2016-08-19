@@ -44,8 +44,8 @@ export class App extends React.Component<AppProps, {}> {
 
         const { config } = this.props
 
-        let editingProduct = props.editingProduct
-        let hookActionsToExternal = null
+        let editingProduct:any = props.editingProduct
+        let hookActionsToExternal:any = null
 
 
         // ---> hook frontend actions to a external function?
@@ -60,7 +60,7 @@ export class App extends React.Component<AppProps, {}> {
         editingProduct = productHelper.prepareEditingProduct(editingProduct)
 
         // populates initial state with editing product
-        const initialState = fromJS({
+        const initialState:any = fromJS({
             editing: editingProduct
         })
 
@@ -102,4 +102,5 @@ export const Evoluttree =  DragDropContext<{config?: any, editingProduct?: any}>
             return <App {...this.props} />;
         },
     })
-);
+)
+

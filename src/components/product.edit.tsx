@@ -13,7 +13,7 @@ import { ProductEditProps } from './model/ProductEditProps'
 
 
 export default class ProductEditComponent extends React.Component<ProductEditProps, {}> {
-    constructor(props) {
+    constructor(props:any) {
         super(props);
     }
     render() {

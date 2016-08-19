@@ -11,17 +11,19 @@
 import { changePageInfo } from "./actions/pages"
 import { changeProductTitle } from "./actions/products"
 
+declare var window:any
+
 // prepare container API
 window['evoluttree'] = {}
 window['evoluttree']['api'] = {}
 
-export const expose = (store) => {
+export const expose = (store:any) => {
     /**
      * Change the title of the product being edited
      * @param newTitle
      * @param preventExternalHooks prevents external hooks be called
      */
-    window['evoluttree']['api']['modifyProductTitle'] = (newTitle, preventExternalHooks = true) => {
+    window['evoluttree']['api']['modifyProductTitle'] = (newTitle:string, preventExternalHooks:boolean = true) => {
         store.dispatch( changeProductTitle(newTitle, preventExternalHooks) )
     }
 
@@ -32,7 +34,7 @@ export const expose = (store) => {
      * @param pageInfo      array containing the information to be modified
      * @param preventExternalHooks prevents external hooks be called
      */
-    window['evoluttree']['api']['modifyPage'] = (localPageId, pageInfo, preventExternalHooks = true) => {
+    window['evoluttree']['api']['modifyPage'] = (localPageId:string, pageInfo:any, preventExternalHooks:boolean = true) => {
         store.dispatch( changePageInfo(localPageId, pageInfo, preventExternalHooks ) )
     }
 }

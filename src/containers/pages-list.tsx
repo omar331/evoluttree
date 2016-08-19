@@ -7,40 +7,40 @@ import {changePageTitle, newPage, movePage, changeTreeState,
 
 
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state:any) => {
     return {
         pages: state.get('editing').get('pages')
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch:any) => {
     return {
-        onTitleChange: (id,newTitle) => {
+        onTitleChange: (id:string,newTitle:string) => {
             dispatch( changePageTitle(id, newTitle) );
         },
-        onNewPage: (ownerPageLocalId, position) => {
+        onNewPage: (ownerPageLocalId:string, position:number) => {
             dispatch( newPage(ownerPageLocalId,  position) )
         },
-        onMovePage: (sourcePageLocalId, destinationPageLocalId, position) => {
+        onMovePage: (sourcePageLocalId:string, destinationPageLocalId:string, position:number) => {
             dispatch( movePage(sourcePageLocalId, destinationPageLocalId, position) )
         },
-        onChangeTreeState: (pageLocalId, newStateInfo ) => {
+        onChangeTreeState: (pageLocalId:string, newStateInfo:any ) => {
             dispatch( changeTreeState(pageLocalId, newStateInfo) )
         },
-        onQuickLevelMove: (direction, localPageId ) => {
+        onQuickLevelMove: (direction:string, localPageId:string ) => {
             dispatch( quickLevelMove(direction,localPageId) )
         },
-        onChangePageInfo: ( localPageId, pageInfo ) => {
+        onChangePageInfo: ( localPageId:string, pageInfo:any ) => {
             dispatch( changePageInfo(localPageId, pageInfo) )
         },
-        onDeletePage: (localPageId ) => {
+        onDeletePage: (localPageId:string ) => {
             dispatch( deletePage(localPageId) )
         },
     }
 }
 
-const mergeProps = (stateProps, dispatchProps, ownProps) => {
-    let ret = {}
+const mergeProps = (stateProps:any, dispatchProps:any, ownProps:any) => {
+    let ret:any = {}
 
     for( let k in ownProps ) {
         ret[k] = ownProps[k]

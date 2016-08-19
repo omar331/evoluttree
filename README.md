@@ -5,6 +5,16 @@ A ReactJs based, drag and drop, tree-structured content management system.
 Built on top of **ReactJs**, **Redux**, **Immutable**, **React dnd** and other wonders
 of javascript's world.
 
+## Getting started
+
+### Installation
+
+```
+npm install evoluttree
+```
+
+
+
 ## Some definitions
 
 * **product** a container for diferent types of contents like a main title, description and tree
@@ -24,6 +34,8 @@ Evoluttree allows to change its state. Checkout out our [API](./docs/API.MD)
 
 
 ## Contributing
+
+Want to get involved? Welcome!
 
 - [Developers notes](./docs/developers.MD)
 

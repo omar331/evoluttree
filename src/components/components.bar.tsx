@@ -6,12 +6,12 @@ import { DragSource } from 'react-dnd';
 import { ItemTypes } from './constants';
 
 const newElementSource = {
-    beginDrag(props) {
+    beginDrag(props:any) {
         return {};
     }
 };
 
-function collect(connect, monitor) {
+function collect(connect:any, monitor:any) {
     return {
         connectDragSource: connect.dragSource(),
         isDragging: monitor.isDragging()
@@ -24,7 +24,7 @@ function collect(connect, monitor) {
  * Represents a new page
  */
 class NewPageElement extends React.Component<{connectDragSource: any, isDragging: any}, {}> {
-    constructor(props) {
+    constructor(props:any) {
         super(props);
     }
     render() {
@@ -49,7 +49,7 @@ const DraggableNewPageElement = DragSource(ItemTypes.NEW_PAGE, newElementSource,
  * Represents a new task
  */
 class NewTaskElement extends React.Component<{connectDragSource: any, isDragging: any}, {}> {
-    constructor(props) {
+    constructor(props:any) {
         super(props);
     }
     render() {
@@ -73,7 +73,7 @@ const DraggableNewTaskElement = DragSource(ItemTypes.NEW_TASK, newElementSource,
  * Elements (content components) bar
  */
 export default class ComponentsBar extends React.Component<{}, {}> {
-    constructor(props) {
+    constructor(props:any) {
         super(props);
     }
     render() {

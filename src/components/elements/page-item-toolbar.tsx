@@ -4,7 +4,7 @@ import { PageItemToolbarProps } from '../model/PageItemToolbarProps'
 
 
 export default class PageItemToolbar extends React.Component<PageItemToolbarProps, {}> {
-    constructor(props) {
+    constructor(props:any) {
         super(props);
     }
 

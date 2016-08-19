@@ -21,7 +21,7 @@ export default class PagesList extends React.Component<PagesProps, {}> {
         depth: 0
     }
 
-    constructor(props) {
+    constructor(props:any) {
         super(props);
     }
     render() {
@@ -34,15 +34,15 @@ export default class PagesList extends React.Component<PagesProps, {}> {
 
         let order = -1;
 
-        let previousPage = null
-        let pageComponentRes
+        let previousPage:any = null
+        let pageComponentRes:any
 
 
         return(
             <div>
                 <div className="content-list">
                     {pages.map(
-                        page => {
+                        (page:any) => {
                             order++
 
                             pageComponentRes = <PageItem info={page}

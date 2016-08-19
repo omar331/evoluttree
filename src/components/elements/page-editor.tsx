@@ -13,14 +13,14 @@ export default class PageEditor extends React.Component<PageEditorInterfaces.Pro
         [string: string]: any;
         bodyTextInput:any;
     }
-    constructor(props) {
+    constructor(props:any) {
         super(props);
     }
-    handleClose(e) {
+    handleClose(e:any) {
         const { onClose } = this.props
         onClose()
     }
-    handleSave(e) {
+    handleSave(e:any) {
         const { pageInfo, onSave } = this.props
 
         onSave(

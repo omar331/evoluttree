@@ -11,9 +11,9 @@
 import * as productHelper from './productHelper'
 import { QuickLevelMove } from '../components/constants';
 
-export const mapActionToAPIParameters = store => next => action =>  {
+export const mapActionToAPIParameters = (store:any) => (next:any) => (action:any) =>  {
     const currentState = store.getState()
-    let page, sourcePage, direction;
+    let page:any, sourcePage:any, direction:any
 
     next(action)
 
@@ -36,8 +36,8 @@ export const mapActionToAPIParameters = store => next => action =>  {
             }
             break;
         case 'NEW_PAGE':
-            let referencedPageId
-            let referencedPagePlacement = 'after'
+            let referencedPageId:string
+            let referencedPagePlacement:string = 'after'
             
             const pageBefore = productHelper.getPageByLocalId(currentState, action.ownerPageLocalId)
             
@@ -95,7 +95,7 @@ export const mapActionToAPIParameters = store => next => action =>  {
             sourcePage = productHelper.getPageByLocalId(currentState, action.pageLocalId)
             direction = action.direction
 
-            let newAction = {
+            let newAction:any = {
                 type: 'HOOK_MOVE_PAGE',
                 sourcePageId: sourcePage.get('id')
             }
