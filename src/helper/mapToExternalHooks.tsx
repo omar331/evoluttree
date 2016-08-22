@@ -38,19 +38,22 @@ export const mapActionToAPIParameters = store => next => action =>  {
         case 'NEW_PAGE':
             let referencedPageId
             let referencedPagePlacement = 'after'
+            let pageReferenceId
             
             const pageBefore = productHelper.getPageByLocalId(currentState, action.ownerPageLocalId)
             
             if ( pageBefore ) {
                 referencedPageId = pageBefore.get('id')
                 referencedPagePlacement = 'after'
+                pageReferenceId = action.ownerPageLocalId
             }
 
             next({
                 type: 'HOOK_NEW_PAGE',
                 referencedPage:{
                     id: referencedPageId,
-                    placement: referencedPagePlacement
+                    placement: referencedPagePlacement,
+                    pageReferenceId: pageReferenceId
                 }
             })
             break;
