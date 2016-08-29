@@ -3,8 +3,8 @@ import * as ReactDOM from 'react-dom';
 
 import { Evoluttree } from './evoluttree';
 
-declare var evltree_config: any;
-declare var evltree_editing_product: any;
+declare var evltree_config: any
+declare var evltree_editing_product: any
 
 ReactDOM.render(
     (
@@ -12,6 +12,4 @@ ReactDOM.render(
     ),
     document.getElementById('content')
 );
-
-
 
