@@ -10,5 +10,6 @@ export interface PagesProps {
     onStartEditPageBody?: any,
     parentPage?: any,
     onMovePage?: any,
-    depth?: number
+    depth?: number,
+    customComponents?: any
 }

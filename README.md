@@ -94,7 +94,7 @@ If everything is alright you gonna get something like this:
 You can drag and drop the pages, sort them as your want, add new pages, edit page and product
 titles (just click over them), edit and delete pages.
 
-New features comming soon.
+New features coming soon.
 
 ### For developers
 
@@ -119,6 +119,8 @@ Evoluttree allows to change its state. Checkout out our [API](./docs/API.MD)
 
 - [Integrating with CkEditor](./docs/ckeditor.MD)
 - [Deploying](./docs/deploying.MD)
+- [Custom components] - docs coming soon
+
 
 
 ## Contributing
