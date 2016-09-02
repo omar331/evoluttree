@@ -68,7 +68,8 @@ interface PageItemProps {
     parentPage: any,
     previousPage: any,
     pageOrder?: number,
-    depth?: number
+    depth?: number,
+    customComponents?: any
 }
 
 interface PageItemState {
@@ -94,7 +95,8 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         info: {},
         parentPage: null,
         previousPage: null,
-        depth: 0
+        depth: 0,
+        customComponents: {}
     }
 
     constructor(props:any) {
@@ -106,7 +108,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
             showPageBodyEditor: false
         }
     }
-    
+
     toggleEditingTitle() {
         let currentStateEditing = this.state.editingTitle;
         let newStateEditing = !currentStateEditing
@@ -203,19 +205,22 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
     }
     
     handleShowBodyEditor(e:SyntheticEvent) {
-        const { info, onStartEditPageBody } = this.props
+        const { info, onStartEditPageBody, customComponents } = this.props
 
         this.setState({showPageBodyEditor: true})
 
-        // ---> render page editor, if it's necessary
-        let pageBodyEditor = <PageEditor
-                                    pageInfo={info}
-                                    onClose={ this.handleCloseBodyEditor.bind(this) }
-                                    onSave={ this.handleSavePage.bind(this) }
-                                    textEditorElementId={this.bodyEditorElementId()}
-                                />
+        let PageEditorComponent = customComponents.PageEditor || PageEditor
 
-        ReactDOM.render(pageBodyEditor, 
+        let pageBodyEditor = React.createElement(PageEditorComponent,
+            {
+                pageInfo: info,
+                onClose: this.handleCloseBodyEditor.bind(this),
+                onSave: this.handleSavePage.bind(this),
+                textEditorElementId: this.bodyEditorElementId()
+            }
+        )
+
+        ReactDOM.render(pageBodyEditor,
             document.getElementById('product-editor-modal'),
             () => {
                 if ( onStartEditPageBody != null ) {
@@ -246,7 +251,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                  onNewPage, onMovePage, parentPage, previousPage,
                 pageOrder, onChangeTreeState, onQuickLevelMove,
                 onChangePageInfo, onDeletePage, onStartEditPageBody,
-                depth
+                depth, customComponents
         } = this.props;
 
         let { toolbarVisible } = this.state
@@ -275,16 +280,21 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                                   onDeletePage={onDeletePage}
                                   onStartEditPageBody={onStartEditPageBody}
                                   depth={ depth + 1 }
+                                  customComponents={customComponents}
                         />;
         }
 
         // is toolbar visible?
         if ( toolbarVisible ) {
-            toolbar = <PageItemToolbar
-                                pageInfo={ info }
-                                onDelete={ onDeletePage }
-                                onEditClicked={ this.handleShowBodyEditor.bind(this) }
-                        />
+            let PageItemToolbarComponent = customComponents.PageItemToolbar || PageItemToolbar
+
+            toolbar = React.createElement(PageItemToolbarComponent,
+                {
+                    pageInfo: info,
+                    onDelete: onDeletePage,
+                    onEditClicked: this.handleShowBodyEditor.bind(this)
+                }
+            )
         }
 
         let depthLeftMargin = depth * 5 + '%'

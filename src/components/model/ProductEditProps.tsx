@@ -1,3 +1,4 @@
 export interface ProductEditProps {
-    onStartEditPageBody?: any
+    onStartEditPageBody?: any,
+    customComponents?: any
 }

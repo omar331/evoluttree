@@ -26,6 +26,7 @@ import * as clientApi from './client-api.tsx'
 import { AppProps } from './components/model/AppProps'
 
 
+//noinspection TypeScriptValidateTypes
 /**
  * Main Evoluttree component
  * (actually it'll be wrapped by dnd's DragDropContext)
@@ -36,12 +37,14 @@ export class App extends React.Component<AppProps, {}> {
 
     public static defaultProps: AppProps = {
         config: {},
-        editingProduct: null
+        editingProduct: null,
+        customComponents: {}
     }
 
     constructor(props:AppProps) {
         super(props);
 
+        //noinspection TypeScriptUnresolvedVariable
         const { config } = this.props
 
         let editingProduct:any = props.editingProduct
@@ -77,14 +80,15 @@ export class App extends React.Component<AppProps, {}> {
         this.store.dispatch( replaceState(initialState) )
     }
     render() {
-        const { config } = this.props
+        //noinspection TypeScriptUnresolvedVariable
+        const { config, customComponents } = this.props
         let { onStartEditPageBody } = config
 
         return(
             <Provider store={this.store}>
                 <ProductEdit
                     onStartEditPageBody={onStartEditPageBody}
-                
+                    customComponents={customComponents}
                 />
             </Provider>
         );
@@ -96,7 +100,7 @@ export class App extends React.Component<AppProps, {}> {
  *
  * @type {ContextComponentClass<{config?: any}>}
  */
-export const Evoluttree =  DragDropContext<{config?: any, editingProduct?: any}>(HTML5Backend)(
+export const Evoluttree =  DragDropContext<{config?: any, editingProduct?: any, customComponents?: any}>(HTML5Backend)(
     React.createClass({
         render: function () {
             return <App {...this.props} />;

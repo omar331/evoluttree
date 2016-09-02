@@ -29,7 +29,7 @@ export default class PagesList extends React.Component<PagesProps, {}> {
                 onNewPage, onMovePage, onChangeTreeState,
                 onQuickLevelMove, onChangePageInfo, onDeletePage,
                 onStartEditPageBody,
-                depth
+                depth, customComponents
         } = this.props;
 
         let order = -1;
@@ -59,6 +59,7 @@ export default class PagesList extends React.Component<PagesProps, {}> {
                                                       onDeletePage={onDeletePage}
                                                       onStartEditPageBody={onStartEditPageBody}
                                                       depth={ depth }
+                                                      customComponents={ customComponents }
                                             />
 
 
