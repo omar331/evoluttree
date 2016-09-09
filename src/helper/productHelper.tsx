@@ -329,7 +329,7 @@ export const quickLevelMove = ( state:any, direction:string, pageLocalId:string 
 
             state = movePage(state,pageLocalId, parentLocalId, parentOrderInLevel + 1 )
 
-            return state
+            return changePageTreeState(state, parentLocalId, {collapsed: true})
         case QuickLevelMove.DIRECTION_DOWN:
             let predecessor = findPagePredecessor(state, pageLocalId )
 
@@ -341,7 +341,9 @@ export const quickLevelMove = ( state:any, direction:string, pageLocalId:string 
             // remove from its original position
             state = removePageByLocalId(state, pageLocalId)
 
-            return addChildToPage(state, predecessor, pageMoving )
+            const newState = changePageTreeState(state, predecessor, {collapsed: false})
+
+            return addChildToPage(newState, predecessor, pageMoving )
         default:
             return state
     }
