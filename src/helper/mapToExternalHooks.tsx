@@ -18,7 +18,7 @@ export const mapActionToAPIParameters = (store:any) => (next:any) => (action:any
     next(action)
 
     /*
-        Sometimes calling hooks are no desired. To prevent external hooks action
+        Sometimes calling hooks are not desired. To prevent external hooks action
         just add preventExternalHooks == true   to action
      */
     if ( action.hasOwnProperty("preventExternalHooks") && action.preventExternalHooks === true ) return
@@ -48,6 +48,7 @@ export const mapActionToAPIParameters = (store:any) => (next:any) => (action:any
 
             next({
                 type: 'HOOK_NEW_PAGE',
+                localId: action.localId,
                 referencedPage:{
                     id: referencedPageId,
                     placement: referencedPagePlacement

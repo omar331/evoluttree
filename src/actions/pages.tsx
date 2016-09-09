@@ -1,3 +1,5 @@
+import { v4 } from 'node-uuid'
+
 export const changePageTitle = (localId:string, newTitle:string) => {
     return {
         type: 'PAGE_CHANGE_TITLE',
@@ -11,6 +13,7 @@ export const changePageTitle = (localId:string, newTitle:string) => {
 export const newPage = (ownerPageLocalId:string, position:number) => {
     return {
         type: 'NEW_PAGE',
+        localId: v4(),
         ownerPageLocalId, position
     }
 }

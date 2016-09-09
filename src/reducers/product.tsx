@@ -14,7 +14,7 @@ const productReducer = (state:any, action:any) => {
             return changePageInfo(state, action.localId, {title: action.newTitle} )
         case 'NEW_PAGE':
             // creates the page
-            const newPageNode = createPageNode({title: null})
+            const newPageNode = createPageNode({title: null, localId: action.localId })
 
             // inserts it
             return insertPage(
