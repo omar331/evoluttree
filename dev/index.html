@@ -13,6 +13,52 @@
 
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+            <style>
+                .page-item-custom {
+                    height: 4.0em !important;
+                }
+
+                .collapse-handler-custom {
+                    line-height: 1.0em;
+                }
+
+                .page-title-custom {
+                    width: 90% !important;
+                    float: left !important;
+                    margin-bottom: 0.3em;
+                }
+
+                .page-title-custom INPUT {
+                    appearance: none;
+                    box-shadow: none;
+                    outline: none;
+                }
+
+                .toolbar-custom {
+                    width: 85% !important;
+                    float: none !important;
+                    clear: both;
+                    text-align: left !important;
+                    margin-left: 3.1em;
+                }
+
+                /* QUANDO O TITULO ESTIVER SENDO EDITADO */
+                .editing-title .page-title-custom {
+                    height: 2.4em;
+                    line-height: 2.4em;
+                }
+
+                .editing-title .page-title-custom INPUT {
+                    font-size: 1.5em;
+                }
+
+                .editing-title .toolbar-custom {
+                    display: none;
+                }
+
+            </style>
+
         </head>
         <body>
             <div id="content"></div>

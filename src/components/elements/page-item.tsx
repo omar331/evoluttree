@@ -298,40 +298,37 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         }
 
         let depthLeftMargin = depth * 5 + '%'
-
+        let editingTitleStyle = this.state.editingTitle ? 'editing-title' : ''
 
         return connectDragSource(
-            <div className="page-item-holder"
+            <div className={"page-item-holder page-item-holder-custom " + editingTitleStyle}
                 style={{ opacity: isDragging ? 0.5 : 1 }}
             >
-
-
-                <Row className="page-item"
+                <div className={'page-item page-item-custom page-item-depth-' + depth}
                         style={{marginLeft: depthLeftMargin}}
                          onMouseEnter={ this.handleMouseEnter.bind(this) }
                          onMouseLeave={ this.handleMouseLeave.bind(this) }
                 >
-                  <Col md={1} onClick={this.handleExpandCollapse.bind(this)} style={{width: "1em", textAlign: "center"}}>
+                  <div className="collapse-handler collapse-handler-custom" onClick={this.handleExpandCollapse.bind(this)}>
                       {  hasChildren ?
                                 this.renderCollapseControl(collapsed)
                                 : <span style={{opacity:0}}>*</span>
                       }
-                  </Col>
-                  <Col md={8}>
-                      <div className="page-title" onClick={ (e) => { this.toggleEditingTitle() } }>
-                         { this.state.editingTitle ?
-                              <TitleEdit value={ info.get('title') }
-                                         onTitleChange={ this.updateTitle.bind(this) }
-                              />
-                              :
-                              <TitleDisplay value={ info.get('title') } />
-                          }
-                      </div>
-                  </Col>
-                  <Col md={3} className="text-right">
+                  </div>
+                  <div className="page-title page-title-custom" onClick={ (e) => { this.toggleEditingTitle() } }>
+                     { this.state.editingTitle ?
+                          <TitleEdit value={ info.get('title') }
+                                     onTitleChange={ this.updateTitle.bind(this) }
+                          />
+                          :
+                          <TitleDisplay value={ info.get('title') } />
+                      }
+                  </div>
+                  <div className="toolbar toolbar-custom">
                       { toolbar }
-                  </Col>
-                </Row>
+                  </div>
+
+                </div>
 
                 <DropStuffArea
                     ownerPage={ info }

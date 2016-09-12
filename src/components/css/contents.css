@@ -35,4 +35,36 @@
     background-color: none;
 }
 
+.page-item-holder-custom {
+
+}
+
+.page-item {
+    float: none;
+    overflow: auto;
+    padding: 0.8em;
+}
+
+.page-item .collapse-handler {
+    float: left;
+    width: 3em;
+    text-align: center;
+    padding: 0.2em;
+}
+
+.page-item .page-title {
+    float: left;
+    width: 65%;
+}
+
+.page-item .toolbar {
+    float: left;
+    width: 25%;
+    text-align: right;
+}
+
+
+
+
+
 
