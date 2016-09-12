@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, Glyphicon } from 'react-bootstrap';
+import { Label, Button, Glyphicon } from 'react-bootstrap';
 
 import { DragSource } from 'react-dnd';
 
@@ -31,12 +31,12 @@ class NewPageElement extends React.Component<{connectDragSource: any, isDragging
         const { connectDragSource, isDragging } = this.props;
         return connectDragSource(
             <div style={{
-        opacity: isDragging ? 0.5 : 1,
-        fontSize: 25,
-        fontWeight: 'bold',
-        cursor: 'move'
-      }}>
-                <Button bsStyle="info"><Glyphicon glyph="plus" /> página</Button>
+                        opacity: isDragging ? 0.5 : 1,
+                        fontSize: 25,
+                        fontWeight: 'bold',
+                        cursor: 'move'
+              }}>
+                <Label bsStyle="primary"><Glyphicon glyph="plus" /> página</Label>
             </div>
         );
     }
