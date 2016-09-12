@@ -78,7 +78,7 @@ export default class ComponentsBar extends React.Component<{}, {}> {
     }
     render() {
         return(
-            <div className="component-bar">
+            <div className="components-list">
                 <div className="component">
                     <DraggableNewPageElement />
                 </div>

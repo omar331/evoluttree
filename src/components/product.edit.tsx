@@ -33,7 +33,7 @@ export default class ProductEditComponent extends React.Component<ProductEditPro
                         </Col>
                     </Row>
                     <Row>
-                        <Col md={2}>
+                        <Col md={2} className="component-bar">
                             <ComponentsBar />
                         </Col>
                         <Col md={6} className="pages-container" >
