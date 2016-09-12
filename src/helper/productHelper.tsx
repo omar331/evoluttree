@@ -21,7 +21,7 @@ export const prepareEditingProduct = (productInfo:any) => {
     let editing = productInfo
 
     editing.general.localId = v4()
-    editing = addLocalIdToPage(editing)
+    editing = setupEditingPages(editing)
 
     return editing;
 }
@@ -33,12 +33,13 @@ export const prepareEditingProduct = (productInfo:any) => {
  * @param page
  * @returns {any}
  */
-const addLocalIdToPage = (page:any) => {
+const setupEditingPages = (page:any) => {
     page.localId = v4()
+    page.collapsed = true
 
     if ( page.pages && page.pages.length > 0 ) {
         for(let i = 0; i < page.pages.length; i++) {
-            page.pages[i] = addLocalIdToPage(page.pages[i])
+            page.pages[i] = setupEditingPages(page.pages[i])
         }
     }
 
