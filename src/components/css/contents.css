@@ -6,21 +6,20 @@
 }
 
 .content-list {
+    margin-top: 0.3em;
 }
 
-.content-list .content-list {
-}
 
 
 .content-list .page-item-holder {
     list-style-type: none;
-
 }
 
-.content-list .page-item {
-    padding: 0.4em 0.1em;
-    background: #efefef;
+
+.content-list .page-item-holder, .content-list .page-item .page-item {
+    margin-bottom: 0.3em;
 }
+
 
 .insert-stuff-area {
     height: 0.3em;
@@ -42,29 +41,48 @@
 .page-item {
     float: none;
     overflow: auto;
-    padding: 0.8em;
+    background: #fafafa;
+    border: 1px solid #ddd;
+    padding-top: 0.6em;
+    width: 35em;
 }
 
 .page-item .collapse-handler {
     float: left;
-    width: 3em;
+    width: 5%;
     text-align: center;
+    margin-left: 1%;
     padding: 0.2em;
+    color: #bbb;
 }
 
 .page-item .page-title {
     float: left;
-    width: 65%;
+    width: 90%;
+}
+
+.page-item .page-title .title-display {
+    color: #23282d;
+    font-weight: bold;
+    font-size: 0.9em;
 }
 
 .page-item .toolbar {
-    float: left;
-    width: 25%;
-    text-align: right;
+    clear: both;
+    width: 85%;
+    margin-left: 2.5em;
+    margin-bottom: 0.3em;
+    height: 1.5em;
 }
 
+.page-item .toolbar A {
+    font-size: 0.9em;
+}
 
+.page-item .toolbar .sep {
+    color: #ddd;
+}
 
-
-
-
+.page-item .toolbar A.danger {
+    color: red;
+}

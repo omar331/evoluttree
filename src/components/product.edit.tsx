@@ -36,7 +36,7 @@ export default class ProductEditComponent extends React.Component<ProductEditPro
                         <Col md={2} className="component-bar">
                             <ComponentsBar />
                         </Col>
-                        <Col md={6} className="pages-container" >
+                        <Col md={10} className="pages-container" >
                             <PagesListContainer
                                     onStartEditPageBody={onStartEditPageBody}
                                     customComponents={customComponents}

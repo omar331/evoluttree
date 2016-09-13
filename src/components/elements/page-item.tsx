@@ -145,11 +145,9 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
     handleExpandCollapse(e:any) {
         const { onChangeTreeState, info } = this.props
 
-        const newCollapsedState = !this.state.collapsed
-        
-        onChangeTreeState( info.get('localId'), {collapsed: newCollapsedState})        
-        
-        this.setState({collapsed: newCollapsedState })
+        const newCollapsedState = ! info.get('collapsed')
+
+        onChangeTreeState( info.get('localId'), {collapsed: newCollapsedState})
     }
     handleEndDrag(dragInfo:any) {
         const { info, pageOrder, onQuickLevelMove } = this.props
@@ -327,7 +325,6 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                   <div className="toolbar toolbar-custom">
                       { toolbar }
                   </div>
-
                 </div>
 
                 <DropStuffArea
