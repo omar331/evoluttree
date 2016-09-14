@@ -297,12 +297,13 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
 
         let depthLeftMargin = depth * 5 + '%'
         let editingTitleStyle = this.state.editingTitle ? 'editing-title' : ''
+        let depthStyles = 'page-item-depth-' + depth
 
         return connectDragSource(
             <div className={"page-item-holder page-item-holder-custom " + editingTitleStyle}
                 style={{ opacity: isDragging ? 0.5 : 1 }}
             >
-                <div className={'page-item page-item-custom page-item-depth-' + depth}
+                <div className={'page-item page-item-custom ' + depthStyles}
                         style={{marginLeft: depthLeftMargin}}
                          onMouseEnter={ this.handleMouseEnter.bind(this) }
                          onMouseLeave={ this.handleMouseLeave.bind(this) }

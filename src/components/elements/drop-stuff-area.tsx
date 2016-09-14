@@ -30,6 +30,8 @@ const dropStuffAreaTarget = {
 
                 destinationId = props.ownerPage.get('localId')
 
+                console.log(' teste posicao = %d', props.pageOrder)
+
                 props.onDrop(ItemTypes.MOVE_PAGE,
                                 {
                                     sourceLocalId: item.localId,

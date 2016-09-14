@@ -10,7 +10,7 @@ export const editingProduct = {
         pages: [
             {
                 id: 1,
-                title: 'Page One',
+                title: 'Page 1',
                 pages: [
                     {id: 11,
                         title: 'Page One One'
@@ -23,7 +23,7 @@ export const editingProduct = {
             },
             {
                 id: 2,
-                title: 'Page Two',
+                title: 'Page 2',
                 pages: [
                     {id: 21,
                         title: 'Page Two A'
@@ -50,7 +50,7 @@ export const editingProduct = {
             },
             {
                 id: 3,
-                title: 'Page Three',
+                title: 'Page 3',
                 pages: [
                     {id: 31,
                         title: 'Page Two A'
@@ -74,6 +74,22 @@ export const editingProduct = {
                         title: 'Página 2c'
                     }
                 ]
+            },
+            {
+                id: 4,
+                title: 'Page 4'
+            },
+            {
+                id: 5,
+                title: 'Page 5'
+            },
+            {
+                id: 6,
+                title: 'Page 6'
+            },
+            {
+                id: 7,
+                title: 'Page 7'
             }
         ]
     }

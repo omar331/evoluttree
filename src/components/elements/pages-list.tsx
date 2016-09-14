@@ -32,7 +32,7 @@ export default class PagesList extends React.Component<PagesProps, {}> {
                 depth, customComponents
         } = this.props;
 
-        let order = -1;
+        let order = -1
 
         let previousPage:any = null
         let pageComponentRes:any

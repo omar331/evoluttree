@@ -5,6 +5,10 @@ import { changeProductTitle, createPageNode, insertPage,
     from '../helper/productHelper'
 
 const productReducer = (state:any, action:any) => {
+
+    console.log('Actions = %o', action)
+
+
     switch (action.type) {
         case 'REPLACE_STATE':
             return action.newState

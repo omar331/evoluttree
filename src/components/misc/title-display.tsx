@@ -12,7 +12,7 @@ export class TitleDisplay extends React.Component<{value: string}, {}> {
 
         if ( this.isEmptyValue() ) textStyle['fontStyle'] = 'italic';
 
-        let displayText = !this.isEmptyValue() ? value : 'untitled page'
+        let displayText = !this.isEmptyValue() ? value : 'sem título'
 
         return <div className="title-display" style={ containerStyle } title={ displayText }>
                      <span style={ textStyle }>{ displayText }</span>

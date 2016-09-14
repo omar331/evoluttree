@@ -220,16 +220,21 @@ export const insertPage = (state:any, ownerPageLocalId:string, position:number, 
 
 export const movePage = (state:any, sourcePageLocalId:string, destinationPageLocalId:string, position:number) =>
 {
-    // get the source page and clone it
-    const sourcePageNode = getPageByLocalId( state, sourcePageLocalId )
+    let tempSourcePageLocalId = sourcePageLocalId + '-moved'
 
-    // remove the page from the state
-    const newState1 = removePageByLocalId( state, sourcePageLocalId )
+    // get the source page and clone it
+    let sourcePageNode = getPageByLocalId( state, sourcePageLocalId )
+    sourcePageNode = sourcePageNode.set('localId', tempSourcePageLocalId )
 
     // ---> insert the cloned page into new location
-    const newState = insertPage(newState1, destinationPageLocalId, position, sourcePageNode )
+    const newState = insertPage(state, destinationPageLocalId, position, sourcePageNode )
 
-    return newState
+    // remove the page from the state
+    const newState1 = removePageByLocalId( newState, sourcePageLocalId )
+
+    const newState2 = changePageInfo( newState1, tempSourcePageLocalId, {localId: sourcePageLocalId})
+
+    return newState2
 }
 
 
