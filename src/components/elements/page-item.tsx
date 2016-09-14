@@ -295,6 +295,8 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
             )
         }
 
+
+
         let depthLeftMargin = depth * 5 + '%'
         let editingTitleStyle = this.state.editingTitle ? 'editing-title' : ''
         let depthStyles = 'page-item-depth-' + depth
@@ -328,13 +330,15 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                   </div>
                 </div>
 
-                <DropStuffArea
-                    ownerPage={ info }
-                    parentPage={ parentPage }
-                    previousPage={ previousPage }
-                    onDrop={this.handleDropItem.bind(this)}
-                    pageOrder={pageOrder}
-                />
+                <div style={{marginLeft: depthLeftMargin}}>
+                    <DropStuffArea
+                        ownerPage={ info }
+                        parentPage={ parentPage }
+                        previousPage={ previousPage }
+                        onDrop={this.handleDropItem.bind(this)}
+                        pageOrder={pageOrder}
+                    />
+                </div>
                 {children}
             </div>
         );
