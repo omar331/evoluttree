@@ -12,7 +12,7 @@
     "./src/main_DIST.tsx",
     "typings/globals/classnames/index.d.ts",
     "typings/modules/es6-promise/index.d.ts",
-    "typings/globals/react/index.d.ts",
+    "typings/modules/react/index.d.ts",
     "typings/modules/react-dom/index.d.ts",
     "typings/globals/react-bootstrap/index.d.ts",
     "typings/modules/react-redux/index.d.ts",

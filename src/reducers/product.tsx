@@ -39,6 +39,18 @@ const productReducer = (state:any, action:any) => {
             return changePageInfo(state, action.localPageId, action.pageInfo )
         case 'DELETE_PAGE':
             return removePageByLocalId( state, action.pageLocalId )
+
+        case 'PAGE_ITEM_START_DRAG':
+
+            // TODO: set page info into the state
+            console.log(' START DRAG PAGE = %o', action.pageInfo)
+
+            return state
+        case 'PAGE_ITEM_END_DRAG':
+
+            // TODO: remove page info from the state
+            console.log(' END DRAG PAGE = %o', action.pageInfo)
+            return state
         default:
             return state
     }

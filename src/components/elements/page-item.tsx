@@ -24,11 +24,16 @@ const pageListingSource = {
     endDrag(props:any, monitor:any, component:any) {
         let offset = monitor.getDifferenceFromInitialOffset()
 
+        props.onEndDrag && props.onEndDrag(props.info)
+
         if ( offset == null ) return;
 
         component.handleEndDrag( { deltaX: offset.x, deltaY: offset.y } )
     },
     beginDrag(props:any) {
+
+        props.onBeginDrag && props.onBeginDrag(props.info)
+
         return {
             localId: props.info.get('localId'),
             id: props.info.get('id'),
@@ -64,6 +69,8 @@ interface PageItemProps {
     onChangePageInfo: any,
     onDeletePage: any,
     onStartEditPageBody: any,
+    onBeginDrag: any,
+    onEndDrag: any,
     info: any,
     parentPage: any,
     previousPage: any,
@@ -92,6 +99,8 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         onChangePageInfo: null,
         onDeletePage: null,
         onStartEditPageBody: null,
+        onBeginDrag: null,
+        onEndDrag: null,
         info: {},
         parentPage: null,
         previousPage: null,
@@ -249,7 +258,8 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                  onNewPage, onMovePage, parentPage, previousPage,
                 pageOrder, onChangeTreeState, onQuickLevelMove,
                 onChangePageInfo, onDeletePage, onStartEditPageBody,
-                depth, customComponents
+                depth, customComponents,
+                onBeginDrag, onEndDrag
         } = this.props;
 
         let { toolbarVisible } = this.state
@@ -277,6 +287,8 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                                   onChangePageInfo={onChangePageInfo}
                                   onDeletePage={onDeletePage}
                                   onStartEditPageBody={onStartEditPageBody}
+                                  onPageItemBeginDrag={onBeginDrag}
+                                  onPageItemEndDrag={onEndDrag}
                                   depth={ depth + 1 }
                                   customComponents={customComponents}
                         />;

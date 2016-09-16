@@ -5,7 +5,7 @@ import HTML5Backend from 'react-dnd-html5-backend'
 
 import { fromJS } from 'immutable';
 
-import ProductEdit from './components/product.edit'
+import ProductEditContainer from './containers/product-edit'
 
 import { Provider } from 'react-redux'
 
@@ -86,7 +86,7 @@ export class App extends React.Component<AppProps, {}> {
 
         return(
             <Provider store={this.store}>
-                <ProductEdit
+                <ProductEditContainer
                     onStartEditPageBody={onStartEditPageBody}
                     customComponents={customComponents}
                 />
