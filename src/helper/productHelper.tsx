@@ -371,3 +371,29 @@ export const changePageInfo = (state:any, localPageId:string, modifiedProperties
 
     return  state.setIn( ['editing'].concat(pageKeyPath), page )
 }
+
+
+/**
+ * Set page being dragged
+ * @param state
+ * @param pageInfo
+ * @returns {List<T>|Map<K, V>}
+ */
+export const setPageBeingDragged = (state:any, pageInfo:any ) => {
+    const newState = state.setIn(['editing', 'misc', 'pageBeingDragged'], pageInfo)
+
+    return newState
+}
+
+
+/**
+ * Unset the page being dragged
+ * @param state
+ * @param pageInfo
+ * @returns {List<T>|Map<K, V>}
+ */
+export const unsetPageBeingDragged = (state:any, pageInfo:any ) => {
+    const newState = state.setIn(['editing', 'misc', 'pageBeingDragged'], null)
+
+    return newState
+}

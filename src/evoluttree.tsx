@@ -61,6 +61,7 @@ export class App extends React.Component<AppProps, {}> {
 
         // ensure every editing product has a local id
         editingProduct = productHelper.prepareEditingProduct(editingProduct)
+        editingProduct.misc = {pageBeingDragged: null}
 
         // populates initial state with editing product
         const initialState:any = fromJS({

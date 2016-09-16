@@ -65,6 +65,7 @@ export default class PagesList extends React.Component<PagesProps, {}> {
                                                       onStartEditPageBody={onStartEditPageBody}
                                                       depth={ depth }
                                                       customComponents={ customComponents }
+                                                      key={page.get('localId')}
                                             />
 
 
