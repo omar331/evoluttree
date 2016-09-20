@@ -8,11 +8,11 @@ import PageItemToolbar from './page-item-toolbar'
 
 import PageEditor from './page-editor'
 
-import { DragSource } from 'react-dnd';
+import { DragSource, DropTarget } from 'react-dnd';
 
 import { QuickLevelMove, ItemTypes } from '../constants';
 
-import { DropStuffArea } from './drop-stuff-area';
+import { DropStuffAreaContainer } from '../../containers/drop-stuff-area';
 
 import { TitleEdit } from '../misc/title-edit'
 import { TitleDisplay } from '../misc/title-display'
@@ -37,7 +37,9 @@ const pageListingSource = {
         return {
             localId: props.info.get('localId'),
             id: props.info.get('id'),
-            pageOrder: props.info.get('pageOrder')
+            pageOrder: props.info.get('pageOrder'),
+            pageTitle: props.info.get('title'),
+            pageInfo: props.info
         };
     }
 };
@@ -60,6 +62,7 @@ function collect(connect:any, monitor:any) {
  */
 interface PageItemProps {
     connectDragSource: any,
+    connectDropTarget: any,
     isDragging: any,
     onTitleChange: any,
     onNewPage?: any,
@@ -76,20 +79,27 @@ interface PageItemProps {
     previousPage: any,
     pageOrder?: number,
     depth?: number,
-    customComponents?: any
+    customComponents?: any,
+    pageItemBeingDraggedOverMe?: any,
+    isOver?: boolean
 }
 
 interface PageItemState {
     editingTitle?: boolean,
-    collapsed?: boolean,
     toolbarVisible?: boolean,
-    showPageBodyEditor?: boolean
+    showPageBodyEditor?: boolean,
+
+    // when the page item must be shown expanded for a short amout of time
+    // (for instance, when another page item is dragged over the this item,
+    //  this item is expanded temporaly)
+    temporalyExpanded?: boolean
 }
 
 
 class PageItem extends React.Component<PageItemProps, PageItemState> {
     public static defaultProps: PageItemProps = {
         connectDragSource: null,
+        connectDropTarget: null,
         isDragging: false,
         onTitleChange: null,
         onNewPage: null,
@@ -105,7 +115,10 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         parentPage: null,
         previousPage: null,
         depth: 0,
-        customComponents: {}
+        customComponents: {},
+
+        pageItemBeingDraggedOverMe: null,
+        isOver: false
     }
 
     constructor(props:any) {
@@ -114,7 +127,8 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         this.state = {
             editingTitle: false,
             toolbarVisible: false,
-            showPageBodyEditor: false
+            showPageBodyEditor: false,
+            temporalyExpanded: false
         }
     }
 
@@ -180,6 +194,8 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         
         let absDeltaX = Math.abs(deltaX)
         let absDeltaY = Math.abs(deltaY)
+
+        console.log(' qld deltaX = %s', absDeltaX)
 
         // decides if it's a Q.L.M. 
         if ( (absDeltaX > QuickLevelMove.MIN_DELTA_X) && ( absDeltaY < QuickLevelMove.MAX_DELTA_Y ) ) {
@@ -254,12 +270,16 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         document.getElementById('product-editor-modal').innerHTML = ''
     }
     render() {
-        const { info, connectDragSource, isDragging, onTitleChange,
+        const { info, connectDragSource,
+                connectDropTarget,
+                isDragging, onTitleChange,
                  onNewPage, onMovePage, parentPage, previousPage,
                 pageOrder, onChangeTreeState, onQuickLevelMove,
                 onChangePageInfo, onDeletePage, onStartEditPageBody,
                 depth, customComponents,
-                onBeginDrag, onEndDrag
+                onBeginDrag, onEndDrag,
+                pageItemBeingDraggedOverMe,
+                isOver
         } = this.props;
 
         let { toolbarVisible } = this.state
@@ -267,11 +287,32 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         // does this node have children nodes?
         let children:any = null
         let toolbar:any = null
-        let pages:any = info.get('pages');
+        let pages:any = info.get('pages')
 
         let hasChildren:boolean = (pages != null)
 
-        const collapsed = info.get('collapsed') || false
+
+
+
+
+        /*
+             expand item temporarily,
+             when a page is being dragged over this item.
+             Ignores when it's the page itself
+         */
+        let isThereAPageBeingDraggedOverMe = false
+        if ( (pageItemBeingDraggedOverMe != null) &&
+             (pageItemBeingDraggedOverMe.get('localId') != info.get('localId') ) )
+        {
+            isThereAPageBeingDraggedOverMe = true
+        }
+
+
+
+
+        let temporalyExpanded = (isOver) && isThereAPageBeingDraggedOverMe
+
+        const collapsed = (info.get('collapsed') || false) && ( !temporalyExpanded )
 
         // If this page has children and its node is not
         // collapsed, render its children components
@@ -313,7 +354,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         let editingTitleStyle = this.state.editingTitle ? 'editing-title' : ''
         let depthStyles = 'page-item-depth-' + depth
 
-        return connectDragSource(
+        return connectDropTarget(connectDragSource(
             <div className={"page-item-holder page-item-holder-custom " + editingTitleStyle}
                 style={{ opacity: isDragging ? 0.5 : 1 }}
             >
@@ -343,7 +384,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                 </div>
 
                 <div style={{marginLeft: depthLeftMargin}}>
-                    <DropStuffArea
+                    <DropStuffAreaContainer
                         ownerPage={ info }
                         parentPage={ parentPage }
                         previousPage={ previousPage }
@@ -353,7 +394,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                 </div>
                 {children}
             </div>
-        );
+        ))
     }
 
     renderCollapseControl(collapsed:boolean) {
@@ -367,7 +408,46 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         </span>
     }
 }
-export default DragSource(ItemTypes.MOVE_PAGE, pageListingSource, collect)(PageItem);
+let pageItemDragSource =  DragSource(ItemTypes.MOVE_PAGE, pageListingSource, collect)(PageItem)
+
+
+
+
+
+
+
+const pageItemTarget = {
+    canDrop(props:any) {
+        // TODO: check what type of object may be dropped here
+        return true;
+    },
+    drop(props:any, monitor:any) {
+    }
+};
+
+
+const pageItemCollect = (connect:any, monitor:any) => {
+    let item = monitor.getItem()
+
+    let pageItemBeingDraggedOverMe:any = null
+
+    if ( item != null ) {
+        pageItemBeingDraggedOverMe = item.pageInfo
+    }
+
+    return {
+        connectDropTarget: connect.dropTarget(),
+        canDrop: monitor.canDrop(),
+        isOver: monitor.isOver(),
+        pageItemBeingDraggedOverMe
+    }
+};
+
+
+
+export default DropTarget( [ItemTypes.MOVE_PAGE, ItemTypes.NEW_PAGE, ItemTypes.NEW_TASK] , pageItemTarget, pageItemCollect )(pageItemDragSource)
+
+
 
 
 

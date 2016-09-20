@@ -30,9 +30,8 @@
 
 
 .insert-stuff-area-over {
-    height: 4em;
-    border: 0.1em dashed #333;
-    background-color: #fafafa;
+    /*border: 0.1em dashed #333;*/
+    background-color: #999;
     margin-bottom: 0.2em;
     margin-top: 0.2em;
     width: 35em;

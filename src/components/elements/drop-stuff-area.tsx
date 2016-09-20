@@ -61,9 +61,12 @@ interface DropAreaProps {
     pageOrder?: number,
     connectDropTarget: any,
     isOver: any,
+    onDragOverBegin?: any,
+    onDragOverEnd?: any,
     canDrop: any,
     onDrop: any,
-    onNewPage?: any
+    onNewPage?: any,
+    pageItemBeingDragged?: any
 }
 
 
@@ -72,16 +75,45 @@ interface DropAreaProps {
 /**
  * Area where users can place content stuff (pages, tasks and so on)
  */
-class DropArea extends React.Component<DropAreaProps, {}> {
+class DropArea extends React.Component<DropAreaProps, {isDraggingOver?: boolean}> {
     constructor(props:any) {
-        super(props);
-    }
-    render() {
-        const { ownerPage, parentPage, pageOrder, 
-            connectDropTarget, isOver, canDrop, onNewPage,
-            previousPage        
-        } = this.props;
+        super(props)
 
+        this.state = {
+            isDraggingOver: false
+        }
+    }
+
+    handleDragOver() {
+        const {ownerPage, onDragOverBegin, onDragOverEnd, isOver } = this.props;
+        const { isDraggingOver } = this.state
+
+        // enters
+        if (isDraggingOver && isOver ) {
+            onDragOverBegin && onDragOverBegin( ownerPage )
+            this.setState({isDraggingOver:true})
+        }
+
+        // leave
+        if (!isOver ) {
+            onDragOverEnd && onDragOverEnd( ownerPage )
+            this.setState({isDraggingOver:false})
+        }
+    }
+
+
+    componentWillReceiveProps() {
+        // verify dragging over
+//        this.handleDragOver()
+    }
+
+    render() {
+        const { connectDropTarget, isOver, pageItemBeingDragged } = this.props;
+
+
+        // this.handleDragOver()
+
+        // const { isDraggingOver } = this.state
         return connectDropTarget(
             <div className={classNames( {'insert-stuff-area': true, 'insert-stuff-area-over': isOver } )}>
             </div>

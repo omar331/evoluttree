@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import PageItem from './page-item';
+import PageItemContainer from '../../containers/page-item';
 import {PagesProps} from '../model/PagesProps'
 import { Map, List } from 'immutable'
 
@@ -48,7 +48,7 @@ export default class PagesList extends React.Component<PagesProps, {}> {
                         (page:any) => {
                             order++
 
-                            pageComponentRes = <PageItem info={page}
+                            pageComponentRes = <PageItemContainer info={page}
                                                       parentPage={parentPage}
                                                       previousPage={previousPage}
                                                       id={page.get('id')}

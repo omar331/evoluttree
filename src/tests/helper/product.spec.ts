@@ -18,6 +18,10 @@ const TEST_FIND_PAGE_TITLE = 'Página 1b'
 const TEST_FIND_PAGE_ID = 12
 
 
+const TEST_EXPAND_ALL_UPPER_LEVELS_LOCAL_ID = 'pagina1b2'
+
+
+
 describe('ProductHelper', () => {
     let state, data
 
@@ -177,6 +181,38 @@ describe('ProductHelper', () => {
             expect( newTitle  ).to.equal( changedPage.get('title') )
         })
     })
+
+
+    /**
+     * Expand all page levels in a certain keypath
+     */
+    it('Expand all page levels in a certain keypath', () => {
+        let pageKeyPath = productHelper.searchPageKeyPath(state.get('editing'), TEST_EXPAND_ALL_UPPER_LEVELS_LOCAL_ID )
+
+        let newCollapseState = false
+
+        const newState = productHelper.changeCollapseStateAllPageLevels( state, TEST_EXPAND_ALL_UPPER_LEVELS_LOCAL_ID, newCollapseState  )
+
+        // ---> verify if all page nodes in keypath are in expected state
+        let allInCorrectState = true
+        while ( pageKeyPath.length > 0 ) {
+            let fullKeypath: any = ['editing'].concat(pageKeyPath)
+            let collapsed = newState.getIn(fullKeypath.concat(['collapsed']))
+
+            if ( collapsed != newCollapseState ) {
+                allInCorrectState = false
+                break
+            }
+
+            // remove 2 last elements
+            pageKeyPath.splice(-2,2)
+        }
+        expect( allInCorrectState  ).to.equal( true )
+
+    })
+
+
+
 
 
 })

@@ -234,7 +234,10 @@ export const movePage = (state:any, sourcePageLocalId:string, destinationPageLoc
 
     const newState2 = changePageInfo( newState1, tempSourcePageLocalId, {localId: sourcePageLocalId})
 
-    return newState2
+    const newState3 = changeCollapseStateAllPageLevels( newState2, sourcePageLocalId, false )
+
+
+    return newState3
 }
 
 
@@ -380,9 +383,7 @@ export const changePageInfo = (state:any, localPageId:string, modifiedProperties
  * @returns {List<T>|Map<K, V>}
  */
 export const setPageBeingDragged = (state:any, pageInfo:any ) => {
-    const newState = state.setIn(['editing', 'misc', 'pageBeingDragged'], pageInfo)
-
-    return newState
+    return state.setIn(['editing', 'misc', 'pageItemBeingDragged'], pageInfo)
 }
 
 
@@ -393,7 +394,28 @@ export const setPageBeingDragged = (state:any, pageInfo:any ) => {
  * @returns {List<T>|Map<K, V>}
  */
 export const unsetPageBeingDragged = (state:any, pageInfo:any ) => {
-    const newState = state.setIn(['editing', 'misc', 'pageBeingDragged'], null)
+    return state.setIn(['editing', 'misc', 'pageItemBeingDragged'], null)
+}
+
+
+
+export const changeCollapseStateAllPageLevels = (state:any, localId:string, newCollapseState:boolean ) => {
+    let path = searchPageKeyPath(state.get('editing'), localId )
+
+    let newState = state.withMutations( (mState:any) => {
+        let editing = mState.get('editing')
+
+        while ( path.length > 0 ) {
+            editing = editing.setIn( path.concat(['collapsed']), newCollapseState)
+
+            // remove 2 last elements
+            path.splice(-2,2)
+        }
+
+
+        mState = mState.setIn( ['editing'], editing )
+    })
+
 
     return newState
 }
