@@ -23,7 +23,7 @@ export const prepareEditingProduct = (productInfo:any) => {
     editing.general.localId = v4()
     editing = setupEditingPages(editing)
 
-    return editing;
+    return editing
 }
 
 

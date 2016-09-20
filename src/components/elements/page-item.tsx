@@ -354,34 +354,38 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         let editingTitleStyle = this.state.editingTitle ? 'editing-title' : ''
         let depthStyles = 'page-item-depth-' + depth
 
-        return connectDropTarget(connectDragSource(
+        // page item content
+        let pageItemNode = <div className={'page-item page-item-custom ' + depthStyles}
+                            style={{marginLeft: depthLeftMargin}}
+                            onMouseEnter={ this.handleMouseEnter.bind(this) }
+                            onMouseLeave={ this.handleMouseLeave.bind(this) }
+                        >
+                            <div className="collapse-handler collapse-handler-custom" onClick={this.handleExpandCollapse.bind(this)}>
+                                {  hasChildren ?
+                                    this.renderCollapseControl(collapsed)
+                                    : <span style={{opacity:0}}>*</span>
+                                }
+                            </div>
+                            <div className="page-title page-title-custom" onClick={ (e) => { this.toggleEditingTitle() } }>
+                                { this.state.editingTitle ?
+                                    <TitleEdit value={ info.get('title') }
+                                               onTitleChange={ this.updateTitle.bind(this) }
+                                    />
+                                    :
+                                    <TitleDisplay value={ info.get('title') } />
+                                }
+                            </div>
+                            <div className="toolbar toolbar-custom">
+                                { toolbar }
+                            </div>
+                     </div>
+
+        // page item holder
+        return connectDropTarget(
             <div className={"page-item-holder page-item-holder-custom " + editingTitleStyle}
                 style={{ opacity: isDragging ? 0.5 : 1 }}
             >
-                <div className={'page-item page-item-custom ' + depthStyles}
-                        style={{marginLeft: depthLeftMargin}}
-                         onMouseEnter={ this.handleMouseEnter.bind(this) }
-                         onMouseLeave={ this.handleMouseLeave.bind(this) }
-                >
-                  <div className="collapse-handler collapse-handler-custom" onClick={this.handleExpandCollapse.bind(this)}>
-                      {  hasChildren ?
-                                this.renderCollapseControl(collapsed)
-                                : <span style={{opacity:0}}>*</span>
-                      }
-                  </div>
-                  <div className="page-title page-title-custom" onClick={ (e) => { this.toggleEditingTitle() } }>
-                     { this.state.editingTitle ?
-                          <TitleEdit value={ info.get('title') }
-                                     onTitleChange={ this.updateTitle.bind(this) }
-                          />
-                          :
-                          <TitleDisplay value={ info.get('title') } />
-                      }
-                  </div>
-                  <div className="toolbar toolbar-custom">
-                      { toolbar }
-                  </div>
-                </div>
+                {connectDragSource(pageItemNode)}
 
                 <div style={{marginLeft: depthLeftMargin}}>
                     <DropStuffAreaContainer
@@ -394,7 +398,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                 </div>
                 {children}
             </div>
-        ))
+        )
     }
 
     renderCollapseControl(collapsed:boolean) {
@@ -421,7 +425,14 @@ const pageItemTarget = {
         // TODO: check what type of object may be dropped here
         return true;
     },
-    drop(props:any, monitor:any) {
+    drop(props:any, monitor:any, component:any) {
+        let offset = monitor.getDifferenceFromInitialOffset()
+
+        console.log('DROP   offset = %o   component = %o', offset, component)
+
+        if ( offset == null ) return;
+
+        component.handleEndDrag( { deltaX: offset.x, deltaY: offset.y } )
     }
 };
 
