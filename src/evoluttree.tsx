@@ -88,7 +88,7 @@ export class App extends React.Component<AppProps, {}> {
         // just changed sanitize
         window.setInterval( () => {
             this.store.dispatch( pageJustChangedSanitize() )
-        }, 2000 )
+        }, 5000 )
     }
     render() {
         //noinspection TypeScriptUnresolvedVariable
