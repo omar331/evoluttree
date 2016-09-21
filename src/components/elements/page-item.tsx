@@ -20,6 +20,9 @@ import { TitleDisplay } from '../misc/title-display'
 import SyntheticEvent = __React.SyntheticEvent;
 
 
+import * as classNames from 'classnames';
+
+
 const pageListingSource = {
     endDrag(props:any, monitor:any, component:any) {
         let offset = monitor.getDifferenceFromInitialOffset()
@@ -92,7 +95,8 @@ interface PageItemState {
     // when the page item must be shown expanded for a short amout of time
     // (for instance, when another page item is dragged over the this item,
     //  this item is expanded temporaly)
-    temporalyExpanded?: boolean
+    temporalyExpanded?: boolean,
+    justChanged?: boolean
 }
 
 
@@ -128,7 +132,8 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
             editingTitle: false,
             toolbarVisible: false,
             showPageBodyEditor: false,
-            temporalyExpanded: false
+            temporalyExpanded: false,
+            justChanged: false
         }
     }
 
@@ -173,7 +178,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         onChangeTreeState( info.get('localId'), {collapsed: newCollapsedState})
     }
     handleEndDrag(dragInfo:any) {
-        const { info, pageOrder, onQuickLevelMove } = this.props
+        const { info, onQuickLevelMove } = this.props
 
         let quickLevelMoveInfo = this.getQuickLevelMoveInfo(dragInfo.deltaX, dragInfo.deltaY)
 
@@ -195,7 +200,6 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         let absDeltaX = Math.abs(deltaX)
         let absDeltaY = Math.abs(deltaY)
 
-        console.log(' qld deltaX = %s', absDeltaX)
 
         // decides if it's a Q.L.M. 
         if ( (absDeltaX > QuickLevelMove.MIN_DELTA_X) && ( absDeltaY < QuickLevelMove.MAX_DELTA_Y ) ) {
@@ -352,14 +356,15 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
 
         let depthLeftMargin = depth * 5 + '%'
         let editingTitleStyle = this.state.editingTitle ? 'editing-title' : ''
-        let depthStyles = 'page-item-depth-' + depth
+        let depthClasses = 'page-item-depth-' + depth
 
         // page item content
-        let pageItemNode = <div className={'page-item page-item-custom ' + depthStyles}
-                            style={{marginLeft: depthLeftMargin}}
-                            onMouseEnter={ this.handleMouseEnter.bind(this) }
-                            onMouseLeave={ this.handleMouseLeave.bind(this) }
-                        >
+        let pageItemNode = <div
+                                className={classNames('page-item', 'page-item-custom', depthClasses, {'just-changed': info.get('justChanged') || false } )}
+                                style={{marginLeft: depthLeftMargin}}
+                                onMouseEnter={ this.handleMouseEnter.bind(this) }
+                                onMouseLeave={ this.handleMouseLeave.bind(this) }
+                            >
                             <div className="collapse-handler collapse-handler-custom" onClick={this.handleExpandCollapse.bind(this)}>
                                 {  hasChildren ?
                                     this.renderCollapseControl(collapsed)
@@ -381,22 +386,26 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                      </div>
 
         // page item holder
+        let dropStuffArea = null
+
+        dropStuffArea = <div style={{marginLeft: depthLeftMargin}}>
+                            <DropStuffAreaContainer
+                                ownerPage={ info }
+                                parentPage={ parentPage }
+                                previousPage={ previousPage }
+                                onDrop={this.handleDropItem.bind(this)}
+                                pageOrder={pageOrder}
+                            />
+                        </div>
+
         return connectDropTarget(
             <div className={"page-item-holder page-item-holder-custom " + editingTitleStyle}
                 style={{ opacity: isDragging ? 0.5 : 1 }}
             >
+
                 {connectDragSource(pageItemNode)}
 
-                <div style={{marginLeft: depthLeftMargin}}>
-                    <DropStuffAreaContainer
-                        ownerPage={ info }
-                        parentPage={ parentPage }
-                        previousPage={ previousPage }
-                        onDrop={this.handleDropItem.bind(this)}
-                        pageOrder={pageOrder}
-                    />
-                </div>
-                {children}
+                {hasChildren ? children : dropStuffArea}
             </div>
         )
     }

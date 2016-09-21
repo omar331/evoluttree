@@ -232,9 +232,9 @@ export const movePage = (state:any, sourcePageLocalId:string, destinationPageLoc
     // remove the page from the state
     const newState1 = removePageByLocalId( newState, sourcePageLocalId )
 
-    const newState2 = changePageInfo( newState1, tempSourcePageLocalId, {localId: sourcePageLocalId})
+    const newState2 = changePageInfo( newState1, tempSourcePageLocalId, {localId: sourcePageLocalId, justChanged: true})
 
-    const newState3 = changeCollapseStateAllPageLevels( newState2, sourcePageLocalId, false )
+    const newState3 = changeCollapseStateAllUpperPageLevels( newState2, sourcePageLocalId, false )
 
 
     return newState3
@@ -399,8 +399,10 @@ export const unsetPageBeingDragged = (state:any, pageInfo:any ) => {
 
 
 
-export const changeCollapseStateAllPageLevels = (state:any, localId:string, newCollapseState:boolean ) => {
+export const changeCollapseStateAllUpperPageLevels = (state:any, localId:string, newCollapseState:boolean ) => {
     let path = searchPageKeyPath(state.get('editing'), localId )
+
+    path.splice(-2,2)
 
     let newState = state.withMutations( (mState:any) => {
         let editing = mState.get('editing')

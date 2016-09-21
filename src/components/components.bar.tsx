@@ -36,7 +36,7 @@ class NewPageElement extends React.Component<{connectDragSource: any, isDragging
                         fontWeight: 'bold',
                         cursor: 'move'
               }}>
-                <Label bsStyle="primary"><Glyphicon glyph="plus" /> página</Label>
+                <Label bsStyle="primary"> página</Label>
             </div>
         );
     }

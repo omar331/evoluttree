@@ -30,8 +30,9 @@
 
 
 .insert-stuff-area-over {
-    /*border: 0.1em dashed #333;*/
-    background-color: #999;
+    border: 0.1em dashed #999;
+    background-color: lightblue;
+    height: 5em;
     margin-bottom: 0.2em;
     margin-top: 0.2em;
     width: 35em;
@@ -114,4 +115,23 @@
 
 .page-item-depth-5 {
     background: #ffffff;
+}
+
+
+@keyframes just-changed {
+    0% {
+        background-color: #1d75b3;
+    }
+    50% {
+        background-color: #66afe9;
+    }
+    80% {
+        background-color: #ffffff;
+    }
+}
+
+
+.page-item.just-changed {
+    animation-name: just-changed;
+    animation-duration: 3s;
 }

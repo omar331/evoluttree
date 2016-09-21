@@ -191,7 +191,7 @@ describe('ProductHelper', () => {
 
         let newCollapseState = false
 
-        const newState = productHelper.changeCollapseStateAllPageLevels( state, TEST_EXPAND_ALL_UPPER_LEVELS_LOCAL_ID, newCollapseState  )
+        const newState = productHelper.changeCollapseStateAllUpperPageLevels( state, TEST_EXPAND_ALL_UPPER_LEVELS_LOCAL_ID, newCollapseState  )
 
         // ---> verify if all page nodes in keypath are in expected state
         let allInCorrectState = true
