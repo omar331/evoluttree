@@ -27,3 +27,11 @@ export const pageItemEndDrag = (pageInfo:any) => {
         pageInfo
     }
 }
+
+
+export const pageJustChangedSanitize = () => {
+    return {
+        type: 'PAGE_JUST_CHANGED_SANITIZE'
+    }
+}
+

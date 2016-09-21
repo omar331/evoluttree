@@ -232,13 +232,58 @@ export const movePage = (state:any, sourcePageLocalId:string, destinationPageLoc
     // remove the page from the state
     const newState1 = removePageByLocalId( newState, sourcePageLocalId )
 
-    const newState2 = changePageInfo( newState1, tempSourcePageLocalId, {localId: sourcePageLocalId, justChanged: true})
+    const newState2 = changePageInfo( newState1, tempSourcePageLocalId, {localId: sourcePageLocalId})
 
     const newState3 = changeCollapseStateAllUpperPageLevels( newState2, sourcePageLocalId, false )
 
+    const newState4 = pageHasJustChanged( newState3, sourcePageLocalId )
 
-    return newState3
+
+
+    return newState4
 }
+
+
+/**
+ * Mark a page as 'just changed' and put it in a queue to be sanitized
+ * @param state
+ * @param localId
+ * @returns {Map<K, V>|Set<T>|Stack<T>|List<T>}
+ */
+export const pageHasJustChanged = (state:any, localId:any) => {
+    return state.withMutations( (mState) => {
+
+        // mark the page as just changed
+        mState = changePageInfo( mState, localId, {justChanged: true})
+
+        // put the page in the sanitizing queue
+        let pagesJustChanged = mState.getIn(['editing', 'misc', 'pagesJustChanged']).toJS()
+        pagesJustChanged.push(localId)
+
+        mState.setIn(['editing', 'misc', 'pagesJustChanged'], fromJS(pagesJustChanged) )
+    })
+}
+
+
+/**
+ * Sanitize the 'just changed' page queue
+ * @param state
+ * @returns {Map<K, V>|Set<T>|Stack<T>|List<T>}
+ */
+export const pageHasJustChangedSanitize = (state:any) => {
+    return state.withMutations( (mState) => {
+
+        let pagesJustChanged = mState.getIn(['editing', 'misc', 'pagesJustChanged']).toJS()
+
+        let pageLocalId = pagesJustChanged.shift()
+
+        if ( pageLocalId ) {
+            mState = changePageInfo( mState, pageLocalId, {justChanged: false} )
+            mState.setIn(['editing', 'misc', 'pagesJustChanged'], fromJS(pagesJustChanged) )
+        }
+    })
+}
+
 
 
 /**

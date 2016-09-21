@@ -36,6 +36,11 @@ const productReducer = (state:any, action:any) => {
             return productHelper.setPageBeingDragged(state, action.pageInfo)
         case 'PAGE_ITEM_END_DRAG':
             return productHelper.unsetPageBeingDragged(state, action.pageInfo)
+
+        case 'PAGE_JUST_CHANGED_SANITIZE':
+            let pagesJustChanged = state.getIn(['editing', 'misc', 'pagesJustChanged'])
+
+            return productHelper.pageHasJustChangedSanitize( state )
         default:
             return state
     }

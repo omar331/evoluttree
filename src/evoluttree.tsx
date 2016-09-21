@@ -11,7 +11,7 @@ import { Provider } from 'react-redux'
 
 import { createStore, applyMiddleware,compose } from 'redux'
 
-import { replaceState } from "./actions/products"
+import { replaceState, pageJustChangedSanitize } from "./actions/products"
 
 import productReducer from './reducers/product'
 
@@ -61,7 +61,12 @@ export class App extends React.Component<AppProps, {}> {
 
         // ensure every editing product has a local id
         editingProduct = productHelper.prepareEditingProduct(editingProduct)
-        editingProduct.misc = {pageItemBeingDragged: null}
+        editingProduct.misc = {
+            pageItemBeingDragged: null,
+
+            // pages just changed
+            pagesJustChanged: fromJS([])
+        }
 
         // populates initial state with editing product
         const initialState:any = fromJS({
@@ -79,6 +84,11 @@ export class App extends React.Component<AppProps, {}> {
         clientApi.expose(this.store)
         
         this.store.dispatch( replaceState(initialState) )
+
+        // just changed sanitize
+        window.setInterval( () => {
+            this.store.dispatch( pageJustChangedSanitize() )
+        }, 2000 )
     }
     render() {
         //noinspection TypeScriptUnresolvedVariable
