@@ -359,7 +359,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         let depthClasses = 'page-item-depth-' + depth
 
         // page item content
-        let pageItemNode = <div
+        let pageItemNode = connectDragSource(<div
                                 className={classNames('page-item', 'page-item-custom', depthClasses, {'just-changed': info.get('justChanged') || false } )}
                                 style={{marginLeft: depthLeftMargin}}
                                 onMouseEnter={ this.handleMouseEnter.bind(this) }
@@ -383,12 +383,10 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                             <div className="toolbar toolbar-custom">
                                 { toolbar }
                             </div>
-                     </div>
+                     </div>)
 
-        // page item holder
-        let dropStuffArea = null
-
-        dropStuffArea = <div style={{marginLeft: depthLeftMargin}}>
+        // drop stuff after current item
+        let dropStuffArea = <div style={{marginLeft: depthLeftMargin}}>
                             <DropStuffAreaContainer
                                 ownerPage={ info }
                                 parentPage={ parentPage }
@@ -398,14 +396,31 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                             />
                         </div>
 
+        // drop stuff before the first item within the level
+        let dropStuffAreaPosition0 = null
+        if ( pageOrder == 0 ) {
+            dropStuffAreaPosition0 = <div style={{marginLeft: depthLeftMargin}}>
+                <DropStuffAreaContainer
+                    ownerPage={ info }
+                    parentPage={ parentPage }
+                    previousPage={ null }
+                    onDrop={this.handleDropItem.bind(this)}
+                    pageOrder={-1}
+                style={{border: '1px solid green'}} />
+            </div>
+        }
+
         return connectDropTarget(
             <div className={"page-item-holder page-item-holder-custom " + editingTitleStyle}
-                style={{ opacity: isDragging ? 0.5 : 1 }}
-            >
+                style={{ opacity: isDragging ? 0.5 : 1 }}>
 
-                {connectDragSource(pageItemNode)}
+                {dropStuffAreaPosition0}
 
-                {hasChildren ? children : dropStuffArea}
+                {pageItemNode}
+
+                { (collapsed || !hasChildren) ? dropStuffArea  : <div />}
+
+                {children}
             </div>
         )
     }
