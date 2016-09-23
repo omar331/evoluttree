@@ -347,7 +347,8 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                 {
                     pageInfo: info,
                     onDelete: onDeletePage,
-                    onEditClicked: this.handleShowBodyEditor.bind(this)
+                    onEditClicked: this.handleShowBodyEditor.bind(this),
+                    depth: depth
                 }
             )
         }

@@ -8,7 +8,7 @@ export default class PageItemToolbar extends React.Component<PageItemToolbarProp
     }
 
    render() {
-        const { pageInfo, onEditClicked, onDelete } = this.props
+        const { pageInfo, onEditClicked, onDelete, depth } = this.props
 
         return <div>
                     <a onClick={ () => { onEditClicked() } }>
