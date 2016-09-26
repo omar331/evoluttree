@@ -26,10 +26,41 @@ export default class PagesList extends React.Component<PagesProps, {}> {
     constructor(props:any) {
         super(props);
     }
+    handleMovePage(...args) {
+        const { depth, onMovePage, customComponents } = this.props
+
+        // it's possible to set an external confirmation handler.
+        // If so, it's called at the first level...
+        if ( depth == 0 ) {
+            if ( customComponents.onMovePageConfirm ) {
+                customComponents.onMovePageConfirm( onMovePage, ...args )
+                return
+            }
+        }
+
+        onMovePage(...args)
+    }
+
+
+    handleQuickLevelMove(...args) {
+        const { depth, onQuickLevelMove, customComponents } = this.props
+
+        // it's possible to set an external confirmation handler.
+        // If so, it's called at the first level...
+        if ( depth == 0 ) {
+            if ( customComponents.onMovePageConfirm ) {
+                customComponents.onMovePageConfirm( onQuickLevelMove, ...args )
+                return
+            }
+        }
+
+        onQuickLevelMove(...args)
+    }
+
     render() {
-        const { pages, generalInfo, parentPage, onTitleChange,
-                onNewPage, onMovePage, onChangeTreeState,
-                onQuickLevelMove, onChangePageInfo, onDeletePage,
+        const { pages, parentPage, onTitleChange,
+                onNewPage, onChangeTreeState,
+                onChangePageInfo, onDeletePage,
                 onStartEditPageBody,
                 depth, customComponents,
                 onPageItemBeginDrag, onPageItemEndDrag
@@ -39,7 +70,6 @@ export default class PagesList extends React.Component<PagesProps, {}> {
 
         let previousPage:any = null
         let pageComponentRes:any
-
 
         return(
             <div>
@@ -55,9 +85,9 @@ export default class PagesList extends React.Component<PagesProps, {}> {
                                                       pageOrder={order}
                                                       onTitleChange={onTitleChange}
                                                       onNewPage={onNewPage}
-                                                      onMovePage={onMovePage}
+                                                      onMovePage={this.handleMovePage.bind(this)}
                                                       onChangeTreeState={onChangeTreeState}
-                                                      onQuickLevelMove={onQuickLevelMove}
+                                                      onQuickLevelMove={this.handleQuickLevelMove.bind(this)}
                                                       onChangePageInfo={onChangePageInfo}
                                                       onDeletePage={onDeletePage}
                                                       onBeginDrag={onPageItemBeginDrag}
