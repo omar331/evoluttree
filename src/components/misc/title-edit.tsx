@@ -27,6 +27,7 @@ export class TitleEdit extends React.Component<{value: string, onTitleChange: an
                       onBlur={ onTitleChange }
                       onClick={ (e) => { e.stopPropagation() } }
                       onKeyPress={ this.handleKeyPress.bind(this) }
+                      onFocus={()=>{this.refs.textInput.select()}}
         />
     }
 }

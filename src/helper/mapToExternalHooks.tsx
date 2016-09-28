@@ -1,7 +1,7 @@
 /**
  * Our frontend speaks in terms of localId's. API talks in terms
  * of database IDs.
- * 
+ *
  * This middleware converts frontend user actions (like drag and drops)
  * to a more suitable format that may be used by external applications,
  * like HTTP Rest calls.
@@ -18,8 +18,8 @@ export const mapActionToAPIParameters = (store:any) => (next:any) => (action:any
     next(action)
 
     /*
-        Sometimes calling hooks are no desired. To prevent external hooks action
-        just add preventExternalHooks == true   to action
+     Sometimes calling hooks are not desired. To prevent external hooks action
+     just add preventExternalHooks == true   to action
      */
     if ( action.hasOwnProperty("preventExternalHooks") && action.preventExternalHooks === true ) return
 
@@ -38,9 +38,9 @@ export const mapActionToAPIParameters = (store:any) => (next:any) => (action:any
         case 'NEW_PAGE':
             let referencedPageId:string
             let referencedPagePlacement:string = 'after'
-            
+
             const pageBefore = productHelper.getPageByLocalId(currentState, action.ownerPageLocalId)
-            
+
             if ( pageBefore ) {
                 referencedPageId = pageBefore.get('id')
                 referencedPagePlacement = 'after'
@@ -48,6 +48,7 @@ export const mapActionToAPIParameters = (store:any) => (next:any) => (action:any
 
             next({
                 type: 'HOOK_NEW_PAGE',
+                localId: action.localId,
                 referencedPage:{
                     id: referencedPageId,
                     placement: referencedPagePlacement
@@ -129,7 +130,7 @@ export const mapActionToAPIParameters = (store:any) => (next:any) => (action:any
             }
 
             if ( newAction != null ) next(newAction)
-            
+
             break;
         case 'DELETE_PAGE':
             sourcePage = productHelper.getPageByLocalId(currentState, action.pageLocalId)
