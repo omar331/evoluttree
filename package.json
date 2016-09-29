@@ -1,6 +1,6 @@
 {
   "name": "evoluttree",
-  "version": "0.1.3",
+  "version": "0.1.8-c",
   "description": "A ReactJs based, drag and drop, tree-structured content management system.",
   "repository": {
     "type": "git",
@@ -10,18 +10,21 @@
     "start": "webpack-dev-server --watch --inline --hot --TARGET=DEV",
     "test": "mocha --colors './src/tests/**/*.spec.ts' --compilers ts:ts-node/register",
     "test:watch": "watch-run -i -p './src/**' npm run test",
-
     "postinstall": "typings install",
-
     "deploy:development": "./node_modules/shipit-cli/bin/shipit development deploy",
     "deploy:staging": "./node_modules/shipit-cli/bin/shipit staging deploy",
     "deploy:production": "./node_modules/shipit-cli/bin/shipit production deploy",
-
     "prepublish": "npm run make:dist",
-
     "make:dist": "webpack --TARGET=DIST"
   },
-  "keywords": ["cms", "content management", "react", "tree", "drag and drop", "typescript"],
+  "keywords": [
+    "cms",
+    "content management",
+    "react",
+    "tree",
+    "drag and drop",
+    "typescript"
+  ],
   "author": "",
   "license": "MIT",
   "dependencies": {
@@ -30,7 +33,7 @@
     "lodash": "^4.13.1",
     "node-uuid": "^1.4.7",
     "react": "^15.2.0",
-    "react-bootstrap": "^0.29.5",
+    "react-bootstrap": "^0.30.3",
     "react-dnd": "^2.1.4",
     "react-dnd-html5-backend": "^2.1.2",
     "react-dom": "^15.2.0",

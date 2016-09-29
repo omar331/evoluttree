@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Glyphicon, Label } from 'react-bootstrap'
 import { PageItemToolbarProps } from '../model/PageItemToolbarProps'
 
 
@@ -9,22 +8,16 @@ export default class PageItemToolbar extends React.Component<PageItemToolbarProp
     }
 
    render() {
-        const { pageInfo, onEditClicked, onDelete } = this.props
+        const { pageInfo, onEditClicked, onDelete, depth } = this.props
 
         return <div>
-                    <a>
-                        <Label bsStyle="primary">
-                            <Glyphicon glyph="edit" onClick={ () => { onEditClicked() } } />
-                        </Label>
+                    <a onClick={ () => { onEditClicked() } }>
+                        edit
                     </a>
-                    &nbsp;
-                    <a onClick={ () => { onDelete( pageInfo.get('localId') ) } }>
-                        <Label bsStyle="danger">
-                            <Glyphicon glyph="trash" />
-                        </Label>
+                    &nbsp;<span className="sep">|</span>&nbsp;
+                    <a className="danger" onClick={ () => { onDelete( pageInfo.get('localId') ) } }>
+                        delete
                     </a>
                </div>
     }
 }
-
-

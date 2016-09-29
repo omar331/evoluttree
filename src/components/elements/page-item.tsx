@@ -8,11 +8,11 @@ import PageItemToolbar from './page-item-toolbar'
 
 import PageEditor from './page-editor'
 
-import { DragSource } from 'react-dnd';
+import { DragSource, DropTarget } from 'react-dnd';
 
 import { QuickLevelMove, ItemTypes } from '../constants';
 
-import { DropStuffArea } from './drop-stuff-area';
+import { DropStuffAreaContainer } from '../../containers/drop-stuff-area';
 
 import { TitleEdit } from '../misc/title-edit'
 import { TitleDisplay } from '../misc/title-display'
@@ -20,19 +20,29 @@ import { TitleDisplay } from '../misc/title-display'
 import SyntheticEvent = __React.SyntheticEvent;
 
 
+import * as classNames from 'classnames';
+
+
 const pageListingSource = {
     endDrag(props:any, monitor:any, component:any) {
         let offset = monitor.getDifferenceFromInitialOffset()
+
+        props.onEndDrag && props.onEndDrag(props.info)
 
         if ( offset == null ) return;
 
         component.handleEndDrag( { deltaX: offset.x, deltaY: offset.y } )
     },
     beginDrag(props:any) {
+
+        props.onBeginDrag && props.onBeginDrag(props.info)
+
         return {
             localId: props.info.get('localId'),
             id: props.info.get('id'),
-            pageOrder: props.info.get('pageOrder')
+            pageOrder: props.info.get('pageOrder'),
+            pageTitle: props.info.get('title'),
+            pageInfo: props.info
         };
     }
 };
@@ -55,6 +65,7 @@ function collect(connect:any, monitor:any) {
  */
 interface PageItemProps {
     connectDragSource: any,
+    connectDropTarget: any,
     isDragging: any,
     onTitleChange: any,
     onNewPage?: any,
@@ -64,24 +75,35 @@ interface PageItemProps {
     onChangePageInfo: any,
     onDeletePage: any,
     onStartEditPageBody: any,
+    onBeginDrag: any,
+    onEndDrag: any,
     info: any,
     parentPage: any,
     previousPage: any,
     pageOrder?: number,
-    depth?: number
+    depth?: number,
+    customComponents?: any,
+    pageItemBeingDraggedOverMe?: any,
+    isOver?: boolean
 }
 
 interface PageItemState {
     editingTitle?: boolean,
-    collapsed?: boolean,
     toolbarVisible?: boolean,
-    showPageBodyEditor?: boolean
+    showPageBodyEditor?: boolean,
+
+    // when the page item must be shown expanded for a short amout of time
+    // (for instance, when another page item is dragged over the this item,
+    //  this item is expanded temporaly)
+    temporalyExpanded?: boolean,
+    justChanged?: boolean
 }
 
 
 class PageItem extends React.Component<PageItemProps, PageItemState> {
     public static defaultProps: PageItemProps = {
         connectDragSource: null,
+        connectDropTarget: null,
         isDragging: false,
         onTitleChange: null,
         onNewPage: null,
@@ -91,10 +113,16 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         onChangePageInfo: null,
         onDeletePage: null,
         onStartEditPageBody: null,
+        onBeginDrag: null,
+        onEndDrag: null,
         info: {},
         parentPage: null,
         previousPage: null,
-        depth: 0
+        depth: 0,
+        customComponents: {},
+
+        pageItemBeingDraggedOverMe: null,
+        isOver: false
     }
 
     constructor(props:any) {
@@ -103,10 +131,12 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         this.state = {
             editingTitle: false,
             toolbarVisible: false,
-            showPageBodyEditor: false
+            showPageBodyEditor: false,
+            temporalyExpanded: false,
+            justChanged: false
         }
     }
-    
+
     toggleEditingTitle() {
         let currentStateEditing = this.state.editingTitle;
         let newStateEditing = !currentStateEditing
@@ -143,14 +173,12 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
     handleExpandCollapse(e:any) {
         const { onChangeTreeState, info } = this.props
 
-        const newCollapsedState = !this.state.collapsed
-        
-        onChangeTreeState( info.get('localId'), {collapsed: newCollapsedState})        
-        
-        this.setState({collapsed: newCollapsedState })
+        const newCollapsedState = ! info.get('collapsed')
+
+        onChangeTreeState( info.get('localId'), {collapsed: newCollapsedState})
     }
     handleEndDrag(dragInfo:any) {
-        const { info, pageOrder, onQuickLevelMove } = this.props
+        const { info, onQuickLevelMove } = this.props
 
         let quickLevelMoveInfo = this.getQuickLevelMoveInfo(dragInfo.deltaX, dragInfo.deltaY)
 
@@ -171,6 +199,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         
         let absDeltaX = Math.abs(deltaX)
         let absDeltaY = Math.abs(deltaY)
+
 
         // decides if it's a Q.L.M. 
         if ( (absDeltaX > QuickLevelMove.MIN_DELTA_X) && ( absDeltaY < QuickLevelMove.MAX_DELTA_Y ) ) {
@@ -203,19 +232,22 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
     }
     
     handleShowBodyEditor(e:SyntheticEvent) {
-        const { info, onStartEditPageBody } = this.props
+        const { info, onStartEditPageBody, customComponents } = this.props
 
         this.setState({showPageBodyEditor: true})
 
-        // ---> render page editor, if it's necessary
-        let pageBodyEditor = <PageEditor
-                                    pageInfo={info}
-                                    onClose={ this.handleCloseBodyEditor.bind(this) }
-                                    onSave={ this.handleSavePage.bind(this) }
-                                    textEditorElementId={this.bodyEditorElementId()}
-                                />
+        let PageEditorComponent = customComponents.PageEditor || PageEditor
 
-        ReactDOM.render(pageBodyEditor, 
+        let pageBodyEditor = React.createElement(PageEditorComponent,
+            {
+                pageInfo: info,
+                onClose: this.handleCloseBodyEditor.bind(this),
+                onSave: this.handleSavePage.bind(this),
+                textEditorElementId: this.bodyEditorElementId()
+            }
+        )
+
+        ReactDOM.render(pageBodyEditor,
             document.getElementById('product-editor-modal'),
             () => {
                 if ( onStartEditPageBody != null ) {
@@ -242,11 +274,16 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         document.getElementById('product-editor-modal').innerHTML = ''
     }
     render() {
-        const { info, connectDragSource, isDragging, onTitleChange,
+        const { info, connectDragSource,
+                connectDropTarget,
+                isDragging, onTitleChange,
                  onNewPage, onMovePage, parentPage, previousPage,
                 pageOrder, onChangeTreeState, onQuickLevelMove,
                 onChangePageInfo, onDeletePage, onStartEditPageBody,
-                depth
+                depth, customComponents,
+                onBeginDrag, onEndDrag,
+                pageItemBeingDraggedOverMe,
+                isOver
         } = this.props;
 
         let { toolbarVisible } = this.state
@@ -254,11 +291,32 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         // does this node have children nodes?
         let children:any = null
         let toolbar:any = null
-        let pages:any = info.get('pages');
+        let pages:any = info.get('pages')
 
         let hasChildren:boolean = (pages != null)
 
-        const collapsed = info.get('collapsed') || false
+
+
+
+
+        /*
+             expand item temporarily,
+             when a page is being dragged over this item.
+             Ignores when it's the page itself
+         */
+        let isThereAPageBeingDraggedOverMe = false
+        if ( (pageItemBeingDraggedOverMe != null) &&
+             (pageItemBeingDraggedOverMe.get('localId') != info.get('localId') ) )
+        {
+            isThereAPageBeingDraggedOverMe = true
+        }
+
+
+
+
+        let temporalyExpanded = (isOver) && isThereAPageBeingDraggedOverMe
+
+        const collapsed = (info.get('collapsed') || false) && ( !temporalyExpanded )
 
         // If this page has children and its node is not
         // collapsed, render its children components
@@ -274,65 +332,98 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                                   onChangePageInfo={onChangePageInfo}
                                   onDeletePage={onDeletePage}
                                   onStartEditPageBody={onStartEditPageBody}
+                                  onPageItemBeginDrag={onBeginDrag}
+                                  onPageItemEndDrag={onEndDrag}
                                   depth={ depth + 1 }
+                                  customComponents={customComponents}
                         />;
         }
 
         // is toolbar visible?
         if ( toolbarVisible ) {
-            toolbar = <PageItemToolbar
-                                pageInfo={ info }
-                                onDelete={ onDeletePage }
-                                onEditClicked={ this.handleShowBodyEditor.bind(this) }
-                        />
+            let PageItemToolbarComponent = customComponents.PageItemToolbar || PageItemToolbar
+
+            toolbar = React.createElement(PageItemToolbarComponent,
+                {
+                    pageInfo: info,
+                    onDelete: onDeletePage,
+                    onEditClicked: this.handleShowBodyEditor.bind(this),
+                    depth: depth
+                }
+            )
         }
 
+
+
         let depthLeftMargin = depth * 5 + '%'
+        let editingTitleStyle = this.state.editingTitle ? 'editing-title' : ''
+        let depthClasses = 'page-item-depth-' + depth
 
+        // page item content
+        let pageItemNode = connectDragSource(<div
+                                className={classNames('page-item', 'page-item-custom', depthClasses, {'just-changed': info.get('justChanged') || false } )}
+                                style={{marginLeft: depthLeftMargin}}
+                                onMouseEnter={ this.handleMouseEnter.bind(this) }
+                                onMouseLeave={ this.handleMouseLeave.bind(this) }
+                            >
+                            <div className="collapse-handler collapse-handler-custom" onClick={this.handleExpandCollapse.bind(this)}>
+                                {  hasChildren ?
+                                    this.renderCollapseControl(collapsed)
+                                    : <span style={{opacity:0}}>*</span>
+                                }
+                            </div>
+                            <div className="page-title page-title-custom" onClick={ (e) => { this.toggleEditingTitle() } }>
+                                { this.state.editingTitle ?
+                                    <TitleEdit value={ info.get('title') }
+                                               onTitleChange={ this.updateTitle.bind(this) }
+                                    />
+                                    :
+                                    <TitleDisplay value={ info.get('title') } />
+                                }
+                            </div>
+                            <div className="toolbar toolbar-custom">
+                                { toolbar }
+                            </div>
+                     </div>)
 
-        return connectDragSource(
-            <div className="page-item-holder"
-                style={{ opacity: isDragging ? 0.5 : 1 }}
-            >
+        // drop stuff after current item
+        let dropStuffArea = <div style={{marginLeft: depthLeftMargin}}>
+                            <DropStuffAreaContainer
+                                ownerPage={ info }
+                                parentPage={ parentPage }
+                                previousPage={ previousPage }
+                                onDrop={this.handleDropItem.bind(this)}
+                                pageOrder={pageOrder}
+                            />
+                        </div>
 
-
-                <Row className="page-item"
-                        style={{marginLeft: depthLeftMargin}}
-                         onMouseEnter={ this.handleMouseEnter.bind(this) }
-                         onMouseLeave={ this.handleMouseLeave.bind(this) }
-                >
-                  <Col md={1} onClick={this.handleExpandCollapse.bind(this)} style={{width: "1em", textAlign: "center"}}>
-                      {  hasChildren ?
-                                this.renderCollapseControl(collapsed)
-                                : <span style={{opacity:0}}>*</span>
-                      }
-                  </Col>
-                  <Col md={8}>
-                      <div className="page-title" onClick={ (e) => { this.toggleEditingTitle() } }>
-                         { this.state.editingTitle ?
-                              <TitleEdit value={ info.get('title') }
-                                         onTitleChange={ this.updateTitle.bind(this) }
-                              />
-                              :
-                              <TitleDisplay value={ info.get('title') } />
-                          }
-                      </div>
-                  </Col>
-                  <Col md={3} className="text-right">
-                      { toolbar }
-                  </Col>
-                </Row>
-
-                <DropStuffArea
+        // drop stuff before the first item within the level
+        let dropStuffAreaPosition0 = null
+        if ( pageOrder == 0 ) {
+            dropStuffAreaPosition0 = <div style={{marginLeft: depthLeftMargin}}>
+                <DropStuffAreaContainer
                     ownerPage={ info }
                     parentPage={ parentPage }
-                    previousPage={ previousPage }
+                    previousPage={ null }
                     onDrop={this.handleDropItem.bind(this)}
-                    pageOrder={pageOrder}
-                />
+                    pageOrder={-1}
+                style={{border: '1px solid green'}} />
+            </div>
+        }
+
+        return connectDropTarget(
+            <div className={"page-item-holder page-item-holder-custom " + editingTitleStyle}
+                style={{ opacity: isDragging ? 0.5 : 1 }}>
+
+                {dropStuffAreaPosition0}
+
+                {pageItemNode}
+
+                { (collapsed || !hasChildren) ? dropStuffArea  : <div />}
+
                 {children}
             </div>
-        );
+        )
     }
 
     renderCollapseControl(collapsed:boolean) {
@@ -346,7 +437,53 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         </span>
     }
 }
-export default DragSource(ItemTypes.MOVE_PAGE, pageListingSource, collect)(PageItem);
+let pageItemDragSource =  DragSource(ItemTypes.MOVE_PAGE, pageListingSource, collect)(PageItem)
+
+
+
+
+
+
+
+const pageItemTarget = {
+    canDrop(props:any) {
+        // TODO: check what type of object may be dropped here
+        return true;
+    },
+    drop(props:any, monitor:any, component:any) {
+        let offset = monitor.getDifferenceFromInitialOffset()
+
+        console.log('DROP   offset = %o   component = %o', offset, component)
+
+        if ( offset == null ) return;
+
+        component.handleEndDrag( { deltaX: offset.x, deltaY: offset.y } )
+    }
+};
+
+
+const pageItemCollect = (connect:any, monitor:any) => {
+    let item = monitor.getItem()
+
+    let pageItemBeingDraggedOverMe:any = null
+
+    if ( item != null ) {
+        pageItemBeingDraggedOverMe = item.pageInfo
+    }
+
+    return {
+        connectDropTarget: connect.dropTarget(),
+        canDrop: monitor.canDrop(),
+        isOver: monitor.isOver(),
+        pageItemBeingDraggedOverMe
+    }
+};
+
+
+
+export default DropTarget( [ItemTypes.MOVE_PAGE, ItemTypes.NEW_PAGE, ItemTypes.NEW_TASK] , pageItemTarget, pageItemCollect )(pageItemDragSource)
+
+
 
 
 

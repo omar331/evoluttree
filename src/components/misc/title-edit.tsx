@@ -9,6 +9,7 @@ export class TitleEdit extends React.Component<{value: string, onTitleChange: an
         textInput:any;
     }
     componentDidMount() {
+        this.refs.textInput.focus()
     }
     handleKeyPress(e:any) {
         const { onTitleChange } = this.props
@@ -25,7 +26,7 @@ export class TitleEdit extends React.Component<{value: string, onTitleChange: an
                       style={ {width: "96%", border: "0"} }
                       defaultValue={ value }
                       onBlur={ onTitleChange }
-                      onClick={ (e) => { e.stopPropagation() } }
+                      onClick={ (e) => { e.stopPropagation(); } }
                       onKeyPress={ this.handleKeyPress.bind(this) }
                       onFocus={()=>{this.refs.textInput.select()}}
         />

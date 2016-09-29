@@ -21,9 +21,9 @@ export const prepareEditingProduct = (productInfo:any) => {
     let editing = productInfo
 
     editing.general.localId = v4()
-    editing = addLocalIdToPage(editing)
+    editing = setupEditingPages(editing)
 
-    return editing;
+    return editing
 }
 
 
@@ -33,12 +33,13 @@ export const prepareEditingProduct = (productInfo:any) => {
  * @param page
  * @returns {any}
  */
-const addLocalIdToPage = (page:any) => {
+const setupEditingPages = (page:any) => {
     page.localId = v4()
+    page.collapsed = true
 
     if ( page.pages && page.pages.length > 0 ) {
         for(let i = 0; i < page.pages.length; i++) {
-            page.pages[i] = addLocalIdToPage(page.pages[i])
+            page.pages[i] = setupEditingPages(page.pages[i])
         }
     }
 
@@ -219,17 +220,70 @@ export const insertPage = (state:any, ownerPageLocalId:string, position:number, 
 
 export const movePage = (state:any, sourcePageLocalId:string, destinationPageLocalId:string, position:number) =>
 {
-    // get the source page and clone it
-    const sourcePageNode = getPageByLocalId( state, sourcePageLocalId )
+    let tempSourcePageLocalId = sourcePageLocalId + '-moved'
 
-    // remove the page from the state
-    const newState1 = removePageByLocalId( state, sourcePageLocalId )
+    // get the source page and clone it
+    let sourcePageNode = getPageByLocalId( state, sourcePageLocalId )
+    sourcePageNode = sourcePageNode.set('localId', tempSourcePageLocalId )
 
     // ---> insert the cloned page into new location
-    const newState = insertPage(newState1, destinationPageLocalId, position, sourcePageNode )
+    const newState = insertPage(state, destinationPageLocalId, position, sourcePageNode )
 
-    return newState
+    // remove the page from the state
+    const newState1 = removePageByLocalId( newState, sourcePageLocalId )
+
+    const newState2 = changePageInfo( newState1, tempSourcePageLocalId, {localId: sourcePageLocalId})
+
+    const newState3 = changeCollapseStateAllUpperPageLevels( newState2, sourcePageLocalId, false )
+
+    const newState4 = pageHasJustChanged( newState3, sourcePageLocalId )
+
+
+
+    return newState4
 }
+
+
+/**
+ * Mark a page as 'just changed' and put it in a queue to be sanitized
+ * @param state
+ * @param localId
+ * @returns {Map<K, V>|Set<T>|Stack<T>|List<T>}
+ */
+export const pageHasJustChanged = (state:any, localId:any) => {
+    return state.withMutations( (mState) => {
+
+        // mark the page as just changed
+        mState = changePageInfo( mState, localId, {justChanged: true})
+
+        // put the page in the sanitizing queue
+        let pagesJustChanged = mState.getIn(['editing', 'misc', 'pagesJustChanged']).toJS()
+        pagesJustChanged.push(localId)
+
+        mState.setIn(['editing', 'misc', 'pagesJustChanged'], fromJS(pagesJustChanged) )
+    })
+}
+
+
+/**
+ * Sanitize the 'just changed' page queue
+ * @param state
+ * @returns {Map<K, V>|Set<T>|Stack<T>|List<T>}
+ */
+export const pageHasJustChangedSanitize = (state:any) => {
+    return state.withMutations( (mState) => {
+
+        let pagesJustChanged = mState.getIn(['editing', 'misc', 'pagesJustChanged']).toJS()
+
+        let pageLocalId = pagesJustChanged.shift()
+
+        if ( pageLocalId ) {
+            mState = changePageInfo( mState, pageLocalId, {justChanged: false} )
+            mState.setIn(['editing', 'misc', 'pagesJustChanged'], fromJS(pagesJustChanged) )
+        }
+    })
+}
+
 
 
 /**
@@ -327,9 +381,13 @@ export const quickLevelMove = ( state:any, direction:string, pageLocalId:string 
 
             let parentOrderInLevel = getPageOrderInLevel(state, parentLocalId)
 
-            state = movePage(state,pageLocalId, parentLocalId, parentOrderInLevel + 1 )
 
-            return state
+            return state.withMutations( (stateM) => {
+                stateM = movePage(stateM,pageLocalId, parentLocalId, parentOrderInLevel + 1 )
+
+                stateM = changePageTreeState(stateM, parentLocalId, {collapsed: true})
+                stateM = pageHasJustChanged( stateM, parentLocalId )
+            })
         case QuickLevelMove.DIRECTION_DOWN:
             let predecessor = findPagePredecessor(state, pageLocalId )
 
@@ -338,10 +396,20 @@ export const quickLevelMove = ( state:any, direction:string, pageLocalId:string 
 
             let pageMoving = getPageByLocalId(state, pageLocalId)
 
-            // remove from its original position
-            state = removePageByLocalId(state, pageLocalId)
 
-            return addChildToPage(state, predecessor, pageMoving )
+            return state.withMutations( (stateM) => {
+
+                stateM = pageHasJustChanged( stateM, predecessor )
+
+                // remove from its original position
+                stateM = removePageByLocalId(stateM, pageLocalId)
+
+                stateM = changePageTreeState(stateM, predecessor, {collapsed: false})
+
+                stateM = addChildToPage(stateM, predecessor, pageMoving )
+
+                stateM = pageHasJustChanged( stateM, pageLocalId )
+            })
         default:
             return state
     }
@@ -362,4 +430,51 @@ export const changePageInfo = (state:any, localPageId:string, modifiedProperties
     page = page.merge( Map(modifiedProperties) )
 
     return  state.setIn( ['editing'].concat(pageKeyPath), page )
+}
+
+
+/**
+ * Set page being dragged
+ * @param state
+ * @param pageInfo
+ * @returns {List<T>|Map<K, V>}
+ */
+export const setPageBeingDragged = (state:any, pageInfo:any ) => {
+    return state.setIn(['editing', 'misc', 'pageItemBeingDragged'], pageInfo)
+}
+
+
+/**
+ * Unset the page being dragged
+ * @param state
+ * @param pageInfo
+ * @returns {List<T>|Map<K, V>}
+ */
+export const unsetPageBeingDragged = (state:any, pageInfo:any ) => {
+    return state.setIn(['editing', 'misc', 'pageItemBeingDragged'], null)
+}
+
+
+
+export const changeCollapseStateAllUpperPageLevels = (state:any, localId:string, newCollapseState:boolean ) => {
+    let path = searchPageKeyPath(state.get('editing'), localId )
+
+    path.splice(-2,2)
+
+    let newState = state.withMutations( (mState:any) => {
+        let editing = mState.get('editing')
+
+        while ( path.length > 0 ) {
+            editing = editing.setIn( path.concat(['collapsed']), newCollapseState)
+
+            // remove 2 last elements
+            path.splice(-2,2)
+        }
+
+
+        mState = mState.setIn( ['editing'], editing )
+    })
+
+
+    return newState
 }

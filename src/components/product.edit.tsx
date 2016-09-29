@@ -16,9 +16,15 @@ export default class ProductEditComponent extends React.Component<ProductEditPro
     constructor(props:any) {
         super(props);
     }
+    handlePageItemStartDrag(pageInfo:any) {
+        this.props.onPageItemBeginDrag && this.props.onPageItemBeginDrag(pageInfo)
+    }
+    handlePageItemEndDrag(pageInfo:any) {
+        this.props.onPageItemEndDrag && this.props.onPageItemEndDrag(pageInfo)
+    }
     render() {
 
-        const { onStartEditPageBody } = this.props
+        const { onStartEditPageBody, customComponents } = this.props
 
         return(
             <div className="product-editing">
@@ -26,18 +32,22 @@ export default class ProductEditComponent extends React.Component<ProductEditPro
                 <Grid className="grid-product-edit">
                     <Row>
                         <Col md={2}>
+
                         </Col>
                         <Col md={10}>
                             <GeneralInfoContainer />
                         </Col>
                     </Row>
                     <Row>
-                        <Col md={2}>
+                        <Col md={2} className="component-bar">
                             <ComponentsBar />
                         </Col>
-                        <Col md={6} className="pages-container" >
+                        <Col md={10} className="pages-container" >
                             <PagesListContainer
                                     onStartEditPageBody={onStartEditPageBody}
+                                    customComponents={customComponents}
+                                    onPageItemBeginDrag={this.handlePageItemStartDrag.bind(this)}
+                                    onPageItemEndDrag={this.handlePageItemEndDrag.bind(this)}
                             />
                         </Col>
                     </Row>

@@ -11,3 +11,27 @@ export const replaceState = (newState:any) => {
         newState
     }
 }
+
+
+export const pageItemStartDrag = (pageInfo:any) => {
+    return {
+        type: 'PAGE_ITEM_START_DRAG',
+        pageInfo
+    }
+}
+
+
+export const pageItemEndDrag = (pageInfo:any) => {
+    return {
+        type: 'PAGE_ITEM_END_DRAG',
+        pageInfo
+    }
+}
+
+
+export const pageJustChangedSanitize = () => {
+    return {
+        type: 'PAGE_JUST_CHANGED_SANITIZE'
+    }
+}
+

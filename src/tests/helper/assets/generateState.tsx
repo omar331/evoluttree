@@ -23,7 +23,19 @@ export const generateState = () => {
                         {
                             id: 12,
                             localId: 'pagina1b',
-                            title: 'Página 1b'
+                            title: 'Página 1b',
+                            pages: [
+                                {
+                                    id: 11,
+                                    localId: 'pagina1b1',
+                                    title: 'pagina1b1'
+                                },
+                                {
+                                    id: 12,
+                                    localId: 'pagina1b2',
+                                    title: 'pagina1b2'
+                                }
+                            ]
                         },
                         {
                             id: 13,

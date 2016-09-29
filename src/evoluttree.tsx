@@ -5,13 +5,13 @@ import HTML5Backend from 'react-dnd-html5-backend'
 
 import { fromJS } from 'immutable';
 
-import ProductEdit from './components/product.edit'
+import ProductEditContainer from './containers/product-edit'
 
 import { Provider } from 'react-redux'
 
 import { createStore, applyMiddleware,compose } from 'redux'
 
-import { replaceState } from "./actions/products"
+import { replaceState, pageJustChangedSanitize } from "./actions/products"
 
 import productReducer from './reducers/product'
 
@@ -26,6 +26,7 @@ import * as clientApi from './client-api.tsx'
 import { AppProps } from './components/model/AppProps'
 
 
+//noinspection TypeScriptValidateTypes
 /**
  * Main Evoluttree component
  * (actually it'll be wrapped by dnd's DragDropContext)
@@ -36,12 +37,14 @@ export class App extends React.Component<AppProps, {}> {
 
     public static defaultProps: AppProps = {
         config: {},
-        editingProduct: null
+        editingProduct: null,
+        customComponents: {}
     }
 
     constructor(props:AppProps) {
         super(props);
 
+        //noinspection TypeScriptUnresolvedVariable
         const { config } = this.props
 
         let editingProduct:any = props.editingProduct
@@ -58,6 +61,12 @@ export class App extends React.Component<AppProps, {}> {
 
         // ensure every editing product has a local id
         editingProduct = productHelper.prepareEditingProduct(editingProduct)
+        editingProduct.misc = {
+            pageItemBeingDragged: null,
+
+            // pages just changed
+            pagesJustChanged: fromJS([])
+        }
 
         // populates initial state with editing product
         const initialState:any = fromJS({
@@ -75,16 +84,22 @@ export class App extends React.Component<AppProps, {}> {
         clientApi.expose(this.store)
         
         this.store.dispatch( replaceState(initialState) )
+
+        // just changed sanitize
+        window.setInterval( () => {
+            this.store.dispatch( pageJustChangedSanitize() )
+        }, 5000 )
     }
     render() {
-        const { config } = this.props
+        //noinspection TypeScriptUnresolvedVariable
+        const { config, customComponents } = this.props
         let { onStartEditPageBody } = config
 
         return(
             <Provider store={this.store}>
-                <ProductEdit
+                <ProductEditContainer
                     onStartEditPageBody={onStartEditPageBody}
-                
+                    customComponents={customComponents}
                 />
             </Provider>
         );
@@ -96,7 +111,7 @@ export class App extends React.Component<AppProps, {}> {
  *
  * @type {ContextComponentClass<{config?: any}>}
  */
-export const Evoluttree =  DragDropContext<{config?: any, editingProduct?: any}>(HTML5Backend)(
+export const Evoluttree =  DragDropContext<{config?: any, editingProduct?: any, customComponents?: any}>(HTML5Backend)(
     React.createClass({
         render: function () {
             return <App {...this.props} />;
