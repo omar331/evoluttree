@@ -23,7 +23,7 @@ export default class ProductEditComponent extends React.Component<ProductEditPro
         return(
             <div className="product-editing">
                 <div id="product-editor-modal"></div>
-                <Grid>
+                <Grid className="grid-product-edit">
                     <Row>
                         <Col md={2}>
                         </Col>
