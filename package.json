@@ -10,18 +10,21 @@
     "start": "webpack-dev-server --watch --inline --hot --TARGET=DEV",
     "test": "mocha --colors './src/tests/**/*.spec.ts' --compilers ts:ts-node/register",
     "test:watch": "watch-run -i -p './src/**' npm run test",
-
     "postinstall": "typings install",
-
     "deploy:development": "./node_modules/shipit-cli/bin/shipit development deploy",
     "deploy:staging": "./node_modules/shipit-cli/bin/shipit staging deploy",
     "deploy:production": "./node_modules/shipit-cli/bin/shipit production deploy",
-
     "prepublish": "npm run make:dist",
-
     "make:dist": "webpack --TARGET=DIST"
   },
-  "keywords": ["cms", "content management", "react", "tree", "drag and drop", "typescript"],
+  "keywords": [
+    "cms",
+    "content management",
+    "react",
+    "tree",
+    "drag and drop",
+    "typescript"
+  ],
   "author": "",
   "license": "MIT",
   "dependencies": {
