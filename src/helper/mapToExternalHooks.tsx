@@ -80,7 +80,9 @@ export const mapActionToAPIParameters = (store:any) => (next:any) => (action:any
         case 'MOVE_PAGE':
             sourcePage = productHelper.getPageByLocalId(currentState, action.sourcePageLocalId)
             let destinationReferencedPage = productHelper.getPageByLocalId(currentState, action.destinationPageLocalId)
-            let destinationReferencedPagePlacement = 'after'
+
+
+            let destinationReferencedPagePlacement = action.position == 0 ? 'before' : 'after'
 
             if ( (sourcePage == null) || (destinationReferencedPage == null )) break
 
