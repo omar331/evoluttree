@@ -16,6 +16,7 @@ export default class PagesList extends React.Component<PagesProps, {}> {
         onChangePageInfo: null,
         onDeletePage: null,
         onStartEditPageBody: null,
+        onFinishEditPageBody: null,
         onPageItemBeginDrag: null,
         onPageItemEndDrag: null,
         parentPage: null,
@@ -61,7 +62,7 @@ export default class PagesList extends React.Component<PagesProps, {}> {
         const { pages, parentPage, onTitleChange,
                 onNewPage, onChangeTreeState,
                 onChangePageInfo, onDeletePage,
-                onStartEditPageBody,
+                onStartEditPageBody, onFinishEditPageBody,
                 depth, customComponents,
                 onPageItemBeginDrag, onPageItemEndDrag
         } = this.props;
@@ -93,6 +94,7 @@ export default class PagesList extends React.Component<PagesProps, {}> {
                                                       onBeginDrag={onPageItemBeginDrag}
                                                       onEndDrag={onPageItemEndDrag}
                                                       onStartEditPageBody={onStartEditPageBody}
+                                                      onFinishEditPageBody={onFinishEditPageBody}
                                                       depth={ depth }
                                                       customComponents={ customComponents }
                                                       key={page.get('localId')}

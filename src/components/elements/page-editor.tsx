@@ -34,37 +34,28 @@ export default class PageEditor extends React.Component<PageEditorInterfaces.Pro
         const { pageInfo, onClose, textEditorElementId } = this.props
 
 
+       // ---> ao fechar
+       // this.handleClose.bind(this)
+
+
         return <div className="modal-container" style={{height: 700}}>
-                <Modal
-                    dialogClassName="evltr-modal"
-                    show={true}
-                    onHide={this.handleClose.bind(this)}
-                    container={this}
-                    aria-labelledby="contained-modal-title"
-                    style={{ width: '1100px', marginLeft: 'auto', marginRight: 'auto'}}
-                >
-                    <Modal.Header closeButton>
-                        <Modal.Title id="contained-modal-title">
-                            { pageInfo.get('title') }
-                        </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <textarea
-                            ref="bodyTextInput"
-                            id={textEditorElementId}
-                            name={textEditorElementId}
-                            cols="50"
-                            rows="10"
-                            defaultValue={ pageInfo.get('body') }
-                            onChange={ (e) => { console.log(' textarea a = %s', e.target.valueOf() ); return true; } }
-                        />
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button bsStyle="primary" bsSize="medium" onClick={ this.handleSave.bind(this) }>Save</Button>
-                        <Button onClick={ onClose }>Close</Button>
-                    </Modal.Footer>
-                </Modal>
-        </div>
+                    <h2>{ pageInfo.get('title') }</h2>
+
+                    <textarea
+                        ref="bodyTextInput"
+                        id={textEditorElementId}
+                        name={textEditorElementId}
+                        cols="50"
+                        rows="10"
+                        defaultValue={ pageInfo.get('body') }
+                        onChange={ (e) => { console.log(' textarea a = %s', e.target.valueOf() ); return true; } }
+                    />
+
+                    <br/><br/>
+
+                    <Button bsStyle="primary" bsSize="medium" onClick={ this.handleSave.bind(this) }>Save</Button>
+                    <Button onClick={ onClose }>Close</Button>
+            </div>
     }
 }
 

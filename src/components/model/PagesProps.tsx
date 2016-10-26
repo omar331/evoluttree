@@ -8,6 +8,7 @@ export interface PagesProps {
     onChangePageInfo?: any,
     onDeletePage?: any,
     onStartEditPageBody?: any,
+    onFinishEditPageBody?: any,
     onPageItemBeginDrag?: any,
     onPageItemEndDrag?: any,
     parentPage?: any,

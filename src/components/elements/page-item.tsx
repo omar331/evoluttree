@@ -75,6 +75,7 @@ interface PageItemProps {
     onChangePageInfo: any,
     onDeletePage: any,
     onStartEditPageBody: any,
+    onFinishEditPageBody: any,
     onBeginDrag: any,
     onEndDrag: any,
     info: any,
@@ -90,9 +91,8 @@ interface PageItemProps {
 interface PageItemState {
     editingTitle?: boolean,
     toolbarVisible?: boolean,
-    showPageBodyEditor?: boolean,
 
-    // when the page item must be shown expanded for a short amout of time
+    // when the page item must be shown expanded for a short amount of time
     // (for instance, when another page item is dragged over the this item,
     //  this item is expanded temporaly)
     temporalyExpanded?: boolean,
@@ -113,6 +113,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         onChangePageInfo: null,
         onDeletePage: null,
         onStartEditPageBody: null,
+        onFinishEditPageBody: null,
         onBeginDrag: null,
         onEndDrag: null,
         info: {},
@@ -131,7 +132,6 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         this.state = {
             editingTitle: false,
             toolbarVisible: false,
-            showPageBodyEditor: false,
             temporalyExpanded: false,
             justChanged: false
         }
@@ -234,8 +234,6 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
     handleShowBodyEditor(e:SyntheticEvent) {
         const { info, onStartEditPageBody, customComponents } = this.props
 
-        this.setState({showPageBodyEditor: true})
-
         let PageEditorComponent = customComponents.PageEditor || PageEditor
 
         let pageBodyEditor = React.createElement(PageEditorComponent,
@@ -248,15 +246,13 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         )
 
         ReactDOM.render(pageBodyEditor,
-            document.getElementById('product-editor-modal'),
+            document.getElementById('page-body-editor'),
             () => {
                 if ( onStartEditPageBody != null ) {
                     onStartEditPageBody(this.bodyEditorElementId(), info.toJS() )
                 }
             }
         )
-        
-        
     }
 
     handleSavePage(pageLocalId:string, info:any) {
@@ -267,11 +263,16 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
     }
 
     handleCloseBodyEditor(e:SyntheticEvent) {
+
         this.closeBodyEditor()
     }
 
     closeBodyEditor() {
-        document.getElementById('product-editor-modal').innerHTML = ''
+        const { onFinishEditPageBody } = this.props
+
+        onFinishEditPageBody()
+        
+        document.getElementById('page-body-editor').innerHTML = ''
     }
     render() {
         const { info, connectDragSource,
@@ -279,7 +280,8 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                 isDragging, onTitleChange,
                  onNewPage, onMovePage, parentPage, previousPage,
                 pageOrder, onChangeTreeState, onQuickLevelMove,
-                onChangePageInfo, onDeletePage, onStartEditPageBody,
+                onChangePageInfo, onDeletePage,
+                onStartEditPageBody, onFinishEditPageBody,
                 depth, customComponents,
                 onBeginDrag, onEndDrag,
                 pageItemBeingDraggedOverMe,
@@ -332,6 +334,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                                   onChangePageInfo={onChangePageInfo}
                                   onDeletePage={onDeletePage}
                                   onStartEditPageBody={onStartEditPageBody}
+                                  onFinishEditPageBody={onFinishEditPageBody}
                                   onPageItemBeginDrag={onBeginDrag}
                                   onPageItemEndDrag={onEndDrag}
                                   depth={ depth + 1 }

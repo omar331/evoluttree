@@ -12,9 +12,14 @@ import ComponentsBar from './components.bar';
 import { ProductEditProps } from './model/ProductEditProps'
 
 
-export default class ProductEditComponent extends React.Component<ProductEditProps, {}> {
+export default class ProductEditComponent extends React.Component<ProductEditProps, {mode:string}> {
     constructor(props:any) {
         super(props);
+
+        // mode = might be 'list' or 'page-edit'
+        this.state = {
+            mode: 'list'
+        }
     }
     handlePageItemStartDrag(pageInfo:any) {
         this.props.onPageItemBeginDrag && this.props.onPageItemBeginDrag(pageInfo)
@@ -22,9 +27,22 @@ export default class ProductEditComponent extends React.Component<ProductEditPro
     handlePageItemEndDrag(pageInfo:any) {
         this.props.onPageItemEndDrag && this.props.onPageItemEndDrag(pageInfo)
     }
-    render() {
+    handleStartEditPageBody(elementId, pageInfo) {
+        const { onStartEditPageBody } = this.props
 
+        this.setState({mode: 'page-edit'})
+
+        onStartEditPageBody(elementId, pageInfo)
+    }
+    handleFinishEditPageBody(elementId, pageInfo) {
+        this.setState({mode: 'list'})
+    }
+    render() {
         const { onStartEditPageBody, customComponents } = this.props
+        const { mode } = this.state
+
+        let stylePageEditor = {display: mode == 'page-edit' ? 'block' : 'none'}
+        let stylePageListContainer = {display: mode == 'list' ? 'block' : 'none'}
 
         return(
             <div className="product-editing">
@@ -43,12 +61,17 @@ export default class ProductEditComponent extends React.Component<ProductEditPro
                             <ComponentsBar />
                         </Col>
                         <Col md={10} className="pages-container" >
-                            <PagesListContainer
-                                    onStartEditPageBody={onStartEditPageBody}
+                            <div id="page-body-editor" style={ stylePageEditor }>
+                            </div>
+                            <div style={ stylePageListContainer }>
+                                <PagesListContainer
+                                    onStartEditPageBody={this.handleStartEditPageBody.bind(this)}
+                                    onFinishEditPageBody={this.handleFinishEditPageBody.bind(this)}
                                     customComponents={customComponents}
                                     onPageItemBeginDrag={this.handlePageItemStartDrag.bind(this)}
                                     onPageItemEndDrag={this.handlePageItemEndDrag.bind(this)}
-                            />
+                                />
+                            </div>
                         </Col>
                     </Row>
                 </Grid>
