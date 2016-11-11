@@ -3,6 +3,7 @@ export interface PageItemToolbarProps {
     onDelete?: any,
     onEditClicked: any,
     onClone: any,
-    depth?: number
+    depth?: number,
+    pageOrder?: number
 }
 

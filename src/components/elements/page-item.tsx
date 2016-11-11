@@ -355,7 +355,8 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                     onDelete: onDeletePage,
                     onEditClicked: this.handleShowBodyEditor.bind(this),
                     depth: depth,
-                    onClone: onClonePage
+                    onClone: onClonePage,
+                    pageOrder: pageOrder
                 }
             )
         }
