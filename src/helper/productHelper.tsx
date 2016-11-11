@@ -48,6 +48,25 @@ const setupEditingPages = (page:any) => {
 
 
 /**
+ * Add a local id to page and to its children pages
+ *
+ * @param page
+ * @returns {any}
+ */
+const prepareClonePages = (page:any) => {
+    page.localId = v4()
+
+    if ( page.pages && page.pages.length > 0 ) {
+        for(let i = 0; i < page.pages.length; i++) {
+            page.pages[i] = prepareClonePages(page.pages[i])
+        }
+    }
+
+    return Map(page)
+}
+
+
+/**
  * Changes title of product currently being edited
  * @param state
  * @param newTitle
@@ -324,6 +343,30 @@ export const removePageByLocalId = ( state:any, localId : string ) => {
 
     return newState1
 }
+
+
+export const clonePageByLocalId = (state:any, sourcePageLocalId:string, position:number) => {
+
+    let sourcePageKeyPath = searchPageKeyPath(state.get('editing'), sourcePageLocalId)
+    let sourceKeyPath = ['editing'].concat(sourcePageKeyPath)
+
+    let destinationPageLocalId = sourcePageLocalId
+
+    // get the source page and clone it
+    let sourcePageNode = getPageByLocalId( state, sourcePageLocalId )
+
+    console.log(sourcePageNode)
+
+    //sourcePageNode = sourcePageNode.set('localId', sourcePageLocalId )
+
+    let pagesPrepared = prepareClonePages( sourcePageNode.toJS() );
+
+    // ---> insert the cloned page into new location
+    const newState = insertPage( state, destinationPageLocalId, position, pagesPrepared )
+
+    return newState
+}
+
 
 
 /**

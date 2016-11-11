@@ -74,6 +74,7 @@ interface PageItemProps {
     onQuickLevelMove: any,
     onChangePageInfo: any,
     onDeletePage: any,
+    onClonePage: any,
     onStartEditPageBody: any,
     onFinishEditPageBody: any,
     onBeginDrag: any,
@@ -112,6 +113,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         onQuickLevelMove: null,
         onChangePageInfo: null,
         onDeletePage: null,
+        onClonePage: null,
         onStartEditPageBody: null,
         onFinishEditPageBody: null,
         onBeginDrag: null,
@@ -160,7 +162,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
      */
     handleDropItem(itemType:any, info:any) {
         const { onNewPage, onMovePage } = this.props
-
+        console.log(info)
         switch (itemType) {
             case ItemTypes.NEW_PAGE:
                 onNewPage(info.ownerPage.get('localId'), info.pageOrder + 1 )
@@ -170,6 +172,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                 break
         }
     }
+
     handleExpandCollapse(e:any) {
         const { onChangeTreeState, info } = this.props
 
@@ -280,7 +283,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                 isDragging, onTitleChange,
                  onNewPage, onMovePage, parentPage, previousPage,
                 pageOrder, onChangeTreeState, onQuickLevelMove,
-                onChangePageInfo, onDeletePage,
+                onChangePageInfo, onDeletePage,onClonePage,
                 onStartEditPageBody, onFinishEditPageBody,
                 depth, customComponents,
                 onBeginDrag, onEndDrag,
@@ -333,6 +336,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                                   onQuickLevelMove={onQuickLevelMove}
                                   onChangePageInfo={onChangePageInfo}
                                   onDeletePage={onDeletePage}
+                                  onClonePage={onClonePage}
                                   onStartEditPageBody={onStartEditPageBody}
                                   onFinishEditPageBody={onFinishEditPageBody}
                                   onPageItemBeginDrag={onBeginDrag}
@@ -345,13 +349,13 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         // is toolbar visible?
         if ( toolbarVisible ) {
             let PageItemToolbarComponent = customComponents.PageItemToolbar || PageItemToolbar
-
             toolbar = React.createElement(PageItemToolbarComponent,
                 {
                     pageInfo: info,
                     onDelete: onDeletePage,
                     onEditClicked: this.handleShowBodyEditor.bind(this),
-                    depth: depth
+                    depth: depth,
+                    onClone: onClonePage
                 }
             )
         }

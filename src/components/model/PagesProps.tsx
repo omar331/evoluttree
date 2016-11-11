@@ -7,6 +7,7 @@ export interface PagesProps {
     onQuickLevelMove?: any,
     onChangePageInfo?: any,
     onDeletePage?: any,
+    onClonePage?: any,
     onStartEditPageBody?: any,
     onFinishEditPageBody?: any,
     onPageItemBeginDrag?: any,
