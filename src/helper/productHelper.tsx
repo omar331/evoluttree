@@ -52,17 +52,23 @@ const setupEditingPages = (page:any) => {
  * @param page
  * @returns {any}
  */
-const prepareClonePages = (page:any) => {
+const prepareClonePages = ( page:any ) => {
+
     page.localId = v4()
     page.collapsed = true
 
-    if ( page.pages && page.pages.length > 0 ) {
-        for(let i = 0; i < page.pages.length; i++) {
-            page.pages[i] = prepareClonePages(page.pages[i])
+    if ( page.get('pages') && page.get('pages').size > 0) {
+
+        for(let i = 0; i <  page.get('pages').size; i++) {
+            let test = page.get('pages')
+            console.log('----------------------- in here')
+            console.log(test)
+            console.log('----------------------- in here')
+            page.set('pages')[i] = prepareClonePages(Map(page.get('pages')[i]))
         }
     }
 
-    return Map(page)
+    return page
 }
 
 
@@ -352,20 +358,14 @@ export const clonePageByLocalId = (state:any, sourcePageLocalId:string, position
     // get the source page and clone it
     let sourcePageNode = getPageByLocalId( state, sourcePageLocalId )
 
-    console.log(sourcePageNode.toJS())
-
-    let pagesPrepared = prepareClonePages( sourcePageNode.toJS() );
+    let pagesPrepared = prepareClonePages( sourcePageNode );
 
     // ---> insert the cloned page into new location
     const newState = insertPage( state, destinationPageLocalId, position, pagesPrepared )
 
     let titleClone = pagesPrepared.get('title') + ' (clone)'
 
-    const newState2 = changePageInfo(newState, pagesPrepared.get('localId'), { title: 'clone parca' } )
-
-    mState = changePageInfo( mState, pageLocalId, {justChanged: false} )
-
-    console.log(newState2)
+    const newState2 = changePageInfo(newState, pagesPrepared.get('localId'), { title: titleClone } )
 
     return newState2
 }

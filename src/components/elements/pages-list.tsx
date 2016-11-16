@@ -72,14 +72,14 @@ export default class PagesList extends React.Component<PagesProps, {}> {
 
         let previousPage:any = null
         let pageComponentRes:any
-
+        console.log(pages)
         return(
             <div>
                 <div className="content-list">
                     {pages.map(
+
                         (page:any) => {
                             order++
-
                             pageComponentRes = <PageItemContainer info={page}
                                                       parentPage={parentPage}
                                                       previousPage={previousPage}
@@ -104,7 +104,9 @@ export default class PagesList extends React.Component<PagesProps, {}> {
 
 
                             previousPage = page
-
+                            console.log('--------------')
+                            console.log(page)
+                            console.log('--------------')
                             return pageComponentRes
                         }
 
