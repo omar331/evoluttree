@@ -46,31 +46,6 @@ const setupEditingPages = (page:any) => {
 }
 
 
-/**
- * Add a local id to page and to its children pages
- *
- * @param page
- * @returns {any}
- */
-const prepareClonePages = ( page:any ) => {
-
-    page.localId = v4()
-    page.collapsed = true
-
-    if ( page.get('pages') && page.get('pages').size > 0) {
-
-        for(let i = 0; i <  page.get('pages').size; i++) {
-            let test = page.get('pages')
-            console.log('----------------------- in here')
-            console.log(test)
-            console.log('----------------------- in here')
-            page.set('pages')[i] = prepareClonePages(Map(page.get('pages')[i]))
-        }
-    }
-
-    return page
-}
-
 
 /**
  * Changes title of product currently being edited
@@ -351,23 +326,88 @@ export const removePageByLocalId = ( state:any, localId : string ) => {
 }
 
 
-export const clonePageByLocalId = (state:any, sourcePageLocalId:string, position:number) => {
+/**
+ * Prepare page to Clone
+ * @param state
+ * @param page
+ * @returns {*}
+ */
+const setupPrepareToClone = (state:any, page:any) => {
 
-    let destinationPageLocalId = sourcePageLocalId
+    //let localIdGeneration = v4()
+
+    const newState2 = changePageInfo( state, page.get('localId'), {localId: page.get('localId')})
+
+    if ( page.get('pages') && page.get('pages').size > 0){
+
+
+        page.get('pages').forEach(function(page){
+
+            console.log(page.get('title'))
+
+            setupPrepareToClone(newState2, page)
+        })
+    }
+
+    return newState2
+}
+
+
+const prepareLocalId = (sourcePageNode:any) => {
+
+    let sourcePageNodeModify = sourcePageNode.set('localId', v4() )
+
+    if ( sourcePageNodeModify.get('pages') && sourcePageNodeModify.get('pages').size > 0) {
+
+
+        //Object.keys(sourcePageNodeModify.get('pages')).map(function(key, index){
+        //    let value = sourcePageNodeModify[key]
+        //    //console.log('index')
+        //    //console.log(index)
+        //    //console.log('index')
+        //
+        //    if (key == '_root'){
+        //        for(let i = 0; i < value.pages; i++) {
+        //            prepareLocalId(value[i])
+        //        }
+        //
+        //        //console.log(sourcePageNodeModify[key].entries)
+        //    }
+        //})
+
+            //console.log('estamos aqui parça')
+            //console.log(sourcePageNodeModify[key])
+            //console.log(key)
+            //console.log('estamos aqui parça')
+
+
+        sourcePageNodeModify.get('pages').forEach(function (page) {
+
+            prepareLocalId(page)
+        });
+    }
+
+    return sourcePageNodeModify
+}
+
+
+
+
+export const clonePageByLocalId = (state:any, sourcePageLocalId:string, position:number) => {
 
     // get the source page and clone it
     let sourcePageNode = getPageByLocalId( state, sourcePageLocalId )
+    //sourcePageNode = sourcePageNode.set('localId', v4() )
 
-    let pagesPrepared = prepareClonePages( sourcePageNode );
+    let sourcePageNodeModify = prepareLocalId( sourcePageNode )
+
+    let sourcePageNodeModify = sourcePageNodeModify.set('title', sourcePageNodeModify.get('title') +  '(clone)');
+    //sourcePageNodeModify = sourcePageNodeModify.set('title', sourcePageNodeModify.get('title') +  '(clone)');
 
     // ---> insert the cloned page into new location
-    const newState = insertPage( state, destinationPageLocalId, position, pagesPrepared )
+    const newState = insertPage(state, sourcePageLocalId, position + 1, sourcePageNodeModify )
 
-    let titleClone = pagesPrepared.get('title') + ' (clone)'
-
-    const newState2 = changePageInfo(newState, pagesPrepared.get('localId'), { title: titleClone } )
-
-    return newState2
+    return newState
 }
 
 
