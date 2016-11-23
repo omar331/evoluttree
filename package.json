@@ -31,7 +31,6 @@
     "classnames": "2.2.5",
     "immutable": "^3.8.1",
     "lodash": "^4.13.1",
-    "node-uuid": "^1.4.7",
     "react": "^15.2.0",
     "react-bootstrap": "^0.30.3",
     "react-dnd": "^2.1.4",
@@ -39,7 +38,8 @@
     "react-dom": "^15.2.0",
     "react-redux": "^4.4.5",
     "react-router": "^2.5.2",
-    "redux": "^3.5.2"
+    "redux": "^3.5.2",
+    "uuid": "^3.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.11.4",
