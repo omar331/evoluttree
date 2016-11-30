@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 
 import Pages from '../components/elements/pages-list'
 import {changePageTitle, newPage, movePage, changeTreeState,
-        quickLevelMove, changePageInfo, deletePage } from "../actions/pages"
+        quickLevelMove, changePageInfo, deletePage, clonePage } from "../actions/pages"
 
 
 
@@ -35,6 +35,9 @@ const mapDispatchToProps = (dispatch:any) => {
         },
         onDeletePage: (localPageId:string ) => {
             dispatch( deletePage(localPageId) )
+        },
+        onClonePage: (localPageId:string, position:number ) => {
+            dispatch( clonePage(localPageId, position) )
         },
     }
 }

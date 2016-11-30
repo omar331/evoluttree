@@ -12,7 +12,8 @@ export const editingProduct = {
                 id: 1,
                 title: 'Page 1',
                 pages: [
-                    {id: 11,
+                    {
+                        id: 11,
                         title: 'Page One One'
                     },
                     {
@@ -52,7 +53,8 @@ export const editingProduct = {
                 id: 3,
                 title: 'Page 3',
                 pages: [
-                    {id: 31,
+                    {
+                        id: 31,
                         title: 'Page Two A'
                     },
                     {
@@ -60,7 +62,8 @@ export const editingProduct = {
                         title: 'Page Two B',
                         body: 'Lorem Ipsum Yeah',
                         pages: [
-                            {id: 321,
+                            {
+                                id: 321,
                                 title: 'Page Two B One'
                             },
                             {

@@ -55,4 +55,12 @@ export const deletePage = (pageLocalId:string) => {
     }
 }
 
+export const clonePage = ( pageLocalId:string, position:number ) => {
+    return {
+        type: 'CLONE_PAGE',
+        pageLocalId,
+        position
+    }
+}
+
 

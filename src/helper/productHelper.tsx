@@ -36,7 +36,6 @@ export const prepareEditingProduct = (productInfo:any) => {
 const setupEditingPages = (page:any) => {
     page.localId = v4()
     page.collapsed = true
-
     if ( page.pages && page.pages.length > 0 ) {
         for(let i = 0; i < page.pages.length; i++) {
             page.pages[i] = setupEditingPages(page.pages[i])
@@ -45,6 +44,7 @@ const setupEditingPages = (page:any) => {
 
     return page
 }
+
 
 
 /**
@@ -324,6 +324,52 @@ export const removePageByLocalId = ( state:any, localId : string ) => {
 
     return newState1
 }
+
+
+/**
+ * Prepare page to Clone
+ * @param state
+ * @param page
+ * @returns {*}
+ */
+const setupPrepareToClone = (state:any, page:any) => {
+
+    //let localIdGeneration = v4()
+
+    const newState2 = changePageInfo( state, page.get('localId'), {localId: page.get('localId')})
+
+    if ( page.get('pages') && page.get('pages').size > 0){
+
+
+        page.get('pages').forEach(function(page){
+
+            console.log(page.get('title'))
+
+            setupPrepareToClone(newState2, page)
+        })
+    }
+
+    return newState2
+}
+
+
+
+
+export const clonePageByLocalId = (state:any, sourcePageLocalId:string, position:number) => {
+
+    // get the source page and clone it
+    let sourcePageNode = getPageByLocalId( state, sourcePageLocalId )
+
+    let sourcePageNodeModify = setupEditingPages( sourcePageNode.toJS() )
+
+    sourcePageNodeModify.title =  sourcePageNodeModify.title + ' (clone)'
+
+    // ---> insert the cloned page into new location
+    const newState = insertPage(state, sourcePageLocalId, position + 1, fromJS(sourcePageNodeModify) )
+
+    return newState
+}
+
 
 
 /**

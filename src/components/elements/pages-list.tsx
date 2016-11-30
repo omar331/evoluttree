@@ -15,6 +15,7 @@ export default class PagesList extends React.Component<PagesProps, {}> {
         onQuickLevelMove: null,
         onChangePageInfo: null,
         onDeletePage: null,
+        onClonePage: null,
         onStartEditPageBody: null,
         onFinishEditPageBody: null,
         onPageItemBeginDrag: null,
@@ -61,7 +62,7 @@ export default class PagesList extends React.Component<PagesProps, {}> {
     render() {
         const { pages, parentPage, onTitleChange,
                 onNewPage, onChangeTreeState,
-                onChangePageInfo, onDeletePage,
+                onChangePageInfo, onDeletePage,onClonePage,
                 onStartEditPageBody, onFinishEditPageBody,
                 depth, customComponents,
                 onPageItemBeginDrag, onPageItemEndDrag
@@ -71,14 +72,14 @@ export default class PagesList extends React.Component<PagesProps, {}> {
 
         let previousPage:any = null
         let pageComponentRes:any
-
+        console.log(pages)
         return(
             <div>
                 <div className="content-list">
                     {pages.map(
+
                         (page:any) => {
                             order++
-
                             pageComponentRes = <PageItemContainer info={page}
                                                       parentPage={parentPage}
                                                       previousPage={previousPage}
@@ -91,6 +92,7 @@ export default class PagesList extends React.Component<PagesProps, {}> {
                                                       onQuickLevelMove={this.handleQuickLevelMove.bind(this)}
                                                       onChangePageInfo={onChangePageInfo}
                                                       onDeletePage={onDeletePage}
+                                                      onClonePage={onClonePage}
                                                       onBeginDrag={onPageItemBeginDrag}
                                                       onEndDrag={onPageItemEndDrag}
                                                       onStartEditPageBody={onStartEditPageBody}
@@ -102,7 +104,6 @@ export default class PagesList extends React.Component<PagesProps, {}> {
 
 
                             previousPage = page
-
                             return pageComponentRes
                         }
 

@@ -8,11 +8,15 @@ export default class PageItemToolbar extends React.Component<PageItemToolbarProp
     }
 
    render() {
-        const { pageInfo, onEditClicked, onDelete, depth } = this.props
+        const { pageInfo, onEditClicked, onDelete, depth, onClone, pageOrder } = this.props
 
         return <div>
                     <a onClick={ () => { onEditClicked() } }>
                         edit
+                    </a>
+                    &nbsp;<span className="sep">|</span>&nbsp;
+                    <a onClick={ () => { onClone( pageInfo.get('localId'), pageOrder ) } }>
+                        clone
                     </a>
                     &nbsp;<span className="sep">|</span>&nbsp;
                     <a className="danger" onClick={ () => { onDelete( pageInfo.get('localId') ) } }>
