@@ -1,6 +1,6 @@
 {
   "name": "evoluttree",
-  "version": "0.2.3",
+  "version": "0.2.3-a",
   "description": "A ReactJs based, drag and drop, tree-structured content management system.",
   "repository": {
     "type": "git",
