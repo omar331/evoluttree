@@ -104,9 +104,6 @@ export default class PagesList extends React.Component<PagesProps, {}> {
 
 
                             previousPage = page
-                            console.log('--------------')
-                            console.log(page)
-                            console.log('--------------')
                             return pageComponentRes
                         }
 
