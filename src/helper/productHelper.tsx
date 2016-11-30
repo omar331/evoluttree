@@ -353,59 +353,19 @@ const setupPrepareToClone = (state:any, page:any) => {
 }
 
 
-const prepareLocalId = (sourcePageNode:any) => {
-
-    let sourcePageNodeModify = sourcePageNode.set('localId', v4() )
-
-    if ( sourcePageNodeModify.get('pages') && sourcePageNodeModify.get('pages').size > 0) {
-
-
-        //Object.keys(sourcePageNodeModify.get('pages')).map(function(key, index){
-        //    let value = sourcePageNodeModify[key]
-        //    //console.log('index')
-        //    //console.log(index)
-        //    //console.log('index')
-        //
-        //    if (key == '_root'){
-        //        for(let i = 0; i < value.pages; i++) {
-        //            prepareLocalId(value[i])
-        //        }
-        //
-        //        //console.log(sourcePageNodeModify[key].entries)
-        //    }
-        //})
-
-            //console.log('estamos aqui parça')
-            //console.log(sourcePageNodeModify[key])
-            //console.log(key)
-            //console.log('estamos aqui parça')
-
-
-        sourcePageNodeModify.get('pages').forEach(function (page) {
-
-            prepareLocalId(page)
-        });
-    }
-
-    return sourcePageNodeModify
-}
-
-
 
 
 export const clonePageByLocalId = (state:any, sourcePageLocalId:string, position:number) => {
 
     // get the source page and clone it
     let sourcePageNode = getPageByLocalId( state, sourcePageLocalId )
-    //sourcePageNode = sourcePageNode.set('localId', v4() )
 
-    let sourcePageNodeModify = prepareLocalId( sourcePageNode )
+    let sourcePageNodeModify = setupEditingPages( sourcePageNode.toJS() )
 
-    let sourcePageNodeModify = sourcePageNodeModify.set('title', sourcePageNodeModify.get('title') +  '(clone)');
-    //sourcePageNodeModify = sourcePageNodeModify.set('title', sourcePageNodeModify.get('title') +  '(clone)');
+    sourcePageNodeModify.title =  sourcePageNodeModify.title + ' (clone)'
 
     // ---> insert the cloned page into new location
-    const newState = insertPage(state, sourcePageLocalId, position + 1, sourcePageNodeModify )
+    const newState = insertPage(state, sourcePageLocalId, position + 1, fromJS(sourcePageNodeModify) )
 
     return newState
 }
