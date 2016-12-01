@@ -29,6 +29,8 @@ const productReducer = (state:any, action:any) => {
             return productHelper.quickLevelMove(state, action.direction, action.pageLocalId)
         case 'CHANGE_PAGE_INFO':
             return productHelper.changePageInfo(state, action.localPageId, action.pageInfo )
+        case 'GET_PAGE_BY_LOCAL_ID':
+            return productHelper.getPageByLocalId(state, action.localPageId )
         case 'DELETE_PAGE':
             return productHelper.removePageByLocalId( state, action.pageLocalId )
         case 'CLONE_PAGE':
