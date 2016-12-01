@@ -340,7 +340,7 @@ export const clonePageByLocalId = (state:any, sourcePageLocalId:string, position
     // ---> insert the cloned page into new location
     const newState = insertPage(state, sourcePageLocalId, position + 1, fromJS(sourcePageNodeModify) )
 
-    return {newState: newState, localId: pageCloneLocalId}
+    return {newState: newState, localId: pageCloneLocalId, pageCloned: sourcePageNodeModify }
 }
 
 
