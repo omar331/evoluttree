@@ -326,35 +326,6 @@ export const removePageByLocalId = ( state:any, localId : string ) => {
 }
 
 
-/**
- * Prepare page to Clone
- * @param state
- * @param page
- * @returns {*}
- */
-const setupPrepareToClone = (state:any, page:any) => {
-
-    //let localIdGeneration = v4()
-
-    const newState2 = changePageInfo( state, page.get('localId'), {localId: page.get('localId')})
-
-    if ( page.get('pages') && page.get('pages').size > 0){
-
-
-        page.get('pages').forEach(function(page){
-
-            console.log(page.get('title'))
-
-            setupPrepareToClone(newState2, page)
-        })
-    }
-
-    return newState2
-}
-
-
-
-
 export const clonePageByLocalId = (state:any, sourcePageLocalId:string, position:number) => {
 
     // get the source page and clone it

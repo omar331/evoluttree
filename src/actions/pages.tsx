@@ -64,3 +64,9 @@ export const clonePage = ( pageLocalId:string, position:number ) => {
 }
 
 
+export const getPageByLocalId = (localPageId:string, preventExternalHooks:boolean = false) => {
+    return {
+        type: 'GET_PAGE_BY_LOCAL_ID',
+        localPageId, preventExternalHooks
+    }
+}
