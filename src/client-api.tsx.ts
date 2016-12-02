@@ -9,7 +9,6 @@
  * 
  */
 import { changePageInfo } from "./actions/pages"
-import { getPageByLocalId } from "./actions/pages"
 import { changeProductTitle } from "./actions/products"
 
 declare var window:any
