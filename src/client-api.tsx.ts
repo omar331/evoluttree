@@ -38,14 +38,5 @@ export const expose = (store:any) => {
     window['evoluttree']['api']['modifyPage'] = (localPageId:string, pageInfo:any, preventExternalHooks:boolean = true) => {
         store.dispatch( changePageInfo(localPageId, pageInfo, preventExternalHooks ) )
     }
-
-    /**
-     * Get Page by local ID
-     * @param localPageId page's local id
-     * @param preventExternalHooks preventExternalHooks prevents external hooks be called
-     */
-    window['evoluttree']['api']['getPageByLocalId'] = (localPageId:string, preventExternalHooks:boolean = true) => {
-        store.dispatch( getPageByLocalId(localPageId, preventExternalHooks ) )
-    }
 }
 
