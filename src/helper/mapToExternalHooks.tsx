@@ -149,7 +149,9 @@ export const mapActionToAPIParameters = (store:any) => (next:any) => (action:any
             next({
                 type: 'HOOK_CLONE_PAGE',
                 originalPageId: sourcePage.get('id'),
-                pageCloneLocalId: action.localIdPageCloned
+                pageCloneLocalId: action.localIdPageCloned,
+                pageClone: action.pageCloned
+
             })
 
             break;
