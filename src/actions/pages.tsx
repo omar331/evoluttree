@@ -48,10 +48,10 @@ export const changePageInfo = (localPageId:string, pageInfo:any, preventExternal
     }
 }
 
-export const deletePage = (pageLocalId:string) => {
+export const deletePage = (pageLocalId:string, preventExternalHooks:boolean = false) => {
     return {
         type: 'DELETE_PAGE',
-        pageLocalId
+        pageLocalId, preventExternalHooks
     }
 }
 
