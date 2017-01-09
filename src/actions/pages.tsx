@@ -48,11 +48,17 @@ export const changePageInfo = (localPageId:string, pageInfo:any, preventExternal
     }
 }
 
-export const deletePage = (pageLocalId:string) => {
+export const deletePage = (pageLocalId:string, preventExternalHooks:boolean = false) => {
     return {
         type: 'DELETE_PAGE',
-        pageLocalId
+        pageLocalId, preventExternalHooks
     }
 }
 
-
+export const clonePage = ( pageLocalId:string, position:number ) => {
+    return {
+        type: 'CLONE_PAGE',
+        pageLocalId,
+        position
+    }
+}

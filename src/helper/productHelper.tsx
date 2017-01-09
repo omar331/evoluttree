@@ -36,7 +36,6 @@ export const prepareEditingProduct = (productInfo:any) => {
 const setupEditingPages = (page:any) => {
     page.localId = v4()
     page.collapsed = true
-
     if ( page.pages && page.pages.length > 0 ) {
         for(let i = 0; i < page.pages.length; i++) {
             page.pages[i] = setupEditingPages(page.pages[i])
@@ -45,6 +44,7 @@ const setupEditingPages = (page:any) => {
 
     return page
 }
+
 
 
 /**
@@ -324,6 +324,25 @@ export const removePageByLocalId = ( state:any, localId : string ) => {
 
     return newState1
 }
+
+
+export const clonePageByLocalId = (state:any, sourcePageLocalId:string, position:number) => {
+
+    // get the source page and clone it
+    let sourcePageNode = getPageByLocalId( state, sourcePageLocalId )
+
+    let sourcePageNodeModify = setupEditingPages( sourcePageNode.toJS() )
+
+    sourcePageNodeModify.title =  sourcePageNodeModify.title + ' (clone)'
+
+    let pageCloneLocalId = sourcePageNodeModify.localId
+
+    // ---> insert the cloned page into new location
+    const newState = insertPage(state, sourcePageLocalId, position + 1, fromJS(sourcePageNodeModify) )
+
+    return {newState: newState, localId: pageCloneLocalId, pageCloned: sourcePageNodeModify }
+}
+
 
 
 /**

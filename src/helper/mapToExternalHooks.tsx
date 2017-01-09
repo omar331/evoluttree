@@ -143,6 +143,18 @@ export const mapActionToAPIParameters = (store:any) => (next:any) => (action:any
             })
 
             break;
+
+        case 'CLONE_PAGE':
+            sourcePage = productHelper.getPageByLocalId(currentState, action.pageLocalId)
+            next({
+                type: 'HOOK_CLONE_PAGE',
+                originalPageId: sourcePage.get('id'),
+                pageCloneLocalId: action.localIdPageCloned,
+                pageClone: action.pageCloned
+
+            })
+
+            break;
         default:
             break
     }

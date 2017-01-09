@@ -9,6 +9,7 @@
  * 
  */
 import { changePageInfo } from "./actions/pages"
+import { deletePage } from "./actions/pages"
 import { changeProductTitle } from "./actions/products"
 
 declare var window:any
@@ -36,6 +37,16 @@ export const expose = (store:any) => {
      */
     window['evoluttree']['api']['modifyPage'] = (localPageId:string, pageInfo:any, preventExternalHooks:boolean = true) => {
         store.dispatch( changePageInfo(localPageId, pageInfo, preventExternalHooks ) )
+    }
+
+    /**
+     * Delete page
+     * @param localPageId   page's local id
+     * @param pageInfo      array containing the information to be modified
+     * @param preventExternalHooks prevents external hooks be called
+     */
+    window['evoluttree']['api']['deletePage'] = (localPageId:string, preventExternalHooks:boolean = true) => {
+        store.dispatch( deletePage( localPageId, preventExternalHooks ) )
     }
 }
 
