@@ -258,11 +258,14 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         )
     }
 
-    handleSavePage(pageLocalId:string, info:any) {
+    handleSavePage(pageLocalId:string, info:any, closeBodyEditor = true) {
         const { onChangePageInfo } = this.props
 
         onChangePageInfo(pageLocalId, info )
-        this.closeBodyEditor()
+
+        if ( closeBodyEditor ){
+            this.closeBodyEditor()
+        }
     }
 
     handleCloseBodyEditor(e:SyntheticEvent) {
