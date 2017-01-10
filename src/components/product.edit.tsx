@@ -9,33 +9,63 @@ import PagesListContainer from '../containers/pages-list';
 
 import ComponentsBar from './components.bar';
 
-import { ProductEditProps } from './model/ProductEditProps'
+import { ProductEditProps,ProductEditState } from './model/ProductEditModel'
 
 
-export default class ProductEditComponent extends React.Component<ProductEditProps, {mode:string}> {
+export default class ProductEditComponent extends React.Component<ProductEditProps, ProductEditState> {
     constructor(props:any) {
         super(props);
-
-        // mode = might be 'list' or 'page-edit'
-        this.state = {
-            mode: 'list'
-        }
     }
+
+    componentWillMount() {
+        this.enterPageListMode()
+    }
+
+    /**
+     * Get the base settings for each mode
+     * @param mode
+     * @returns {any}
+     */
+    getBaseModeSettings( mode:string) {
+        const baseSettings = {
+            'list': {
+                componentsBarVisible: true,
+                sideBarMd: 2,
+                contentMd: 10,
+            },
+            'page-edit': {
+                componentsBarVisible: false,
+                sideBarMd: 0,
+                contentMd: 12,
+            },
+        }
+
+        return baseSettings[mode]
+    }
+
+
+
     handlePageItemStartDrag(pageInfo:any) {
         this.props.onPageItemBeginDrag && this.props.onPageItemBeginDrag(pageInfo)
     }
     handlePageItemEndDrag(pageInfo:any) {
         this.props.onPageItemEndDrag && this.props.onPageItemEndDrag(pageInfo)
     }
-    handleStartEditPageBody(elementId, pageInfo) {
+    enterPageEditMode(elementId, pageInfo) {
         const { onStartEditPageBody } = this.props
 
-        this.setState({mode: 'page-edit'})
+        this.setState({
+            mode: 'page-edit',
+            modeSettings: this.getBaseModeSettings('page-edit')
+        })
 
-        onStartEditPageBody(elementId, pageInfo)
+        if ( onStartEditPageBody ) onStartEditPageBody(elementId, pageInfo)
     }
-    handleFinishEditPageBody(elementId, pageInfo) {
-        this.setState({mode: 'list'})
+    enterPageListMode() {
+        this.setState({
+            mode: 'list',
+            modeSettings: this.getBaseModeSettings('list')
+        })
     }
     render() {
         const { onStartEditPageBody, customComponents } = this.props
@@ -49,24 +79,32 @@ export default class ProductEditComponent extends React.Component<ProductEditPro
                 <div id="product-editor-modal"></div>
                 <Grid className="grid-product-edit">
                     <Row>
-                        <Col md={2}>
-
-                        </Col>
-                        <Col md={10}>
+                        {
+                            this.state.modeSettings.componentsBarVisible ? <Col md={this.state.modeSettings.sideBarMd}>
+                                        </Col>
+                                        :
+                                        null
+                        }
+                        <Col md={this.state.modeSettings.contentMd}>
                             <GeneralInfoContainer />
                         </Col>
                     </Row>
                     <Row>
-                        <Col md={2} className="component-bar">
-                            <ComponentsBar />
-                        </Col>
-                        <Col md={10} className="pages-container" >
+                        {
+                            this.state.modeSettings.componentsBarVisible ?
+                                <Col md={this.state.modeSettings.sideBarMd} className="component-bar">
+                                    <ComponentsBar />
+                                </Col>
+                                :
+                                null
+                        }
+                        <Col md={this.state.modeSettings.contentMd} className="pages-container" >
                             <div id="page-body-editor" style={ stylePageEditor }>
                             </div>
                             <div style={ stylePageListContainer }>
                                 <PagesListContainer
-                                    onStartEditPageBody={this.handleStartEditPageBody.bind(this)}
-                                    onFinishEditPageBody={this.handleFinishEditPageBody.bind(this)}
+                                    onStartEditPageBody={this.enterPageEditMode.bind(this)}
+                                    onFinishEditPageBody={this.enterPageListMode.bind(this)}
                                     customComponents={customComponents}
                                     onPageItemBeginDrag={this.handlePageItemStartDrag.bind(this)}
                                     onPageItemEndDrag={this.handlePageItemEndDrag.bind(this)}
