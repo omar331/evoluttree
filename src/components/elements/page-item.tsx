@@ -311,8 +311,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
 
         let hasChildren:boolean = (pages != null)
 
-
-
+        let enableExpand = false //False for never expand item
 
 
         /*
@@ -322,12 +321,12 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
          */
         let isThereAPageBeingDraggedOverMe = false
         if ( (pageItemBeingDraggedOverMe != null) &&
-             (pageItemBeingDraggedOverMe.get('localId') != info.get('localId') ) )
+             (pageItemBeingDraggedOverMe.get('localId') != info.get('localId') ) &&
+             (enableExpand != false )
+        )
         {
             isThereAPageBeingDraggedOverMe = true
         }
-
-
 
 
         let temporalyExpanded = (isOver) && isThereAPageBeingDraggedOverMe
