@@ -244,7 +244,8 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                 pageInfo: info,
                 onClose: this.handleCloseBodyEditor.bind(this),
                 onSave: this.handleSavePage.bind(this),
-                textEditorElementId: this.bodyEditorElementId()
+                textEditorElementId: this.bodyEditorElementId(),
+                onClearInterval: this.clearInterval.bind(this)
             }
         )
 
@@ -280,6 +281,13 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         
         document.getElementById('page-body-editor').innerHTML = ''
     }
+
+    clearInterval( intervalId ){
+
+        clearInterval( intervalId )
+    }
+
+
     render() {
         const { info, connectDragSource,
                 connectDropTarget,
