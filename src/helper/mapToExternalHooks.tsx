@@ -62,7 +62,8 @@ export const mapActionToAPIParameters = (store:any) => (next:any) => (action:any
                 next({
                     type: 'HOOK_CHANGE_PAGE_TITLE',
                     pageId: page.get('id'),
-                    newTitle: action.newTitle
+                    newTitle: action.newTitle,
+                    localId: page.get('localId')
                 })
             }
             break;
@@ -73,7 +74,8 @@ export const mapActionToAPIParameters = (store:any) => (next:any) => (action:any
                 next({
                     type: 'HOOK_CHANGE_PAGE_INFO',
                     pageId: page.get('id'),
-                    modifiedInfo: action.pageInfo
+                    modifiedInfo: action.pageInfo,
+                    localId: page.get('localId')
                 })
             }
             break
