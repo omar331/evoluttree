@@ -244,7 +244,8 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                 pageInfo: info,
                 onClose: this.handleCloseBodyEditor.bind(this),
                 onSave: this.handleSavePage.bind(this),
-                textEditorElementId: this.bodyEditorElementId()
+                textEditorElementId: this.bodyEditorElementId(),
+                onClearInterval: this.clearInterval.bind(this)
             }
         )
 
@@ -280,6 +281,13 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         
         document.getElementById('page-body-editor').innerHTML = ''
     }
+
+    clearInterval( intervalId ){
+
+        clearInterval( intervalId )
+    }
+
+
     render() {
         const { info, connectDragSource,
                 connectDropTarget,
@@ -303,8 +311,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
 
         let hasChildren:boolean = (pages != null)
 
-
-
+        let enableExpand = false //False for never expand item
 
 
         /*
@@ -314,12 +321,12 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
          */
         let isThereAPageBeingDraggedOverMe = false
         if ( (pageItemBeingDraggedOverMe != null) &&
-             (pageItemBeingDraggedOverMe.get('localId') != info.get('localId') ) )
+             (pageItemBeingDraggedOverMe.get('localId') != info.get('localId') ) &&
+             (enableExpand != false )
+        )
         {
             isThereAPageBeingDraggedOverMe = true
         }
-
-
 
 
         let temporalyExpanded = (isOver) && isThereAPageBeingDraggedOverMe
