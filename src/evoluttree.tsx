@@ -27,16 +27,15 @@ import { AppProps } from './components/model/AppProps'
 
 
 //noinspection TypeScriptValidateTypes
-/**
- * Main Evoluttree component
- * (actually it'll be wrapped by dnd's DragDropContext)
- *
- */
 export class App extends React.Component<AppProps, {}> {
     store: any;
 
     public static defaultProps: AppProps = {
-        config: {},
+        config: {
+            hookActionsToExternal: null,
+            onStartEditPageBody: null,
+            onContentChange: null
+        },
         editingProduct: null,
         customComponents: {}
     }
@@ -80,9 +79,23 @@ export class App extends React.Component<AppProps, {}> {
             applyMiddleware(mapActionToAPIParameters, externalHooksConnect.connect( {hookActionsToExternal} ))
         )
 
-        // Expose client API externally
+        // Expose client API 
         clientApi.expose(this.store)
-        
+
+
+        /**
+         * Subscribe for content changes
+         */
+        if ( config.onContentChange ) {
+            let store = this.store
+
+            store.subscribe( () => {
+                let productState = store.getState().get('editing').toJS()
+                config.onContentChange(productState)
+            })
+        }
+
+
         this.store.dispatch( replaceState(initialState) )
 
         // just changed sanitize

@@ -2,8 +2,9 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
 import { Evoluttree } from './evoluttree';
+import { EvoluttreeConfig } from './components/model/AppProps'
 
-declare var evltree_config: any
+declare var evltree_config: EvoluttreeConfig
 declare var evltree_editing_product: any
 
 

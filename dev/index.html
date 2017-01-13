@@ -35,6 +35,9 @@
                         ckEditorInstance.on('blur', function(e) {
                             window.evoluttree.api.modifyPage( pageInfo.localId, {body: ckEditorInstance.getData()} )
                         });
+                    },
+                    onContentChange: function(x) {
+                        console.log('onContentChange = %o', x)
                     }
             };
 
