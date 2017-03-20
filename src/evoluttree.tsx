@@ -30,6 +30,8 @@ import { AppProps } from './components/model/AppProps'
 export class App extends React.Component<AppProps, {}> {
     store: any;
 
+    unsubscribe: any;
+
     public static defaultProps: AppProps = {
         config: {
             hookActionsToExternal: null,
@@ -82,20 +84,6 @@ export class App extends React.Component<AppProps, {}> {
         // Expose client API 
         clientApi.expose(this.store)
 
-
-        /**
-         * Subscribe for content changes
-         */
-        if ( config.onContentChange ) {
-            let store = this.store
-
-            store.subscribe( () => {
-                let productState = store.getState().get('editing').toJS()
-                config.onContentChange(productState)
-            })
-        }
-
-
         this.store.dispatch( replaceState(initialState) )
 
         // just changed sanitize
@@ -103,7 +91,9 @@ export class App extends React.Component<AppProps, {}> {
             this.store.dispatch( pageJustChangedSanitize() )
         }, 5000 )
     }
+
     render() {
+
         //noinspection TypeScriptUnresolvedVariable
         const { config, customComponents } = this.props
         let { onStartEditPageBody } = config
@@ -115,8 +105,39 @@ export class App extends React.Component<AppProps, {}> {
                     customComponents={customComponents}
                 />
             </Provider>
+
         );
     }
+
+    componentDidMount() {
+        //noinspection TypeScriptUnresolvedVariable
+        const { config } = this.props
+
+        var that = this
+        /**
+         * Subscribe for content changes
+         */
+        if ( config.onContentChange ) {
+
+            let store = this.store;
+
+            this.unsubscribe = store.subscribe( () => {
+                let productState = store.getState().get('editing').toJS()
+                config.onContentChange(productState)
+            })
+        }
+        that.forceUpdate()
+
+    }
+
+    componentWillUnmount() {
+        if (this.unsubscribe) { // don't forget to unsubscribe when unmounting
+
+            this.unsubscribe()
+            this.unsubscribe = null
+        }
+    }
+
 }
 
 
