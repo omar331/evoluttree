@@ -1,5 +1,11 @@
+export interface EvoluttreeConfig {
+    hookActionsToExternal: Function,
+    onStartEditPageBody: any,
+    onContentChange?: Function
+}
+
 export interface AppProps {
-    config?: any,
+    config: EvoluttreeConfig,
     editingProduct?: any
     customComponents?: any
 }
