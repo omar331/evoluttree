@@ -72,7 +72,6 @@ export default class PagesList extends React.Component<PagesProps, {}> {
 
         let previousPage:any = null
         let pageComponentRes:any
-        console.log(pages)
         return(
             <div>
                 <div className="content-list">

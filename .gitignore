@@ -3,6 +3,6 @@ typings/
 dev/ckeditor
 build/
 shipitfile.js
-.idea/
+.idea/*
 dist
 

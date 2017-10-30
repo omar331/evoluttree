@@ -31,7 +31,7 @@ const pageListingSource = {
 
         if ( offset == null ) return;
 
-        component.handleEndDrag( { deltaX: offset.x, deltaY: offset.y } )
+        if (typeof component.handleEndDrag == 'function') component.handleEndDrag( { deltaX: offset.x, deltaY: offset.y } )
     },
     beginDrag(props:any) {
 
@@ -475,7 +475,7 @@ const pageItemTarget = {
 
         if ( offset == null ) return;
 
-        component.handleEndDrag( { deltaX: offset.x, deltaY: offset.y } )
+        if (typeof component.handleEndDrag == 'function') component.handleEndDrag( { deltaX: offset.x, deltaY: offset.y } )
     }
 };
 

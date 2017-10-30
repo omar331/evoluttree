@@ -26,7 +26,6 @@ import * as clientApi from './client-api.tsx'
 import { AppProps } from './components/model/AppProps'
 
 
-//noinspection TypeScriptValidateTypes
 export class App extends React.Component<AppProps, {}> {
     store: any;
 
