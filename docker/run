@@ -1,0 +1,18 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+import argparse
+import os
+
+parser = argparse.ArgumentParser(description='')
+
+parser.add_argument('-t','--task', help='Task to be executed',required=False)
+
+args = parser.parse_args()
+
+task = args.task
+
+print ("Tarefa a ser executada : %s" % task )
+
+os.environ["DEV_TASK"] = task
+
+os.system("docker-compose up")

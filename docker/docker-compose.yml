@@ -1,0 +1,14 @@
+version: '2'
+services:
+    evoluttree:
+        build: ./build
+        image: evoluttobr/evoluttree:lastest
+        container_name: evoluttree_dev
+        command: /opt/scripts/run-task
+        ports:
+            - "7000:7000"
+        volumes:
+            # path to source code
+            - ..:/opt/front-dev
+        environment:
+          - DEV_TASK=${DEV_TASK}
