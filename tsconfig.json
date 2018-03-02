@@ -27,5 +27,13 @@
     "typings/globals/mocha/index.d.ts",
     "typings/globals/chai/index.d.ts",
     "typings/globals/react-dnd-html5-backend/index.d.ts"
-  ]
+  ],
+  "filesGlob": [
+    "src/**/*.tsx",
+    "src/**/*.ts",
+    "typings/**/*d.ts",
+    "./**/*.ts",
+    "!./node_modules/**/*.ts"
+  ],
+  "exclude": []
 }

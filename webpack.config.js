@@ -7,10 +7,10 @@ var DEFAULT_TARGET = 'BUILD';
 
 var DEFAULT_PARAMS = {
     resolve: {
-        extensions: ['', '.ts', '.tsx', '.js']
+        extensions: [' ', '.ts', '.tsx', '.js']
     },
     entry: {
-        main: './src/main.tsx'
+        main: __dirname + '/src/main_DEV.tsx'
     },
     output: {
         publicPath: '',
@@ -21,10 +21,10 @@ var DEFAULT_PARAMS = {
         'auth0-lock': 'Auth0Lock'
     },
     module: {
-        loaders: [
+        rules: [
             {test: /\.tsx?$/, loader: 'ts-loader?jsx=true', exclude: /(\.test.ts$|node_modules)/},
-            {test: /\.css$/, loader: 'style!css'},
-            {test: /\.(ico|png|jpg|gif|svg|eot|ttf|woff|woff2)(\?.+)?$/, loader: 'url?limit=50000'}
+            {test: /\.css$/, loader: 'style-loader!css-loader'},
+            {test: /\.(ico|png|jpg|gif|svg|eot|ttf|woff|woff2)(\?.+)?$/, loader: 'url-loader?limit=50000'}
         ]
     },
     plugins: [
@@ -35,16 +35,17 @@ var DEFAULT_PARAMS = {
         port: 7000,
         host: "0.0.0.0"
     },
-    debug: true,
-    progress: true,
-    colors: true
+    stats: {
+        errors: true,
+        errorDetails: true
+    }
 };
 
 var PARAMS_PER_TARGET = {
 
     DEV: {
         entry: {
-            main: './src/main_DEV.tsx'
+            main: __dirname + '/src/main_DEV.tsx'
         },
         devtool: 'inline-source-map',
         output: {
@@ -56,7 +57,7 @@ var PARAMS_PER_TARGET = {
 
     BUILD: {
         output: {
-            path: './build'
+            path: __dirname + '/build'
         },
         devtool: 'source-map',
         plugins: [
@@ -65,11 +66,11 @@ var PARAMS_PER_TARGET = {
 
     DIST: {
         entry: {
-            main: './src/main_DIST.tsx'
+            main: __dirname+ '/src/main_DIST.tsx'
         },
         debug: false,
         output: {
-            path: './dist'
+            path: __dirname + '/dist'
         },
         plugins: [
             new webpack.optimize.UglifyJsPlugin()
