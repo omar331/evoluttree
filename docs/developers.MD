@@ -1,27 +1,34 @@
 # Developers notes
 
-If you want to develop new features, fix bugs or make some improvements on **evoluttree**,
-welcome! In this document follows some guidelines.
+If you want to develop new features, fix bugs or contribute to **evoluttree**,
+welcome!
 
 
 ## Requirements
 
-- node and npm
-- webpack and webpack-dev-server installed globally
+- **docker**, **docker-compose** 
 
-
-## Webpack developer server
-
-If you want to see the development webserver, just go to **evoluttree** root and type
+To get started enter go to ``docker`` directory
 
 ```
-cd node_modules/evoluttree
-npm start
+cd docker
+./run -t install-packages
 ```
 
-head to your favorite browser and issue the url
+This command will download and install node modules and some typescript's typings before you can run the project.
 
-**http://localhost:7000**
+To get dev server started
+
+```
+./run -t ds
+```
+
+and head to your favorite browser and issue the url
+
+
+```
+http://localhost:7000/
+```
 
 
 ## Application state / Product structure
