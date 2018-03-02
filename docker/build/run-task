@@ -1,0 +1,36 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import os
+import subprocess
+import time
+
+task = os.environ["DEV_TASK"]
+
+os.chdir("/opt/front-dev")
+
+
+#
+# Tarefa especial: install-packages
+#    Usá-la quando se desejar instalar os pacotes npm e typescripts
+#    de dentro da pasta da aplicação
+#
+if task == 'install-packages':
+   subprocess.call(["npm", "install"])
+   subprocess.call(["typings", "install"])
+
+#
+# It simply put the process to sleep
+#
+elif task == 'sleep':
+    time.sleep(10000)
+
+#
+# otherwise try to execute a gulp task
+#
+else:
+    subprocess.call(["gulp", task])
+
+
+
+
