@@ -6,13 +6,14 @@ import os
 parser = argparse.ArgumentParser(description='')
 
 parser.add_argument('-t','--task', help='Task to be executed',required=False)
+parser.add_argument('-st','--subtask', help='Subtask to be executed, in case wether task is "npm-run"',default='', required=False)
 
 args = parser.parse_args()
 
 task = args.task
-
-print ("Tarefa a ser executada : %s" % task )
+subtask = args.subtask
 
 os.environ["DEV_TASK"] = task
+os.environ["DEV_SUBTASK"] = subtask
 
 os.system("docker-compose up")

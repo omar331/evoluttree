@@ -12,3 +12,4 @@ services:
             - ..:/opt/front-dev
         environment:
           - DEV_TASK=${DEV_TASK}
+          - DEV_SUBTASK=${DEV_SUBTASK}

@@ -7,9 +7,7 @@
     "url": "https://github.com/omar331/evoluttree.git"
   },
   "scripts": {
-    "start": "webpack-dev-server --watch --inline --hot --TARGET=DEV",
-    "test": "mocha --colors './src/tests/**/*.spec.ts' --compilers ts:ts-node/register",
-    "test:watch": "watch-run -i -p './src/**' npm run test",
+    "start": "webpack-dev-server --watch --inline --hot",
     "postinstall": "typings install",
     "deploy:development": "./node_modules/shipit-cli/bin/shipit development deploy",
     "deploy:staging": "./node_modules/shipit-cli/bin/shipit staging deploy",

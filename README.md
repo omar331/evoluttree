@@ -117,6 +117,7 @@ Evoluttree allows to change its state. Checkout out our [API](./docs/API.MD)
 
 ## Recipes
 
+- [Contributing as a developer](./docs/developers.MD)
 - [Integrating with CkEditor](./docs/ckeditor.MD)
 - [Deploying](./docs/deploying.MD)
 - [Custom components] - docs coming soon
