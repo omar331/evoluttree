@@ -10,7 +10,7 @@ export const editingProduct = {
         pages: [
             {
                 id: 1,
-                title: 'Page 1',
+                title: 'Page number 1',
                 pages: [
                     {
                         id: 11,

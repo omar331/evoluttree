@@ -186,6 +186,8 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
 
         let quickLevelMoveInfo = this.getQuickLevelMoveInfo(dragInfo.deltaX, dragInfo.deltaY)
 
+        console.log(" ---- QLM info = %o ", quickLevelMoveInfo)
+
         // Is it a quick level move?
         if ( quickLevelMoveInfo.direction != QuickLevelMove.DIRECTION_NONE ) {
             onQuickLevelMove( quickLevelMoveInfo.direction, info.get('localId') )
@@ -200,19 +202,19 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
      */
     getQuickLevelMoveInfo(deltaX:number, deltaY:number ) {
         let direction = QuickLevelMove.DIRECTION_NONE
-        
+
         let absDeltaX = Math.abs(deltaX)
         let absDeltaY = Math.abs(deltaY)
 
 
-        // decides if it's a Q.L.M. 
+        // decides if it's a Q.L.M.
         if ( (absDeltaX > QuickLevelMove.MIN_DELTA_X) && ( absDeltaY < QuickLevelMove.MAX_DELTA_Y ) ) {
             direction = deltaX > 0 ? QuickLevelMove.DIRECTION_DOWN : QuickLevelMove.DIRECTION_UP
         }
-        
+
         return {
             direction
-        }   
+        }
     }
 
 
@@ -234,7 +236,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
     bodyEditorElementId() {
         return 'evltr_text_element_container'
     }
-    
+
     handleShowBodyEditor(e:SyntheticEvent) {
         const { info, onStartEditPageBody, customComponents } = this.props
 
@@ -279,7 +281,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         const { onFinishEditPageBody } = this.props
 
         onFinishEditPageBody()
-        
+
         document.getElementById('page-body-editor').innerHTML = ''
     }
 
@@ -478,7 +480,7 @@ const pageItemTarget = {
 
         if ( offset == null ) return;
 
-        if (typeof component.handleEndDrag == 'function') component.handleEndDrag( { deltaX: offset.x, deltaY: offset.y } )
+        component.handleEndDrag( { deltaX: offset.x, deltaY: offset.y } )
     }
 };
 

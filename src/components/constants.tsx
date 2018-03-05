@@ -4,7 +4,6 @@ export const ItemTypes = {
     NEW_TASK: 'new_task'
 };
 
-
 export const QuickLevelMove = {
     // minimun x displacement for a drag movement to be considered a Q.L.M
     MIN_DELTA_X: 20,
