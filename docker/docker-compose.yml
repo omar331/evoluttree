@@ -6,7 +6,7 @@ services:
         container_name: evoluttree_dev
         command: /opt/scripts/run-task
         ports:
-            - "7000:7000"
+            - "7500:7000"
         volumes:
             # path to source code
             - ..:/opt/front-dev
