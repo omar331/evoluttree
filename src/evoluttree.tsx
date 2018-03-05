@@ -11,7 +11,7 @@ import { Provider } from 'react-redux'
 
 import { createStore, applyMiddleware,compose } from 'redux'
 
-import { replaceState, pageJustChangedSanitize } from "./actions/products"
+import { replaceState, pageJustChangedSanitize, changeContent } from "./actions/products"
 
 import productReducer from './reducers/product'
 
@@ -70,7 +70,8 @@ export class App extends React.Component<AppProps, {}> {
 
         // populates initial state with editing product
         const initialState:any = fromJS({
-            editing: editingProduct
+            editing: editingProduct,
+            contentChanged: false
         })
 
 
@@ -121,12 +122,18 @@ export class App extends React.Component<AppProps, {}> {
             let store = this.store;
 
             this.unsubscribe = store.subscribe( () => {
-                let productState = store.getState().get('editing').toJS()
-                config.onContentChange(productState)
+                if(store.getState().get('contentChanged')) {
+                    let productState = store.getState().get('editing').toJS()
+                    config.onContentChange(productState)
+                    this.handleChangeOccured(false)
+                }
             })
         }
         that.forceUpdate()
+    }
 
+    handleChangeOccured(value) {
+        this.store.dispatch( changeContent( value ) )
     }
 
     componentWillUnmount() {

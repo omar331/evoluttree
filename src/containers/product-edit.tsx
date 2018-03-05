@@ -1,5 +1,5 @@
-import { connect } from 'react-redux'
-import ProductEdit from '../components/product.edit'
+import { connect } from 'react-redux';
+import ProductEdit from '../components/product.edit';
 import * as productActions from "../actions/products";
 
 const mapStateToProps = (state:any) => {

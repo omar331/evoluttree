@@ -445,10 +445,10 @@ export const quickLevelMove = ( state:any, direction:string, pageLocalId:string 
 export const changePageInfo = (state:any, localPageId:string, modifiedProperties:any ) => {
     const pageKeyPath = searchPageKeyPath(state.get('editing'), localPageId )
 
-    let page = getPageByLocalId(state, localPageId)
-    page = page.merge( Map(modifiedProperties) )
+    let page = getPageByLocalId(state, localPageId);
+    page = page.merge( Map(modifiedProperties) );
 
-    return  state.setIn( ['editing'].concat(pageKeyPath), page )
+    return  state.setIn( ['editing'].concat(pageKeyPath), page );
 }
 
 
@@ -496,4 +496,19 @@ export const changeCollapseStateAllUpperPageLevels = (state:any, localId:string,
 
 
     return newState
+}
+
+
+/**
+ * Set to true if any content has changed
+ * @param state
+ * @param value
+ * @returns {any}
+ */
+export const anyContentHasChanged = ( state:any, value:boolean ) => {
+    console.log('helper state = %o', state)
+    console.log('helper value = %o', value)
+    let newstate = state.setIn(['contentChanged'], value)
+    console.log('helper newstate = %o', newstate)
+    return newstate
 }

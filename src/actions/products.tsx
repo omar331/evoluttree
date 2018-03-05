@@ -35,3 +35,10 @@ export const pageJustChangedSanitize = () => {
     }
 }
 
+
+export const changeContent = (value:boolean) => {
+    return {
+        type: 'ANY_CONTENT_HAS_CHANGED',
+        value
+    }
+}

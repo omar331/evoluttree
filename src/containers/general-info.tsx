@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import Info from '../components/misc/general-info'
-import {changeProductTitle} from "../actions/products";
+import {changeContent, changeProductTitle} from "../actions/products";
 
 const mapStateToProps = (state:any) => {
     let general:any
@@ -15,7 +15,8 @@ const mapStateToProps = (state:any) => {
 const mapDispatchToProps = (dispatch:any) => {
     return {
         onTitleChange: (newTitle:string) => {
-            dispatch( changeProductTitle(newTitle) );
+            dispatch( changeProductTitle(newTitle) )
+            dispatch( changeContent(true) )
         }
     }
 }

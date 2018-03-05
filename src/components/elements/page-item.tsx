@@ -31,6 +31,7 @@ const pageListingSource = {
 
         if ( offset == null ) return;
 
+        // component.handleEndDrag( { deltaX: offset.x, deltaY: offset.y });
         if (typeof component.handleEndDrag == 'function') component.handleEndDrag( { deltaX: offset.x, deltaY: offset.y } )
     },
     beginDrag(props:any) {
@@ -379,7 +380,9 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
 
         // page item content
         let pageItemNode = connectDragSource(<div
-                                className={classNames('page-item', 'page-item-custom', depthClasses, {'just-changed': info.get('justChanged') || false } )}
+                                className={classNames(
+                                    'page-item', 'page-item-custom', depthClasses, {'just-changed': info.get('justChanged') || false }
+                                    )}
                                 style={{marginLeft: depthLeftMargin}}
                                 onMouseEnter={ this.handleMouseEnter.bind(this) }
                                 onMouseLeave={ this.handleMouseLeave.bind(this) }
