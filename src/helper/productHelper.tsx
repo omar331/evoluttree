@@ -506,9 +506,6 @@ export const changeCollapseStateAllUpperPageLevels = (state:any, localId:string,
  * @returns {any}
  */
 export const anyContentHasChanged = ( state:any, value:boolean ) => {
-    console.log('helper state = %o', state)
-    console.log('helper value = %o', value)
-    let newstate = state.setIn(['contentChanged'], value)
-    console.log('helper newstate = %o', newstate)
-    return newstate
+    state = state.setIn(['contentChanged'], value);
+    return state;
 }

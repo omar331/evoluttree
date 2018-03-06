@@ -32,7 +32,9 @@ const pageListingSource = {
         if ( offset == null ) return;
 
         // component.handleEndDrag( { deltaX: offset.x, deltaY: offset.y });
-        if (typeof component.handleEndDrag == 'function') component.handleEndDrag( { deltaX: offset.x, deltaY: offset.y } )
+        // if (typeof component.handleEndDrag == 'function')
+            console.log('inicio = %o', component);
+            component.handleEndDrag( { deltaX: offset.x, deltaY: offset.y } )
     },
     beginDrag(props:any) {
 
@@ -87,7 +89,7 @@ interface PageItemProps {
     depth?: number,
     customComponents?: any,
     pageItemBeingDraggedOverMe?: any,
-    isOver?: boolean
+    isOver?: boolean,
 }
 
 interface PageItemState {
@@ -163,7 +165,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
      */
     handleDropItem(itemType:any, info:any) {
         const { onNewPage, onMovePage } = this.props
-        console.log(info)
+        // console.log(info)
         switch (itemType) {
             case ItemTypes.NEW_PAGE:
                 onNewPage(info.ownerPage.get('localId'), info.pageOrder + 1 )
@@ -473,14 +475,18 @@ const pageItemTarget = {
         // TODO: check what type of object may be dropped here
         return true;
     },
-    drop(props:any, monitor:any, component:any) {
-        let offset = monitor.getDifferenceFromInitialOffset()
+    drop: function (props: any, monitor: any, component: any) {
+        let offset = monitor.getDifferenceFromInitialOffset();
 
-        console.log('DROP   offset = %o   component = %o', offset, component)
+        // console.log('props = %o', props);
 
-        if ( offset == null ) return;
+        // console.log('DROP   offset = %o   component = %o', offset, component);
 
-        component.handleEndDrag( { deltaX: offset.x, deltaY: offset.y } )
+        if (offset === null) {
+            return;
+        }
+
+        component.handleEndDrag({deltaX: offset.x, deltaY: offset.y});
     }
 };
 

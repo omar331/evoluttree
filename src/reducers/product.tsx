@@ -43,7 +43,6 @@ const productReducer = (state:any, action:any) => {
         case 'PAGE_JUST_CHANGED_SANITIZE':
             return productHelper.pageHasJustChangedSanitize( state )
         case 'ANY_CONTENT_HAS_CHANGED':
-            console.log('action = %o', action)
             return productHelper.anyContentHasChanged( state, action.value )
         default:
             return state
