@@ -26,5 +26,5 @@ COPY ./run-task /opt/scripts
 RUN echo "cd /opt/front-dev/" >> ~/.bashrc
 
 EXPOSE 22
-EXPOSE 7000
+EXPOSE 7500
 

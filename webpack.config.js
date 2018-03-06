@@ -32,7 +32,7 @@ var DEFAULT_PARAMS = {
     devServer: {
         contentBase: 'dev/',
         hot: true,
-        port: 7000,
+        port: 7500,
         host: "0.0.0.0"
     },
     stats: {
