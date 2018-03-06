@@ -1,14 +1,14 @@
 import * as React from 'react';
-import { PageItemToolbarProps } from '../model/PageItemToolbarProps'
+import { PageItemToolbarProps } from '../model/PageItemToolbarProps';
 
 
 export default class PageItemToolbar extends React.Component<PageItemToolbarProps, {}> {
-    constructor(props:any) {
+    constructor(props: any) {
         super(props);
     }
 
-   render() {
-        const { pageInfo, onEditClicked, onDelete, depth, onClone, pageOrder } = this.props
+    render() {
+        const { pageInfo, onEditClicked, onDelete, onClone, pageOrder } = this.props;
 
         return <div>
                     <a onClick={ () => { onEditClicked() } }>
@@ -22,6 +22,6 @@ export default class PageItemToolbar extends React.Component<PageItemToolbarProp
                     <a className="danger" onClick={ () => { onDelete( pageInfo.get('localId') ) } }>
                         delete
                     </a>
-               </div>
+               </div>;
     }
 }

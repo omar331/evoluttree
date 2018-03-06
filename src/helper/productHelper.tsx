@@ -100,7 +100,7 @@ export const searchPageKeyPath = (node:any, localId:string, position:number = 0,
 export const createPageNode:(info:PageInfo)=>any = (info:PageInfo) => {
     if (!info.hasOwnProperty('localId')) info.localId = v4();
 
-    return Map(info)
+    return Map(info);
 }
 
 
