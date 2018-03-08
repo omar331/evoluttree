@@ -6,4 +6,5 @@ shipitfile.js
 .idea/*
 dist
 *.d.ts
+typ/
 
