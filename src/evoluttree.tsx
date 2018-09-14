@@ -93,7 +93,6 @@ export class App extends React.Component<AppProps, {}> {
     }
 
     render() {
-
         //noinspection TypeScriptUnresolvedVariable
         const { config, customComponents } = this.props;
         let { onStartEditPageBody } = config;
@@ -152,10 +151,10 @@ export class App extends React.Component<AppProps, {}> {
  * @type {ContextComponentClass<{config?: any}>}
  */
 export const Evoluttree =  DragDropContext<{config?: any, editingProduct?: any, customComponents?: any}>(HTML5Backend)(
-    React.createClass({
-        render: function () {
-            return <App {...this.props} />;
+    class X extends React.Component<AppProps, {}> {
+        render() {
+            return <App {...this.props} />
         }
-    })
+    }
 );
 

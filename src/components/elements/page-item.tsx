@@ -407,7 +407,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                                 }
                             </div>
                             <div className="toolbar toolbar-custom">
-                                { toolbar }
+                               { toolbar }
                             </div>
                      </div>)
 
