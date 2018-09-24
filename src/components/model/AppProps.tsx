@@ -7,5 +7,6 @@ export interface EvoluttreeConfig {
 export interface AppProps {
     config: EvoluttreeConfig,
     editingProduct?: any
-    customComponents?: any
+    customComponents?: any,
+    dragDropContext?: boolean
 }

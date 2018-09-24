@@ -1,7 +1,8 @@
 import * as React from 'react';
 
-import { DragDropContext } from 'react-dnd';
+
 import HTML5Backend from 'react-dnd-html5-backend';
+import { DragDropContext } from 'react-dnd';
 
 import { fromJS } from 'immutable';
 
@@ -26,6 +27,7 @@ import * as clientApi from './client-api.tsx';
 import { AppProps } from './components/model/AppProps';
 
 
+
 export class App extends React.Component<AppProps, {}> {
     store: any;
 
@@ -38,16 +40,20 @@ export class App extends React.Component<AppProps, {}> {
             onContentChange: undefined
         },
         editingProduct: undefined,
-        customComponents: {}
+        customComponents: {},
+        dragDropContextManager: true
     };
 
     constructor(props: AppProps) {
         super(props);
 
+        console.log(" Props do evoluttree: %o ", this.props)
+
         //noinspection TypeScriptUnresolvedVariable
         const { config } = this.props;
 
         let editingProduct: any = props.editingProduct;
+
         let hookActionsToExternal: any = undefined;
 
 
@@ -93,6 +99,8 @@ export class App extends React.Component<AppProps, {}> {
     }
 
     render() {
+
+
         //noinspection TypeScriptUnresolvedVariable
         const { config, customComponents } = this.props;
         let { onStartEditPageBody } = config;
@@ -150,11 +158,34 @@ export class App extends React.Component<AppProps, {}> {
  *
  * @type {ContextComponentClass<{config?: any}>}
  */
-export const Evoluttree =  DragDropContext<{config?: any, editingProduct?: any, customComponents?: any}>(HTML5Backend)(
-    class X extends React.Component<AppProps, {}> {
-        render() {
-            return <App {...this.props} />
-        }
-    }
-);
+// export const Evoluttree =  DragDropContext<{config?: any, editingProduct?: any, customComponents?: any}>(html5back)(
+//     class X extends React.Component<AppProps, {}> {
+//
+//         render() {
+//             return <App {...this.props} />
+//         }
+//     }
+// );
 
+
+
+/**
+ *
+ * @type {ContextComponentClass<{config?: any}>}
+ */
+export const Evoluttree = class X extends React.Component<any, any> {
+    render() {
+        let { dragDropContextManager } = this.props
+
+        let AppEnv = App
+
+        if ( dragDropContextManager ) {
+             AppEnv = DragDropContext<{config?: any, editingProduct?: any, customComponents?: any}>(HTML5Backend)(App)
+           // AppEnv = DragDropContext(HTML5Backend)(App);
+        }
+
+        console.log("valor AppEnv: %o", AppEnv);
+
+        return <AppEnv {...this.props} />
+    }
+}
