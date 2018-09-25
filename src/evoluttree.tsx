@@ -51,7 +51,6 @@ export class App extends React.Component<AppProps, {}> {
 
         let hookActionsToExternal: any = undefined;
 
-
         // ---> hook frontend actions to a external function?
         if ( config.hasOwnProperty('hookActionsToExternal') ) {
             hookActionsToExternal = config.hookActionsToExternal;
@@ -75,7 +74,6 @@ export class App extends React.Component<AppProps, {}> {
             contentChanged: false
         });
 
-
         this.store = createStore(
             productReducer,
             {},
@@ -91,21 +89,6 @@ export class App extends React.Component<AppProps, {}> {
         window.setInterval( () => {
             this.store.dispatch( pageJustChangedSanitize() );
         }, 5000 );
-    }
-
-    render() {
-
-        //noinspection TypeScriptUnresolvedVariable
-        const { config, customComponents } = this.props;
-        let { onStartEditPageBody } = config;
-
-        return  <Provider store={this.store}>
-                    <ProductEditContainer
-                        onStartEditPageBody={onStartEditPageBody}
-                        customComponents={customComponents}
-                    />
-                </Provider>
-
     }
 
     componentDidMount() {
@@ -143,6 +126,19 @@ export class App extends React.Component<AppProps, {}> {
         }
     }
 
+    render() {
+
+        //noinspection TypeScriptUnresolvedVariable
+        const { config, customComponents } = this.props;
+        let { onStartEditPageBody } = config;
+
+        return  <Provider store={this.store}>
+            <ProductEditContainer
+                onStartEditPageBody={onStartEditPageBody}
+                customComponents={customComponents}
+            />
+        </Provider>
+    }
 }
 
 /**
@@ -155,7 +151,7 @@ export const Evoluttree = class X extends React.Component<any, any> {
 
         let AppEnv = App
 
-        if ( dragDropContextManager )
+        if( dragDropContextManager )
              AppEnv = DragDropContext<{config?: any, editingProduct?: any, customComponents?: any}>(HTML5Backend)(App)
 
         return <AppEnv {...this.props} />

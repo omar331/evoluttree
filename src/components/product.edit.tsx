@@ -43,14 +43,14 @@ export default class ProductEditComponent extends React.Component<ProductEditPro
         return baseSettings[mode]
     }
 
-
-
     handlePageItemStartDrag(pageInfo:any) {
         this.props.onPageItemBeginDrag && this.props.onPageItemBeginDrag(pageInfo)
     }
+
     handlePageItemEndDrag(pageInfo:any) {
         this.props.onPageItemEndDrag && this.props.onPageItemEndDrag(pageInfo)
     }
+
     enterPageEditMode(elementId, pageInfo) {
         const { onStartEditPageBody } = this.props
 
@@ -61,13 +61,16 @@ export default class ProductEditComponent extends React.Component<ProductEditPro
 
         if ( onStartEditPageBody ) onStartEditPageBody(elementId, pageInfo)
     }
+
     enterPageListMode() {
         this.setState({
             mode: 'list',
             modeSettings: this.getBaseModeSettings('list')
         })
     }
+
     render() {
+
         const { onStartEditPageBody, customComponents } = this.props
         const { mode } = this.state
 
