@@ -4,6 +4,7 @@ export interface PageItemToolbarProps {
     onEditClicked: any,
     onClone: any,
     depth?: number,
-    pageOrder?: number
+    pageOrder?: number,
+    onNewPageFromParent?:any
 }
 

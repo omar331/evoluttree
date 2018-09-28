@@ -62,7 +62,7 @@ function collect(connect:any, monitor:any) {
  * Represents a page item in product content hierarchy
  *
  * Each page has a DropStuffArea where it's possible do add/assign
- * new contents to the page. Those contents could be pages, tasks,
+ * new contents to the page. These contents could be pages, tasks,
  * notes and so on
  *
  */
@@ -72,6 +72,7 @@ interface PageItemProps {
     isDragging: any,
     onTitleChange: any,
     onNewPage?: any,
+    onNewPageFromParent?: any,
     onMovePage?:any,
     onChangeTreeState: any,
     onQuickLevelMove: any,
@@ -111,6 +112,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         isDragging: false,
         onTitleChange: null,
         onNewPage: null,
+        onNewPageFromParent: null,
         onMovePage: null,
         onChangeTreeState: null,
         onQuickLevelMove: null,
@@ -297,9 +299,9 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         const { info, connectDragSource,
                 connectDropTarget,
                 isDragging, onTitleChange,
-                 onNewPage, onMovePage, parentPage, previousPage,
+                 onNewPage, onNewPageFromParent, onMovePage, parentPage, previousPage,
                 pageOrder, onChangeTreeState, onQuickLevelMove,
-                onChangePageInfo, onDeletePage,onClonePage,
+                onChangePageInfo, onDeletePage, onClonePage,
                 onStartEditPageBody, onFinishEditPageBody,
                 depth, customComponents,
                 onBeginDrag, onEndDrag,
@@ -371,7 +373,8 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                     onEditClicked: this.handleShowBodyEditor.bind(this),
                     depth: depth,
                     onClone: onClonePage,
-                    pageOrder: pageOrder
+                    pageOrder: pageOrder,
+                    onNewPageFromParent: onNewPageFromParent
                 }
             )
         }

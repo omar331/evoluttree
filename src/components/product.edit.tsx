@@ -82,25 +82,21 @@ export default class ProductEditComponent extends React.Component<ProductEditPro
                 <div id="product-editor-modal"></div>
                 <Grid className="grid-product-edit">
                     <Row>
-                        {
-                            this.state.modeSettings.componentsBarVisible ? <Col md={this.state.modeSettings.sideBarMd}>
-                                        </Col>
-                                        :
-                                        null
-                        }
                         <Col md={this.state.modeSettings.contentMd}>
                             <GeneralInfoContainer />
                         </Col>
                     </Row>
-                    <Row>
-                        {
-                            this.state.modeSettings.componentsBarVisible ?
+                    {
+                        this.state.modeSettings.componentsBarVisible ?
+                            <Row>
                                 <Col md={this.state.modeSettings.sideBarMd} className="component-bar">
                                     <ComponentsBar />
                                 </Col>
-                                :
-                                null
-                        }
+                            </Row>
+                            :
+                            null
+                    }
+                    <Row>
                         <Col md={this.state.modeSettings.contentMd} className="pages-container" >
                             <div id="page-body-editor" style={ stylePageEditor }>
                             </div>

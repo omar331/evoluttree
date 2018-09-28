@@ -5,8 +5,8 @@ export interface EvoluttreeConfig {
 }
 
 export interface AppProps {
-    config: EvoluttreeConfig,
-    editingProduct?: any
+    config?: EvoluttreeConfig,
+    editingProduct?: any,
     customComponents?: any,
     dragDropContext?: boolean
 }
