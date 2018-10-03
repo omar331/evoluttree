@@ -11,7 +11,6 @@ export default class PagesList extends React.Component<PagesProps, {}> {
         generalInfo: {},
         onTitleChange: null,
         onNewPage: null,
-        onNewPageFromParent: null,
         onChangeTreeState: null,
         onQuickLevelMove: null,
         onChangePageInfo: null,
@@ -62,7 +61,7 @@ export default class PagesList extends React.Component<PagesProps, {}> {
 
     render() {
         const { pages, parentPage, onTitleChange,
-                onNewPage, onNewPageFromParent, onChangeTreeState,
+                onNewPage, onChangeTreeState,
                 onChangePageInfo, onDeletePage, onClonePage,
                 onStartEditPageBody, onFinishEditPageBody,
                 depth, customComponents,
@@ -87,7 +86,6 @@ export default class PagesList extends React.Component<PagesProps, {}> {
                                                       pageOrder={order}
                                                       onTitleChange={onTitleChange}
                                                       onNewPage={onNewPage}
-                                                      onNewPageFromParent={onNewPageFromParent}
                                                       onMovePage={this.handleMovePage.bind(this)}
                                                       onChangeTreeState={onChangeTreeState}
                                                       onQuickLevelMove={this.handleQuickLevelMove.bind(this)}

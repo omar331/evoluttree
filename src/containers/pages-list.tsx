@@ -24,14 +24,6 @@ const mapDispatchToProps = (dispatch:any) => {
             dispatch( newPage(ownerPageLocalId,  position) );
             dispatch( changeContent(true) );
         },
-        onNewPageFromParent: (ownerPageLocalId:string, position:number) => {
-
-            //sums 1 to put the content in the next slot
-            position++
-
-            dispatch( newPage(ownerPageLocalId,  position) );
-            dispatch( changeContent(true) );
-        },
         onMovePage: (sourcePageLocalId:string, destinationPageLocalId:string, position:number) => {
             dispatch( movePage(sourcePageLocalId, destinationPageLocalId, position) );
             dispatch( changeContent(true) );

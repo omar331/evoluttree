@@ -72,7 +72,6 @@ interface PageItemProps {
     isDragging: any,
     onTitleChange: any,
     onNewPage?: any,
-    onNewPageFromParent?: any,
     onMovePage?:any,
     onChangeTreeState: any,
     onQuickLevelMove: any,
@@ -112,7 +111,6 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         isDragging: false,
         onTitleChange: null,
         onNewPage: null,
-        onNewPageFromParent: null,
         onMovePage: null,
         onChangeTreeState: null,
         onQuickLevelMove: null,
@@ -299,7 +297,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         const { info, connectDragSource,
                 connectDropTarget,
                 isDragging, onTitleChange,
-                 onNewPage, onNewPageFromParent, onMovePage, parentPage, previousPage,
+                 onNewPage, onMovePage, parentPage, previousPage,
                 pageOrder, onChangeTreeState, onQuickLevelMove,
                 onChangePageInfo, onDeletePage, onClonePage,
                 onStartEditPageBody, onFinishEditPageBody,
@@ -374,7 +372,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                     depth: depth,
                     onClone: onClonePage,
                     pageOrder: pageOrder,
-                    onNewPageFromParent: onNewPageFromParent
+                    onNewPage: onNewPage
                 }
             )
         }

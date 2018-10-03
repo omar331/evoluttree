@@ -203,17 +203,20 @@ export const findParentPage = (state:any, localId:string, asObject:boolean = fal
  * @returns {any}
  */
 export const insertPage = (state:any, ownerPageLocalId:string, position:number, pageNodeToInsert:any) => {
-
+    console.log(ownerPageLocalId)
     if ( ownerPageLocalId == null ){
 
         return insertPageInEditingEmpty( state, pageNodeToInsert );
     }
 
+    console.log(state.get('editing'))
+
     const ownerPageKeyPath = searchPageKeyPath(state.get('editing'), ownerPageLocalId );
+
+    console.log(ownerPageKeyPath)
 
     let pagesNode:any
     let keyPathApply = ['editing'].concat(ownerPageKeyPath)
-
     keyPathApply.pop()
 
     pagesNode = state.getIn(keyPathApply)

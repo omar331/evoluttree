@@ -8,7 +8,7 @@ export default class PageItemToolbar extends React.Component<PageItemToolbarProp
     }
 
     render() {
-        const { pageInfo, onEditClicked, onDelete, onClone, pageOrder, onNewPageFromParent} = this.props;
+        const { pageInfo, onEditClicked, onDelete, onClone, pageOrder, onNewPage } = this.props;
 
         return <div>
                     <a onClick={ () => { onEditClicked() } }>
@@ -23,7 +23,7 @@ export default class PageItemToolbar extends React.Component<PageItemToolbarProp
                         delete
                     </a>
                     &nbsp;<span className="sep">|</span>&nbsp;
-                    <a className="primary" onClick={ () => { onNewPageFromParent( pageInfo.get('localId'), pageOrder ) } }>
+                    <a className="primary" onClick={ () => { onNewPage( pageInfo.get('localId'), pageOrder ) } }>
                         new page
                     </a>
                </div>;
