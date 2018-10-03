@@ -1,4 +1,5 @@
 import * as productHelper from '../helper/productHelper';
+import {searchPageKeyPath} from '../helper/productHelper';
 
 const productReducer = (state: any, action: any) => {
     switch (action.type) {
@@ -12,7 +13,6 @@ const productReducer = (state: any, action: any) => {
             // creates the page
             const newPageNode = productHelper.createPageNode({title: undefined, localId: action.localId });
 
-            // inserts it
             return productHelper.insertPage(
                               state,
                               action.ownerPageLocalId,

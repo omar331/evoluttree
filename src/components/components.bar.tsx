@@ -77,10 +77,18 @@ export default class ComponentsBar extends React.Component<{}, {}> {
         super(props);
     }
     render() {
+        const { onNewPage } = this.props;
+
         return(
             <div className="components-list">
                 <div className="component">
-                    <DraggableNewPageElement />
+                    { typeof this.props.pages == 'undefined'
+                        ? <Button bsStyle="success" onClick={ () => onNewPage(null, 0) }>+</Button>
+                        : ''
+                    }
+
+
+                    {/*<DraggableNewPageElement />*/}
                 </div>
                 {/*
                 <div className="component">
@@ -91,6 +99,3 @@ export default class ComponentsBar extends React.Component<{}, {}> {
         );
     }
 }
-
-
-

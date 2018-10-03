@@ -7,7 +7,8 @@ import './css/contents.css';
 import GeneralInfoContainer from '../containers/general-info';
 import PagesListContainer from '../containers/pages-list';
 
-import ComponentsBar from './components.bar';
+// import ComponentsBar from './components.bar';
+import ComponentsBarContainer from '../containers/components-bar';
 
 import { ProductEditProps,ProductEditState } from './model/ProductEditModel'
 
@@ -90,7 +91,7 @@ export default class ProductEditComponent extends React.Component<ProductEditPro
                         this.state.modeSettings.componentsBarVisible ?
                             <Row>
                                 <Col md={this.state.modeSettings.sideBarMd} className="component-bar">
-                                    <ComponentsBar />
+                                    <ComponentsBarContainer />
                                 </Col>
                             </Row>
                             :

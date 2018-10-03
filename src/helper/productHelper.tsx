@@ -203,10 +203,17 @@ export const findParentPage = (state:any, localId:string, asObject:boolean = fal
  * @returns {any}
  */
 export const insertPage = (state:any, ownerPageLocalId:string, position:number, pageNodeToInsert:any) => {
+
+    if ( ownerPageLocalId == null ){
+
+        return insertPageInEditingEmpty( state, pageNodeToInsert );
+    }
+
     const ownerPageKeyPath = searchPageKeyPath(state.get('editing'), ownerPageLocalId );
 
     let pagesNode:any
     let keyPathApply = ['editing'].concat(ownerPageKeyPath)
+
     keyPathApply.pop()
 
     pagesNode = state.getIn(keyPathApply)
@@ -217,6 +224,23 @@ export const insertPage = (state:any, ownerPageLocalId:string, position:number, 
     return state.setIn( keyPathApply, newPagesList )
 }
 
+/**
+ * Insert page in Editing. This method is called when there are no pages in the editing
+ *
+ * @param state
+ * @param pageNodeToInsert
+ * @returns {any}
+ */
+export const insertPageInEditingEmpty = ( state:any, pageNodeToInsert:any ) => {
+
+    if ( state.get('editing').length < 0 ) return state;
+
+    let editing = state.get('editing').toJS();
+
+    editing.pages = [ pageNodeToInsert ];
+
+    return state.setIn( ['editing'], fromJS(editing) );
+}
 
 export const movePage = (state:any, sourcePageLocalId:string, destinationPageLocalId:string, position:number) =>
 {
