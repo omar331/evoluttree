@@ -23,7 +23,7 @@ export default class PageItemToolbar extends React.Component<PageItemToolbarProp
                         delete
                     </a>
                     &nbsp;<span className="sep">|</span>&nbsp;
-                    <a className="primary" onClick={ () => { onNewPage( pageInfo.get('localId'), pageOrder ) } }>
+                    <a className="primary" onClick={ () => { onNewPage( pageInfo.get('localId'), pageOrder + 1 ) } }>
                         new page
                     </a>
                </div>;
