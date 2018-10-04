@@ -15,7 +15,6 @@ export default class PageEditor extends React.Component<PageEditorInterfaces.Pro
     }
     constructor(props:any) {
         super(props);
-        console.log(props)
     }
     handleClose(e:any) {
         const { onClose } = this.props

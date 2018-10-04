@@ -21,6 +21,7 @@ import SyntheticEvent = __React.SyntheticEvent;
 
 
 import * as classNames from 'classnames';
+import ControlDisplayTitle from './control-display-title';
 
 
 const pageListingSource = {
@@ -399,13 +400,19 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                                 }
                             </div>
                             <div className="page-title page-title-custom" onClick={ (e) => { this.toggleEditingTitle() } }>
-                                { this.state.editingTitle ?
-                                    <TitleEdit value={ info.get('title') }
-                                               onTitleChange={ this.updateTitle.bind(this) }
-                                    />
-                                    :
-                                    <TitleDisplay value={ info.get('title') } />
-                                }
+
+                                <ControlDisplayTitle
+                                    info={info}
+                                    onTitleChange={ this.updateTitle.bind(this) }
+                                    editingTitle={this.state.editingTitle}
+                                />
+                                {/*{ this.state.editingTitle ?*/}
+                                    {/*<TitleEdit value={ info.get('title') }*/}
+                                               {/*onTitleChange={ this.updateTitle.bind(this) }*/}
+                                    {/*/>*/}
+                                    {/*:*/}
+                                    {/*<TitleDisplay value={ info.get('title') } />*/}
+                                {/*}*/}
                             </div>
                             <div className="toolbar toolbar-custom">
                                { toolbar }
