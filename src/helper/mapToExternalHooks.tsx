@@ -42,8 +42,8 @@ export const mapActionToAPIParameters = (store:any) => (next:any) => (action:any
             const pageBefore = productHelper.getPageByLocalId(currentState, action.ownerPageLocalId)
 
             if ( pageBefore ) {
-                referencedPageId = pageBefore.get('id')
-                referencedPagePlacement = 'after'
+                referencedPageId = pageBefore.get('id');
+                referencedPagePlacement = 'after';
             }
 
             next({
@@ -51,7 +51,8 @@ export const mapActionToAPIParameters = (store:any) => (next:any) => (action:any
                 localId: action.localId,
                 referencedPage:{
                     id: referencedPageId,
-                    placement: referencedPagePlacement
+                    placement: referencedPagePlacement,
+                    productId: action.productId,
                 }
             })
             break;

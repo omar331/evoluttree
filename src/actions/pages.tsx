@@ -10,11 +10,11 @@ export const changePageTitle = (localId:string, newTitle:string) => {
 
 
 
-export const newPage = (ownerPageLocalId:string, position:number) => {
+export const newPage = (ownerPageLocalId:string, position:number, productId:any) => {
     return {
         type: 'NEW_PAGE',
         localId: v4(),
-        ownerPageLocalId, position
+        ownerPageLocalId, position, productId
     }
 }
 

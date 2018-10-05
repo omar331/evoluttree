@@ -166,7 +166,6 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
      */
     handleDropItem(itemType:any, info:any) {
         const { onNewPage, onMovePage } = this.props
-        // console.log(info)
         switch (itemType) {
             case ItemTypes.NEW_PAGE:
                 onNewPage(info.ownerPage.get('localId'), info.pageOrder + 1 )
