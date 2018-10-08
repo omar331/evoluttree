@@ -34,11 +34,11 @@ export class App extends React.Component<AppProps, {}> {
        config: {
             hookActionsToExternal: undefined,
             onStartEditPageBody: undefined,
-            onContentChange: undefined
+            onContentChange: undefined,
+            dragDropContextManager: true
         },
         editingProduct: undefined,
-        customComponents: {},
-        dragDropContext: true
+        customComponents: {}
     };
 
     constructor(props: AppProps) {
@@ -140,20 +140,23 @@ export class App extends React.Component<AppProps, {}> {
         </Provider>
     }
 }
+//
+// export const Evoluttree = DragDropContext<{config?: any, editingProduct?: any, customComponents?: any, dragDropContext?:any}>(HTML5Backend)(App)
+//
+// /**
+//  *
+//  */
 
-export const Evoluttree = DragDropContext<{config?: any, editingProduct?: any, customComponents?: any, dragDropContext?:any}>(HTML5Backend)(App)
 
-/**
- *
- */
-/*
 export class Evoluttree extends React.Component<any, any> {
     render() {
         let AppEnv = App
 
-        if( this.props.dragDropContext )
-             AppEnv = DragDropContext<{config?: any, editingProduct?: any, customComponents?: any, dragDropContext?:any}>(HTML5Backend)(App)
+        const { config } = this.props
+
+        if( config.dragDropContextManager )
+             AppEnv = DragDropContext<{config?: any, editingProduct?: any, customComponents?: any, dragDropContextManager?:any}>(HTML5Backend)(App)
 
         return <AppEnv {...this.props} />
     }
-}*/
+}

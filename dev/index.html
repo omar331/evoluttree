@@ -1,4 +1,5 @@
     <!doctype html>
+    <!--suppress ALL -->
     <html lang="en">
         <head>
             <title>Evolutree Yeah</title>
@@ -8,7 +9,7 @@
             <!-- Optional theme -->
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
 
-            <script src="http://front.evolutto.com.br/ckeditor/ckeditor.js"></script>
+            <script src="http://frontend.evolutto.com.br/ckeditor/ckeditor.js"></script>
             <!--<script src="./ckeditor/ckeditor.js"></script>-->
 
             <meta charset="UTF-8">
@@ -37,7 +38,9 @@
                     },
                     onContentChange: function(x) {
                         // console.log('onContentChange = %o', x)
-                    }
+                    },
+
+                    dragDropContextManager: true
             };
 
             // product being edited

@@ -17,7 +17,6 @@ let custom_components = {
     }
 }
 
-
 ReactDOM.render(
     (
         <Evoluttree config={evltree_config}
