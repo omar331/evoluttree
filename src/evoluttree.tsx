@@ -155,7 +155,7 @@ export class Evoluttree extends React.Component<any, any> {
         const { config } = this.props
 
         if( config.dragDropContextManager )
-             AppEnv = DragDropContext<{config?: any, editingProduct?: any, customComponents?: any, dragDropContextManager?:any}>(HTML5Backend)(App)
+             AppEnv = DragDropContext<{config?: any, editingProduct?: any, customComponents?: any, dragDropContextManager?: any}>(HTML5Backend)(App)
 
         return <AppEnv {...this.props} />
     }
