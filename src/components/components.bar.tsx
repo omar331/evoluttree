@@ -72,7 +72,7 @@ const DraggableNewTaskElement = DragSource(ItemTypes.NEW_TASK, newElementSource,
 /**
  * Elements (content components) bar
  */
-export default class ComponentsBar extends React.Component<{}, {}> {
+export default class ComponentsBar extends React.Component<{ onNewPage: any, productId: any, pages: any }, {}> {
     constructor(props:any) {
         super(props);
     }
