@@ -2,7 +2,9 @@ export interface ProductEditProps {
     onStartEditPageBody?: any,
     customComponents?: any,
     onPageItemBeginDrag?: any,
-    onPageItemEndDrag?: any
+    onPageItemEndDrag?: any,
+    pages?: any,
+    onNewPage?: any
 }
 
 

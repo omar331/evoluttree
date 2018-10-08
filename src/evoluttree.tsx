@@ -25,7 +25,7 @@ import * as clientApi from './client-api.tsx';
 
 import { AppProps } from './components/model/AppProps';
 
-export class App extends React.Component<AppProps, {}> {
+class App extends React.Component<AppProps, {}> {
     store: any;
 
     unsubscribe: any;
@@ -132,7 +132,7 @@ export class App extends React.Component<AppProps, {}> {
         const { config, customComponents } = this.props;
         let { onStartEditPageBody } = config;
 
-        return  <Provider store={this.store}>
+        return <Provider store={this.store}>
             <ProductEditContainer
                 onStartEditPageBody={onStartEditPageBody}
                 customComponents={customComponents}
@@ -140,23 +140,28 @@ export class App extends React.Component<AppProps, {}> {
         </Provider>
     }
 }
-//
-// export const Evoluttree = DragDropContext<{config?: any, editingProduct?: any, customComponents?: any, dragDropContext?:any}>(HTML5Backend)(App)
-//
-// /**
-//  *
-//  */
+
 
 
 export class Evoluttree extends React.Component<any, any> {
+
+
     render() {
-        let AppEnv = App
+        const props = this.props
 
-        const { config } = this.props
 
-        if( config.dragDropContextManager )
-             AppEnv = DragDropContext(HTML5Backend)(App)
+        let C = class extends React.Component<any, any> {
+            render() {
+                return <App {...props}  />
+            }
+        }
 
-        return <AppEnv {...this.props} />
+
+        if ( props.config.dragDropContextManager === true) {
+            C = DragDropContext<any>(HTML5Backend)(C)
+        }
+
+
+        return <C />
     }
 }
