@@ -22,7 +22,6 @@ const mapDispatchToProps = (dispatch:any) => {
         },
         onNewPage: (ownerPageLocalId:string, position:number) => {
             dispatch( newPage(ownerPageLocalId,  position, null) );
-            dispatch( changeContent(true) );
         },
         onMovePage: (sourcePageLocalId:string, destinationPageLocalId:string, position:number) => {
             dispatch( movePage(sourcePageLocalId, destinationPageLocalId, position) );
