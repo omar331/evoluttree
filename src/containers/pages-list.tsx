@@ -18,7 +18,7 @@ const mapDispatchToProps = (dispatch:any) => {
     return {
         onTitleChange: (id:string,newTitle:string) => {
             dispatch( changePageTitle(id, newTitle) );
-            dispatch( changeContent(true) );
+            //dispatch( changeContent(true) );
         },
         onNewPage: (ownerPageLocalId:string, position:number) => {
             dispatch( newPage(ownerPageLocalId,  position, null) );
