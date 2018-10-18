@@ -72,18 +72,18 @@ const DraggableNewTaskElement = DragSource(ItemTypes.NEW_TASK, newElementSource,
 /**
  * Elements (content components) bar
  */
-export default class ComponentsBar extends React.Component<{}, {}> {
+export default class ComponentsBar extends React.Component<{ onNewPage?: any, productId?: any, pages?: any }, {}> {
     constructor(props:any) {
         super(props);
     }
     render() {
-        const { onNewPage } = this.props;
+        const { onNewPage, productId } = this.props;
 
         return(
             <div className="components-list">
                 <div className="component">
-                    { typeof this.props.pages == 'undefined'
-                        ? <Button bsStyle="success" onClick={ () => onNewPage(null, 0) }>+</Button>
+                    { typeof this.props.pages == 'undefined' || this.props.pages.size == 0
+                        ? <Button bsStyle="success" onClick={ () => onNewPage(null, 0, productId) }>+</Button>
                         : ''
                     }
 

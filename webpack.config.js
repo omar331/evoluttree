@@ -1,13 +1,16 @@
+var path = require('path');
 var _ = require('lodash');
 var minimist = require('minimist');
 var chalk = require('chalk');
 var webpack = require('webpack');
 
-var DEFAULT_TARGET = 'BUILD';
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+
+var DEFAULT_TARGET = 'DEV';
 
 var DEFAULT_PARAMS = {
     resolve: {
-        extensions: [' ', '.ts', '.tsx', '.js']
+        extensions: [' ', '.ts', '.tsx', '.js'],
     },
     entry: {
         main: __dirname + '/src/main_DEV.tsx'
@@ -22,9 +25,34 @@ var DEFAULT_PARAMS = {
     },
     module: {
         rules: [
-            {test: /\.tsx?$/, loader: 'ts-loader?jsx=true', exclude: /(\.test.ts$|node_modules)/},
+
+            {
+                test: /\.(jsx|tsx|js|ts)$/,
+                use:{
+                    loader: 'ts-loader',
+                    options: {
+                        compilerOptions: {
+                            module: 'esnext',
+                            allowJs: true,
+                            declaration: false,
+                        },
+                    }
+                },
+                exclude: /(\.test.ts$|node_modules)/,
+            },
+
+            {
+                test: /\.css$/,
+                use: [
+                    { loader: "style-loader" },
+                    { loader: "css-loader" }
+                ]
+            },
+            {test: /\.(ico|png|jpg|gif|svg|eot|ttf|woff|woff2)(\?.+)?$/, use:{ loader: 'url-loader'} }
+
+            /*{test: /\.tsx?$/, loader: 'ts-loader?jsx=true', exclude: /(\.test.ts$|node_modules)/},
             {test: /\.css$/, loader: 'style-loader!css-loader'},
-            {test: /\.(ico|png|jpg|gif|svg|eot|ttf|woff|woff2)(\?.+)?$/, loader: 'url-loader?limit=50000'}
+            {test: /\.(ico|png|jpg|gif|svg|eot|ttf|woff|woff2)(\?.+)?$/, loader: 'url-loader?limit=50000'}*/
         ]
     },
     plugins: [
@@ -44,12 +72,14 @@ var DEFAULT_PARAMS = {
 var PARAMS_PER_TARGET = {
 
     DEV: {
+        mode: 'development',
         entry: {
             main: __dirname + '/src/main_DEV.tsx'
         },
         devtool: 'inline-source-map',
         output: {
-            filename: '[name].js'
+            path: __dirname + '/dev',
+            filename: 'main.js'
         },
         plugins: [
         ]
@@ -68,18 +98,20 @@ var PARAMS_PER_TARGET = {
         entry: {
             main: __dirname+ '/src/main_DIST.tsx'
         },
-        debug: false,
         output: {
             path: __dirname + '/dist'
         },
         plugins: [
-            new webpack.optimize.UglifyJsPlugin()
+            new UglifyJsPlugin({
+                test: /\.js(\?.*)?$/i
+            })
         ]
     }
 
 };
 
 var target = _resolveBuildTarget(DEFAULT_TARGET);
+
 
 
 

@@ -25,31 +25,28 @@ import * as clientApi from './client-api.tsx';
 
 import { AppProps } from './components/model/AppProps';
 
-export class App extends React.Component<AppProps, {}> {
-    store: any;
+class App extends React.Component {
 
-    unsubscribe: any;
-
-    public static defaultProps: AppProps = {
+    public static defaultProps = {
        config: {
             hookActionsToExternal: undefined,
             onStartEditPageBody: undefined,
-            onContentChange: undefined
+            onContentChange: undefined,
+            dragDropContextManager: true
         },
         editingProduct: undefined,
-        customComponents: {},
-        dragDropContext: true
+        customComponents: {}
     };
 
-    constructor(props: AppProps) {
+    constructor(props) {
         super(props);
 
         //noinspection TypeScriptUnresolvedVariable
         const { config } = this.props;
 
-        let editingProduct: any = props.editingProduct;
+        let editingProduct = props.editingProduct;
 
-        let hookActionsToExternal: any = undefined;
+        let hookActionsToExternal = undefined;
 
         // ---> hook frontend actions to a external function?
         if ( config.hasOwnProperty('hookActionsToExternal') ) {
@@ -69,7 +66,7 @@ export class App extends React.Component<AppProps, {}> {
         };
 
         // populates initial state with editing product
-        const initialState: any = fromJS({
+        const initialState = fromJS({
             editing: editingProduct,
             contentChanged: false
         });
@@ -132,7 +129,7 @@ export class App extends React.Component<AppProps, {}> {
         const { config, customComponents } = this.props;
         let { onStartEditPageBody } = config;
 
-        return  <Provider store={this.store}>
+        return <Provider store={this.store}>
             <ProductEditContainer
                 onStartEditPageBody={onStartEditPageBody}
                 customComponents={customComponents}
@@ -141,19 +138,27 @@ export class App extends React.Component<AppProps, {}> {
     }
 }
 
-export const Evoluttree = DragDropContext<{config?: any, editingProduct?: any, customComponents?: any, dragDropContext?:any}>(HTML5Backend)(App)
 
-/**
- *
- */
-/*
-export class Evoluttree extends React.Component<any, any> {
+
+export class Evoluttree extends React.Component {
+
+
     render() {
-        let AppEnv = App
+        const props = this.props
 
-        if( this.props.dragDropContext )
-             AppEnv = DragDropContext<{config?: any, editingProduct?: any, customComponents?: any, dragDropContext?:any}>(HTML5Backend)(App)
 
-        return <AppEnv {...this.props} />
+        let C = class extends React.Component {
+            render() {
+                return <App {...props}  />
+            }
+        }
+
+
+        if ( props.config.dragDropContextManager === true) {
+            C = DragDropContext(HTML5Backend)(C)
+        }
+
+
+        return <C />
     }
-}*/
+}

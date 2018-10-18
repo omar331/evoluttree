@@ -5,12 +5,12 @@
  */
 
 
-let config:any
+let config
 
 
-export const connect = (config:any) => {
+export const connect = (config) => {
 
-    this.config = config
+    // this.config = config
 
     return externalHooksMiddleware 
 } 
@@ -20,14 +20,14 @@ export const connect = (config:any) => {
 
 
 
-const externalHooksMiddleware = (store:any) => (next:any) => (action:any) =>  {
+const externalHooksMiddleware = (store) => (next) => (action) =>  {
     next(action)
 
-    if ( this.config.hookActionsToExternal != null ) {
-        if ( action.type.match(/HOOK_/) ) {
-            this.config.hookActionsToExternal(action)
-        }
-    }
+    // if ( this.config.hookActionsToExternal != null ) {
+    //     if ( action.type.match(/HOOK_/) ) {
+    //         this.config.hookActionsToExternal(action)
+    //     }
+    // }
 
 
     switch (action.type) {

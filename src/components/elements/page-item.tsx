@@ -23,6 +23,7 @@ import SyntheticEvent = __React.SyntheticEvent;
 import * as classNames from 'classnames';
 import ControlDisplayTitle from './control-display-title';
 
+//const { DragSource, DropTarget } = DragDropContext;
 
 const pageListingSource = {
     endDrag(props:any, monitor:any, component:any) {
@@ -166,7 +167,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
      */
     handleDropItem(itemType:any, info:any) {
         const { onNewPage, onMovePage } = this.props
-        // console.log(info)
+
         switch (itemType) {
             case ItemTypes.NEW_PAGE:
                 onNewPage(info.ownerPage.get('localId'), info.pageOrder + 1 )
@@ -178,12 +179,14 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
     }
 
     handleExpandCollapse(e:any) {
+
         const { onChangeTreeState, info } = this.props
 
         const newCollapsedState = ! info.get('collapsed')
 
         onChangeTreeState( info.get('localId'), {collapsed: newCollapsedState})
     }
+
     handleEndDrag(dragInfo:any) {
         const { info, onQuickLevelMove } = this.props
 
@@ -285,7 +288,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
 
         onFinishEditPageBody()
 
-        document.getElementById('page-body-editor').innerHTML = ''
+        ReactDOM.unmountComponentAtNode(document.getElementById('page-body-editor'));
     }
 
     clearInterval( intervalId ){
@@ -298,7 +301,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         const { info, connectDragSource,
                 connectDropTarget,
                 isDragging, onTitleChange,
-                 onNewPage, onMovePage, parentPage, previousPage,
+                onNewPage, onMovePage, parentPage, previousPage,
                 pageOrder, onChangeTreeState, onQuickLevelMove,
                 onChangePageInfo, onDeletePage, onClonePage,
                 onStartEditPageBody, onFinishEditPageBody,
