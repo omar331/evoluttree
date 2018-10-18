@@ -25,12 +25,9 @@ import * as clientApi from './client-api.tsx';
 
 import { AppProps } from './components/model/AppProps';
 
-class App extends React.Component<AppProps, {}> {
-    store: any;
+class App extends React.Component {
 
-    unsubscribe: any;
-
-    public static defaultProps: AppProps = {
+    public static defaultProps = {
        config: {
             hookActionsToExternal: undefined,
             onStartEditPageBody: undefined,
@@ -41,15 +38,15 @@ class App extends React.Component<AppProps, {}> {
         customComponents: {}
     };
 
-    constructor(props: AppProps) {
+    constructor(props) {
         super(props);
 
         //noinspection TypeScriptUnresolvedVariable
         const { config } = this.props;
 
-        let editingProduct: any = props.editingProduct;
+        let editingProduct = props.editingProduct;
 
-        let hookActionsToExternal: any = undefined;
+        let hookActionsToExternal = undefined;
 
         // ---> hook frontend actions to a external function?
         if ( config.hasOwnProperty('hookActionsToExternal') ) {
@@ -69,7 +66,7 @@ class App extends React.Component<AppProps, {}> {
         };
 
         // populates initial state with editing product
-        const initialState: any = fromJS({
+        const initialState = fromJS({
             editing: editingProduct,
             contentChanged: false
         });
@@ -143,14 +140,14 @@ class App extends React.Component<AppProps, {}> {
 
 
 
-export class Evoluttree extends React.Component<any, any> {
+export class Evoluttree extends React.Component {
 
 
     render() {
         const props = this.props
 
 
-        let C = class extends React.Component<any, any> {
+        let C = class extends React.Component {
             render() {
                 return <App {...props}  />
             }
@@ -158,7 +155,7 @@ export class Evoluttree extends React.Component<any, any> {
 
 
         if ( props.config.dragDropContextManager === true) {
-            C = DragDropContext<any>(HTML5Backend)(C)
+            C = DragDropContext(HTML5Backend)(C)
         }
 
 

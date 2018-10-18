@@ -1,6 +1,5 @@
 import { Map, List, fromJS } from 'immutable'
-import { v4 } from 'node-uuid'
-
+import uuidv4 from 'uuid/v4'
 
 
 import { QuickLevelMove } from '../components/constants.tsx'
@@ -20,7 +19,7 @@ import { PageInfo } from '../components/model/PageInfo'
 export const prepareEditingProduct = (productInfo:any) => {
     let editing = productInfo
 
-    editing.general.localId = v4()
+    editing.general.localId = uuidv4()
     editing = setupEditingPages(editing)
 
     return editing
@@ -34,7 +33,7 @@ export const prepareEditingProduct = (productInfo:any) => {
  * @returns {any}
  */
 const setupEditingPages = (page:any) => {
-    page.localId = v4()
+    page.localId = uuidv4()
     page.collapsed = true
     if ( page.pages && page.pages.length > 0 ) {
         for(let i = 0; i < page.pages.length; i++) {
@@ -98,7 +97,7 @@ export const searchPageKeyPath = (node:any, localId:string, position:number = 0,
  * @returns {any}
  */
 export const createPageNode:(info:PageInfo)=>any = (info:PageInfo) => {
-    if (!info.hasOwnProperty('localId')) info.localId = v4();
+    if (!info.hasOwnProperty('localId')) info.localId = uuidv4();
 
     return Map(info);
 }

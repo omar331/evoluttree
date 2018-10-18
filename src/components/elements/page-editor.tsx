@@ -42,18 +42,18 @@ export default class PageEditor extends React.Component<PageEditorInterfaces.Pro
                     <h2>{ pageInfo.get('title') }</h2>
 
                     <textarea
-                        ref="bodyTextInput"
+                        ref={ (ref) => { this.refs.bodyTextInput = ref; } }
                         id={textEditorElementId}
                         name={textEditorElementId}
-                        cols="50"
-                        rows="10"
+                        cols={50}
+                        rows={10}
                         defaultValue={ pageInfo.get('body') }
                         onChange={ (e) => { console.log(' textarea a = %s', e.target.valueOf() ); return true; } }
                     />
 
                     <br/><br/>
 
-                    <Button bsStyle="primary" bsSize="medium" onClick={ this.handleSave.bind(this) }>Save</Button>
+                    <Button bsStyle={'primary'} onClick={ this.handleSave.bind(this) }>Save</Button>
                     <Button onClick={ onClose }>Close</Button>
             </div>
     }

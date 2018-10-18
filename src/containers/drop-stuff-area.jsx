@@ -1,17 +1,17 @@
 import { connect } from 'react-redux'
 import { DropStuffArea } from '../components/elements/drop-stuff-area'
 
-const mapStateToProps = (state:any) => {
+const mapStateToProps = (state) => {
     return {
         // when some page is being dragged, it's useful to droparea knows it
         pageItemBeingDragged: state.getIn(['editing', 'misc', 'pageItemBeingDragged'])
     }
 }
 
-const mapDispatchToProps = (dispatch:any) => {
+const mapDispatchToProps = (dispatch) => {
     return {
-        onDragOverBegin: (ownerPage:any) => { ownerPage && console.log('DOB    page = %s', ownerPage.get('title'))},
-        onDragOverEnd: (ownerPage:any) => { ownerPage && console.log('DOE   page = %s', ownerPage.get('title'))},
+        onDragOverBegin: (ownerPage) => { ownerPage && console.log('DOB    page = %s', ownerPage.get('title'))},
+        onDragOverEnd: (ownerPage) => { ownerPage && console.log('DOE   page = %s', ownerPage.get('title'))},
     }
 }
 
