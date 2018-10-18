@@ -18,23 +18,22 @@ const mapDispatchToProps = (dispatch:any) => {
     return {
         onTitleChange: (id:string,newTitle:string) => {
             dispatch( changePageTitle(id, newTitle) );
-            dispatch( changeContent(true) );
+            //dispatch( changeContent(true) );
         },
         onNewPage: (ownerPageLocalId:string, position:number) => {
             dispatch( newPage(ownerPageLocalId,  position, null) );
-            dispatch( changeContent(true) );
         },
         onMovePage: (sourcePageLocalId:string, destinationPageLocalId:string, position:number) => {
             dispatch( movePage(sourcePageLocalId, destinationPageLocalId, position) );
-            dispatch( changeContent(true) );
+            //dispatch( changeContent(true) );
         },
         onChangeTreeState: (pageLocalId:string, newStateInfo:any ) => {
             dispatch( changeTreeState(pageLocalId, newStateInfo) );
-            dispatch( changeContent(true) );
+            // dispatch( changeContent(true) );
         },
         onQuickLevelMove: (direction:string, localPageId:string ) => {
             dispatch( quickLevelMove(direction,localPageId) );
-            dispatch( changeContent(true) );
+            //dispatch( changeContent(true) );
         },
         onChangePageInfo: ( localPageId:string, pageInfo:any ) => {
             dispatch( changePageInfo(localPageId, pageInfo) );
@@ -42,11 +41,11 @@ const mapDispatchToProps = (dispatch:any) => {
         },
         onDeletePage: (localPageId:string ) => {
             dispatch( deletePage(localPageId) );
-            dispatch( changeContent(true) );
+            //dispatch( changeContent(true) );
         },
         onClonePage: (localPageId:string, position:number ) => {
             dispatch( clonePage(localPageId, position) );
-            dispatch( changeContent(true) );
+           // dispatch( changeContent(true) );
         },
     }
 }
