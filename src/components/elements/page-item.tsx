@@ -8,7 +8,7 @@ import PageItemToolbar from './page-item-toolbar'
 
 import PageEditor from './page-editor'
 
-import DragDropContext from 'react-dnd';
+import { DragSource, DropTarget } from 'react-dnd';
 
 import { QuickLevelMove, ItemTypes } from '../constants';
 
@@ -23,7 +23,7 @@ import SyntheticEvent = __React.SyntheticEvent;
 import * as classNames from 'classnames';
 import ControlDisplayTitle from './control-display-title';
 
-const { DragSource, DropTarget } = DragDropContext;
+//const { DragSource, DropTarget } = DragDropContext;
 
 const pageListingSource = {
     endDrag(props:any, monitor:any, component:any) {
