@@ -12,7 +12,7 @@ import { DragSource, DropTarget } from 'react-dnd';
 
 import { QuickLevelMove, ItemTypes } from '../constants';
 
-import { DropStuffAreaContainer } from '../../containers/drop-stuff-area';
+import { DropStuffAreaContainer } from '../../containers/drop-stuff-area.jsx';
 
 import { TitleEdit } from '../misc/title-edit'
 import { TitleDisplay } from '../misc/title-display'

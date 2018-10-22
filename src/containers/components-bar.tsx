@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 
 import ComponentsBar from '../components/components.bar';
-import { newPage } from "../actions/pages"
+import { newPage } from "../actions/pages.jsx"
 import { changeContent } from "../actions/products"
 
 const mapStateToProps = (state:any) => {

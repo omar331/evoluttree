@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import PageItemContainer from '../../containers/page-item';
+import PageItemContainer from '../../containers/page-item.jsx';
 import {PagesProps} from '../model/PagesProps'
 import { Map, List } from 'immutable'
 

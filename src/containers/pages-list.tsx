@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 
 import Pages from '../components/elements/pages-list'
 import {changePageTitle, newPage, movePage, changeTreeState,
-        quickLevelMove, changePageInfo, deletePage, clonePage } from "../actions/pages"
+        quickLevelMove, changePageInfo, deletePage, clonePage } from "../actions/pages.jsx"
 import { changeContent } from "../actions/products"
 
 

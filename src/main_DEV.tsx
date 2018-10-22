@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import { Evoluttree } from './evoluttree';
+import { Evoluttree } from './evoluttree.jsx';
 import { EvoluttreeConfig } from './components/model/AppProps';
 
 declare var evltree_config: EvoluttreeConfig;

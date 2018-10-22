@@ -8,8 +8,7 @@
  * </code>
  * 
  */
-import { changePageInfo } from './actions/pages';
-import { deletePage } from './actions/pages';
+import { changePageInfo, deletePage } from './actions/pages.jsx';
 import { changeProductTitle } from './actions/products';
 
 declare var window: any;
