@@ -6,9 +6,9 @@ RUN apt-get update && apt-get install -y curl \
                        git-core \
                        nano
 
-RUN apt-get install -y gnupg \
-                    gnupg1 \
-                    gnupg2
+#RUN apt-get install -y gnupg \
+#                    gnupg1 \
+#                    gnupg2
 
 RUN cd /tmp && curl -sL https://deb.nodesource.com/setup_8.x | bash -
 
