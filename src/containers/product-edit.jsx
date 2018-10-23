@@ -2,17 +2,17 @@ import { connect } from 'react-redux';
 import ProductEdit from '../components/product.edit';
 import * as productActions from "../actions/products";
 
-const mapStateToProps = (state:any) => {
+const mapStateToProps = (state) => {
     return {
     }
 }
 
-const mapDispatchToProps = (dispatch:any) => {
+const mapDispatchToProps = (dispatch) => {
     return {
-        onPageItemBeginDrag: (pageInfo:any) => {
+        onPageItemBeginDrag: (pageInfo) => {
             dispatch( productActions.pageItemStartDrag(pageInfo) );
         },
-        onPageItemEndDrag: (pageInfo:any) => {
+        onPageItemEndDrag: (pageInfo) => {
             dispatch( productActions.pageItemEndDrag(pageInfo) );
         },
     }

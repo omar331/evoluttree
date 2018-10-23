@@ -5,7 +5,7 @@ import { DragDropContext } from 'react-dnd';
 
 import { fromJS } from 'immutable';
 
-import ProductEditContainer from './containers/product-edit';
+import ProductEditContainer from './containers/product-edit.jsx';
 
 import { Provider } from 'react-redux';
 
@@ -17,7 +17,7 @@ import productReducer from './reducers/product';
 
 import * as productHelper from './helper/productHelper';
 import * as externalHooksConnect from './helper/externalHooksConnect.jsx';
-import { mapActionToAPIParameters } from './helper/mapToExternalHooks';
+import { mapActionToAPIParameters } from './helper/mapToExternalHooks.jsx';
 
 import * as sampleSettings from './misc/sampleSettings.tsx';
 

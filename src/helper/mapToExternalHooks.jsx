@@ -11,9 +11,9 @@
 import * as productHelper from './productHelper'
 import { QuickLevelMove } from '../components/constants';
 
-export const mapActionToAPIParameters = (store:any) => (next:any) => (action:any) =>  {
+export const mapActionToAPIParameters = (store) => (next) => (action) =>  {
     const currentState = store.getState()
-    let page:any, sourcePage:any, direction:any
+    let page, sourcePage, direction
 
     next(action)
 
@@ -36,8 +36,8 @@ export const mapActionToAPIParameters = (store:any) => (next:any) => (action:any
             }
             break;
         case 'NEW_PAGE':
-            let referencedPageId:string
-            let referencedPagePlacement:string = 'after'
+            let referencedPageId;
+            let referencedPagePlacement = 'after'
 
             const pageBefore = productHelper.getPageByLocalId(currentState, action.ownerPageLocalId)
 
@@ -57,6 +57,9 @@ export const mapActionToAPIParameters = (store:any) => (next:any) => (action:any
             })
             break;
         case 'PAGE_CHANGE_TITLE':
+
+            console.log("titulo da pagina foi alterado enviando para HOOK_CHANGE_PAGE_TITLE")
+
             page = productHelper.getPageByLocalId(currentState, action.localId)
 
             if ( page != null && page.get('id') ){
@@ -85,7 +88,7 @@ export const mapActionToAPIParameters = (store:any) => (next:any) => (action:any
             let destinationReferencedPage = productHelper.getPageByLocalId(currentState, action.destinationPageLocalId)
 
 
-            let destinationReferencedPagePlacement = action.position == 0 ? 'before' : 'after'
+            let destinationReferencedPagePlacement = action.position === 0 ? 'before' : 'after'
 
             if ( (sourcePage == null) || (destinationReferencedPage == null )) break
 
@@ -101,7 +104,7 @@ export const mapActionToAPIParameters = (store:any) => (next:any) => (action:any
             sourcePage = productHelper.getPageByLocalId(currentState, action.pageLocalId)
             direction = action.direction
 
-            let newAction:any = {
+            let newAction = {
                 type: 'HOOK_MOVE_PAGE',
                 sourcePageId: sourcePage.get('id')
             }
