@@ -16,14 +16,14 @@ import { PageInfo } from '../components/model/PageInfo'
  * In this stage, editing product must be just a plai javascript object.
  *
  */
-export const prepareEditingProduct = (productInfo:any) => {
-    let editing = productInfo
+export const prepareEditingProduct = (productInfo) => {
+    let editing = productInfo;
 
-    editing.general.localId = uuidv4()
-    editing = setupEditingPages(editing)
+    editing.general.localId = uuidv4();
+    editing = setupEditingPages(editing);
 
     return editing
-}
+};
 
 
 /**
@@ -32,7 +32,7 @@ export const prepareEditingProduct = (productInfo:any) => {
  * @param page
  * @returns {any}
  */
-const setupEditingPages = (page:any) => {
+const setupEditingPages = (page) => {
     page.localId = uuidv4()
     page.collapsed = true
     if ( page.pages && page.pages.length > 0 ) {
@@ -42,7 +42,7 @@ const setupEditingPages = (page:any) => {
     }
 
     return page
-}
+};
 
 
 
@@ -52,7 +52,7 @@ const setupEditingPages = (page:any) => {
  * @param newTitle
  * @returns {Map<K, V>|Cursor|List<T>}
  */
-export const changeProductTitle = (state:any, newTitle:string ) => {
+export const changeProductTitle = (state, newTitle ) => {
     return state.setIn(
         ['editing', 'general', 'title'],
         newTitle
@@ -66,19 +66,19 @@ export const changeProductTitle = (state:any, newTitle:string ) => {
 /**
  * Get keyPath to a certain page within the state
  *
- * @param Map node the root node to page hierarchy
- * @param string localId local id to be found
- * @param integer position position in the current hierarchy level (used only for recursion purposes)
- * @param array acc keyPath being generated (used only for recursion purposes)
+ * @param node node the root node to page hierarchy
+ * @param localId localId local id to be found
+ * @param position position position in the current hierarchy level (used only for recursion purposes)
+ * @param acc acc keyPath being generated (used only for recursion purposes)
  * @returns {array}
  */
-export const searchPageKeyPath = (node:any, localId:string, position:number = 0, acc:any = [] ):any => {
+export const searchPageKeyPath = (node, localId, position = 0, acc = [] ) => {
     // when the node is found...
-    if ( node.get('localId') == localId ) return ['pages', position]
+    if ( node.get('localId') === localId ) return ['pages', position]
 
     // otherwise keep searching
     let childrenPages = node.get('pages')
-    if ( typeof childrenPages == 'undefined' ) return null
+    if ( typeof childrenPages === 'undefined' ) return null
 
     for(let position = 0; position < childrenPages.size; position++ ) {
         let page = childrenPages.get( position )
@@ -96,7 +96,7 @@ export const searchPageKeyPath = (node:any, localId:string, position:number = 0,
  * @param info
  * @returns {any}
  */
-export const createPageNode:(info:PageInfo)=>any = (info:PageInfo) => {
+export const createPageNode = (info  => {
     if (!info.hasOwnProperty('localId')) info.localId = uuidv4();
 
     return Map(info);
@@ -113,7 +113,7 @@ export const createPageNode:(info:PageInfo)=>any = (info:PageInfo) => {
  * 
  * 
  */
-export const addChildToPage = (state:any, parentPageLocalId:string, pageToInsert:any) => {
+export const addChildToPage = (state, parentPageLocalId, pageToInsert) => {
     // TODO: add 'position' parameter
 
     let page = getPageByLocalId( state, parentPageLocalId )
@@ -140,25 +140,25 @@ export const addChildToPage = (state:any, parentPageLocalId:string, pageToInsert
  * @param asObject
  * @returns Map|string|null
  */
-export const findPagePredecessor = (state:any, localId:string, asObject:boolean = false) => {
+export const findPagePredecessor = (state, localId, asObject = false) => {
     let pageKeypath = searchPageKeyPath( state.get('editing'), localId )
 
     // page not found
-    if ( pageKeypath == null ) return null
+    if ( pageKeypath == null ) return null;
     
-    let pageIndex = pageKeypath.pop()
+    let pageIndex = pageKeypath.pop();
     
     // page has no predecessor
-    if ( pageIndex == 0 ) return null
+    if ( pageIndex === 0 ) return null;
     
     // determine predecessor keyPath
-    let predecessorIndex = --pageIndex
-    pageKeypath.push( predecessorIndex )
+    let predecessorIndex = --pageIndex;
+    pageKeypath.push( predecessorIndex );
 
-    pageKeypath = ['editing'].concat(pageKeypath)
-    let pageNode = state.getIn( pageKeypath )
+    pageKeypath = ['editing'].concat(pageKeypath);
+    let pageNode = state.getIn( pageKeypath );
 
-    if ( pageNode == null ) return null
+    if ( pageNode == null ) return null;
 
     // return a node (map) object or just the page's localId ?
     return asObject ? pageNode : pageNode.get('localId')
@@ -173,18 +173,18 @@ export const findPagePredecessor = (state:any, localId:string, asObject:boolean 
  * @param asObject
  * @returns {any}
  */
-export const findParentPage = (state:any, localId:string, asObject:boolean = false ) => {
-    let pageKeypath = searchPageKeyPath( state.get('editing'), localId )
+export const findParentPage = (state, localId, asObject = false ) => {
+    let pageKeypath = searchPageKeyPath( state.get('editing'), localId );
 
     // page not found
-    if ( pageKeypath == null ) return null
+    if ( pageKeypath == null ) return null;
 
-    pageKeypath.splice(-2, 2)
+    pageKeypath.splice(-2, 2);
 
-    pageKeypath = ['editing'].concat(pageKeypath)
-    let pageNode = state.getIn( pageKeypath )
+    pageKeypath = ['editing'].concat(pageKeypath);
+    let pageNode = state.getIn( pageKeypath );
 
-    if ( pageNode == null ) return null
+    if ( pageNode == null ) return null;
 
     // return a node (map) object or just the page's localId ?
     return asObject ? pageNode : pageNode.get('localId')
@@ -201,7 +201,7 @@ export const findParentPage = (state:any, localId:string, asObject:boolean = fal
  * @param pageNodeToInsert
  * @returns {any}
  */
-export const insertPage = (state:any, ownerPageLocalId:string, position:number, pageNodeToInsert:any) => {
+export const insertPage = (state, ownerPageLocalId, position, pageNodeToInsert) => {
 
     if ( ownerPageLocalId == null ){
 
@@ -211,13 +211,10 @@ export const insertPage = (state:any, ownerPageLocalId:string, position:number, 
     const ownerPageKeyPath = searchPageKeyPath(state.get('editing'), ownerPageLocalId );
 
 
-    let pagesNode:any
     let keyPathApply = ['editing'].concat(ownerPageKeyPath)
     keyPathApply.pop()
 
-    pagesNode = state.getIn(keyPathApply)
-
-    const pagesList = pagesNode
+    const pagesList = state.getIn(keyPathApply);
     const newPagesList = pagesList.insert( position, pageNodeToInsert)
 
     return state.setIn( keyPathApply, newPagesList )
@@ -230,7 +227,7 @@ export const insertPage = (state:any, ownerPageLocalId:string, position:number, 
  * @param pageNodeToInsert
  * @returns {any}
  */
-export const insertPageInEditingEmpty = ( state:any, pageNodeToInsert:any ) => {
+export const insertPageInEditingEmpty = ( state, pageNodeToInsert ) => {
 
     if ( state.get('editing').length < 0 ) return state;
 
@@ -239,32 +236,30 @@ export const insertPageInEditingEmpty = ( state:any, pageNodeToInsert:any ) => {
     editing.pages = [ pageNodeToInsert ];
 
     return state.setIn( ['editing'], fromJS(editing) );
-}
+};
 
-export const movePage = (state:any, sourcePageLocalId:string, destinationPageLocalId:string, position:number) =>
+export const movePage = (state, sourcePageLocalId, destinationPageLocalId, position) =>
 {
-    let tempSourcePageLocalId = sourcePageLocalId + '-moved'
+    let tempSourcePageLocalId = sourcePageLocalId + '-moved';
 
     // get the source page and clone it
-    let sourcePageNode = getPageByLocalId( state, sourcePageLocalId )
-    sourcePageNode = sourcePageNode.set('localId', tempSourcePageLocalId )
+    let sourcePageNode = getPageByLocalId( state, sourcePageLocalId );
+    sourcePageNode = sourcePageNode.set('localId', tempSourcePageLocalId );
 
     // ---> insert the cloned page into new location
-    const newState = insertPage(state, destinationPageLocalId, position, sourcePageNode )
+    const newState = insertPage(state, destinationPageLocalId, position, sourcePageNode );
 
     // remove the page from the state
-    const newState1 = removePageByLocalId( newState, sourcePageLocalId )
+    const newState1 = removePageByLocalId( newState, sourcePageLocalId );
 
-    const newState2 = changePageInfo( newState1, tempSourcePageLocalId, {localId: sourcePageLocalId})
+    const newState2 = changePageInfo( newState1, tempSourcePageLocalId, {localId: sourcePageLocalId});
 
-    const newState3 = changeCollapseStateAllUpperPageLevels( newState2, sourcePageLocalId, false )
+    const newState3 = changeCollapseStateAllUpperPageLevels( newState2, sourcePageLocalId, false );
 
-    const newState4 = pageHasJustChanged( newState3, sourcePageLocalId )
-
-
+    const newState4 = pageHasJustChanged( newState3, sourcePageLocalId );
 
     return newState4
-}
+};
 
 
 /**
@@ -273,7 +268,7 @@ export const movePage = (state:any, sourcePageLocalId:string, destinationPageLoc
  * @param localId
  * @returns {Map<K, V>|Set<T>|Stack<T>|List<T>}
  */
-export const pageHasJustChanged = (state:any, localId:any) => {
+export const pageHasJustChanged = (state, localId) => {
     return state.withMutations( (mState) => {
 
         // mark the page as just changed
@@ -293,15 +288,15 @@ export const pageHasJustChanged = (state:any, localId:any) => {
  * @param state
  * @returns {Map<K, V>|Set<T>|Stack<T>|List<T>}
  */
-export const pageHasJustChangedSanitize = (state:any) => {
+export const pageHasJustChangedSanitize = (state) => {
     return state.withMutations( (mState) => {
 
-        let pagesJustChanged = mState.getIn(['editing', 'misc', 'pagesJustChanged']).toJS()
+        let pagesJustChanged = mState.getIn(['editing', 'misc', 'pagesJustChanged']).toJS();
 
-        let pageLocalId = pagesJustChanged.shift()
+        let pageLocalId = pagesJustChanged.shift();
 
         if ( pageLocalId ) {
-            mState = changePageInfo( mState, pageLocalId, {justChanged: false} )
+            mState = changePageInfo( mState, pageLocalId, {justChanged: false} );
             mState.setIn(['editing', 'misc', 'pagesJustChanged'], fromJS(pagesJustChanged) )
         }
     })
@@ -311,10 +306,11 @@ export const pageHasJustChangedSanitize = (state:any) => {
 
 /**
  * Gets a page by its localId
+ * @param state
  * @param localId
  * @returns {any}
  */
-export const getPageByLocalId = ( state:any, localId : string ) => {
+export const getPageByLocalId = ( state, localId ) => {
     let sourcePageKeyPath = searchPageKeyPath(state.get('editing'), localId)
     let sourceKeyPath = ['editing'].concat(sourcePageKeyPath)
 
@@ -323,24 +319,24 @@ export const getPageByLocalId = ( state:any, localId : string ) => {
 
 
 
-export const removePageByLocalId = ( state:any, localId : string ) => {
+export const removePageByLocalId = ( state, localId ) => {
     let sourcePageKeyPath = searchPageKeyPath(state.get('editing'), localId)
     let sourceKeyPath = ['editing'].concat(sourcePageKeyPath)
 
     // decides if the parent 'pages' node must be removed
-    let removeParentPagesNode = false
+    let removeParentPagesNode = false;
 
-    let parentKeyPath = sourceKeyPath.slice(0)
-    parentKeyPath.pop()
+    let parentKeyPath = sourceKeyPath.slice(0);
+    parentKeyPath.pop();
 
-    const parentNode = state.getIn( parentKeyPath )
-    if ( parentNode.size == 1 ) removeParentPagesNode = true
+    const parentNode = state.getIn( parentKeyPath );
+    if ( parentNode.size === 1 ) removeParentPagesNode = true;
 
     // remove the page
-    const newState0 = state.removeIn( sourceKeyPath )
+    const newState0 = state.removeIn( sourceKeyPath );
 
     // if it's necessary to remove the parent 'pages' node...
-    let newState1 = newState0
+    let newState1 = newState0;
     if ( removeParentPagesNode ) {
         newState1 = newState0.removeIn(parentKeyPath)
     }
@@ -349,22 +345,22 @@ export const removePageByLocalId = ( state:any, localId : string ) => {
 }
 
 
-export const clonePageByLocalId = (state:any, sourcePageLocalId:string, position:number) => {
+export const clonePageByLocalId = (state, sourcePageLocalId, position) => {
 
     // get the source page and clone it
-    let sourcePageNode = getPageByLocalId( state, sourcePageLocalId )
+    let sourcePageNode = getPageByLocalId( state, sourcePageLocalId );
 
-    let sourcePageNodeModify = setupEditingPages( sourcePageNode.toJS() )
+    let sourcePageNodeModify = setupEditingPages( sourcePageNode.toJS() );
 
-    sourcePageNodeModify.title =  sourcePageNodeModify.title + ' (clone)'
+    sourcePageNodeModify.title =  sourcePageNodeModify.title + ' (clone)';
 
-    let pageCloneLocalId = sourcePageNodeModify.localId
+    let pageCloneLocalId = sourcePageNodeModify.localId;
 
     // ---> insert the cloned page into new location
-    const newState = insertPage(state, sourcePageLocalId, position + 1, fromJS(sourcePageNodeModify) )
+    const newState = insertPage(state, sourcePageLocalId, position + 1, fromJS(sourcePageNodeModify) );
 
     return {newState: newState, localId: pageCloneLocalId, pageCloned: sourcePageNodeModify }
-}
+};
 
 
 
@@ -376,14 +372,14 @@ export const clonePageByLocalId = (state:any, sourcePageLocalId:string, position
  * @param newStateInfo
  * @returns {any}
  */
-export const changePageTreeState = ( state:any, pageLocalId:string, newStateInfo:any ) => {
-    let sourcePageKeyPath = searchPageKeyPath(state.get('editing'), pageLocalId)
-    let sourceKeyPath = ['editing'].concat(sourcePageKeyPath)
+export const changePageTreeState = ( state, pageLocalId, newStateInfo ) => {
+    let sourcePageKeyPath = searchPageKeyPath(state.get('editing'), pageLocalId);
+    let sourceKeyPath = ['editing'].concat(sourcePageKeyPath);
 
-    const newState = state.setIn( sourceKeyPath.concat(['collapsed']), newStateInfo.collapsed )
+    const newState = state.setIn( sourceKeyPath.concat(['collapsed']), newStateInfo.collapsed );
 
     return newState
-}
+};
 
 
 /**
@@ -391,13 +387,13 @@ export const changePageTreeState = ( state:any, pageLocalId:string, newStateInfo
  * it's located.
  * 
  */
-export const getPageOrderInLevel = (state:any, pageLocalId:string) => {
-    let pageKeypath = searchPageKeyPath( state.get('editing'), pageLocalId )
+export const getPageOrderInLevel = (state, pageLocalId) => {
+    let pageKeypath = searchPageKeyPath( state.get('editing'), pageLocalId );
 
-    if ( ! pageKeypath ) return null
+    if ( ! pageKeypath ) return null;
 
     return pageKeypath.pop()
-}
+};
 
 
 /**
@@ -414,48 +410,48 @@ export const getPageOrderInLevel = (state:any, pageLocalId:string) => {
  * @param pageLocalId
  * @returns {any}
  */
-export const quickLevelMove = ( state:any, direction:string, pageLocalId:string ) => {
+export const quickLevelMove = ( state, direction, pageLocalId ) => {
     switch (direction) {
         case QuickLevelMove.DIRECTION_UP:
-            let parentLocalId = findParentPage( state, pageLocalId )
+            let parentLocalId = findParentPage( state, pageLocalId );
 
-            if ( !parentLocalId ) return state
+            if ( !parentLocalId ) return state;
 
             let parentOrderInLevel = getPageOrderInLevel(state, parentLocalId)
 
 
             return state.withMutations( (stateM) => {
-                stateM = movePage(stateM,pageLocalId, parentLocalId, parentOrderInLevel + 1 )
+                stateM = movePage(stateM,pageLocalId, parentLocalId, parentOrderInLevel + 1 );
 
-                stateM = changePageTreeState(stateM, parentLocalId, {collapsed: true})
+                stateM = changePageTreeState(stateM, parentLocalId, {collapsed: true});
                 stateM = pageHasJustChanged( stateM, parentLocalId )
-            })
+            });
         case QuickLevelMove.DIRECTION_DOWN:
-            let predecessor = findPagePredecessor(state, pageLocalId )
+            let predecessor = findPagePredecessor(state, pageLocalId );
 
             // there's no predecessor...
-            if ( ! predecessor ) return state
+            if ( ! predecessor ) return state;
 
-            let pageMoving = getPageByLocalId(state, pageLocalId)
+            let pageMoving = getPageByLocalId(state, pageLocalId);
 
 
             return state.withMutations( (stateM) => {
 
-                stateM = pageHasJustChanged( stateM, predecessor )
+                stateM = pageHasJustChanged( stateM, predecessor );
 
                 // remove from its original position
-                stateM = removePageByLocalId(stateM, pageLocalId)
+                stateM = removePageByLocalId(stateM, pageLocalId);
 
-                stateM = changePageTreeState(stateM, predecessor, {collapsed: false})
+                stateM = changePageTreeState(stateM, predecessor, {collapsed: false});
 
-                stateM = addChildToPage(stateM, predecessor, pageMoving )
+                stateM = addChildToPage(stateM, predecessor, pageMoving );
 
                 stateM = pageHasJustChanged( stateM, pageLocalId )
-            })
+            });
         default:
             return state
     }
-}
+};
 
 
 /**
@@ -465,14 +461,14 @@ export const quickLevelMove = ( state:any, direction:string, pageLocalId:string 
  * @param modifiedProperties
  * @returns {any}
  */
-export const changePageInfo = (state:any, localPageId:string, modifiedProperties:any ) => {
+export const changePageInfo = (state, localPageId, modifiedProperties ) => {
     const pageKeyPath = searchPageKeyPath(state.get('editing'), localPageId )
 
     let page = getPageByLocalId(state, localPageId);
     page = page.merge( Map(modifiedProperties) );
 
     return  state.setIn( ['editing'].concat(pageKeyPath), page );
-}
+};
 
 
 /**
@@ -481,9 +477,9 @@ export const changePageInfo = (state:any, localPageId:string, modifiedProperties
  * @param pageInfo
  * @returns {List<T>|Map<K, V>}
  */
-export const setPageBeingDragged = (state:any, pageInfo:any ) => {
+export const setPageBeingDragged = (state, pageInfo ) => {
     return state.setIn(['editing', 'misc', 'pageItemBeingDragged'], pageInfo)
-}
+};
 
 
 /**
@@ -492,22 +488,22 @@ export const setPageBeingDragged = (state:any, pageInfo:any ) => {
  * @param pageInfo
  * @returns {List<T>|Map<K, V>}
  */
-export const unsetPageBeingDragged = (state:any, pageInfo:any ) => {
+export const unsetPageBeingDragged = (state, pageInfo ) => {
     return state.setIn(['editing', 'misc', 'pageItemBeingDragged'], null)
-}
+};
 
 
 
-export const changeCollapseStateAllUpperPageLevels = (state:any, localId:string, newCollapseState:boolean ) => {
-    let path = searchPageKeyPath(state.get('editing'), localId )
+export const changeCollapseStateAllUpperPageLevels = (state, localId, newCollapseState ) => {
+    let path = searchPageKeyPath(state.get('editing'), localId );
 
-    path.splice(-2,2)
+    path.splice(-2,2);
 
-    let newState = state.withMutations( (mState:any) => {
-        let editing = mState.get('editing')
+    let newState = state.withMutations( (mState) => {
+        let editing = mState.get('editing');
 
         while ( path.length > 0 ) {
-            editing = editing.setIn( path.concat(['collapsed']), newCollapseState)
+            editing = editing.setIn( path.concat(['collapsed']), newCollapseState);
 
             // remove 2 last elements
             path.splice(-2,2)
@@ -528,7 +524,7 @@ export const changeCollapseStateAllUpperPageLevels = (state:any, localId:string,
  * @param value
  * @returns {any}
  */
-export const anyContentHasChanged = ( state:any, value:boolean ) => {
+export const anyContentHasChanged = ( state, value ) => {
     state = state.setIn(['contentChanged'], value);
     return state;
 }

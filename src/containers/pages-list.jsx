@@ -3,55 +3,55 @@ import { connect } from 'react-redux'
 import Pages from '../components/elements/pages-list'
 import {changePageTitle, newPage, movePage, changeTreeState,
         quickLevelMove, changePageInfo, deletePage, clonePage } from "../actions/pages.jsx"
-import { changeContent } from "../actions/products"
+import { changeContent } from "../actions/products.jsx"
 
 
 
-
-const mapStateToProps = (state:any) => {
+const mapStateToProps = (state) => {
     return {
         pages: state.get('editing').get('pages')
     }
-}
+};
 
-const mapDispatchToProps = (dispatch:any) => {
+const mapDispatchToProps = (dispatch) => {
     return {
-        onTitleChange: (id:string,newTitle:string) => {
+        onTitleChange: (id,newTitle) => {
+            console.log("estamos onTitleChange!!!!");
             dispatch( changePageTitle(id, newTitle) );
-            //dispatch( changeContent(true) );
+            // dispatch( changeContent(true) );
         },
-        onNewPage: (ownerPageLocalId:string, position:number) => {
+        onNewPage: (ownerPageLocalId, position) => {
             dispatch( newPage(ownerPageLocalId,  position, null) );
         },
-        onMovePage: (sourcePageLocalId:string, destinationPageLocalId:string, position:number) => {
+        onMovePage: (sourcePageLocalId, destinationPageLocalId, position) => {
             dispatch( movePage(sourcePageLocalId, destinationPageLocalId, position) );
             //dispatch( changeContent(true) );
         },
-        onChangeTreeState: (pageLocalId:string, newStateInfo:any ) => {
+        onChangeTreeState: (pageLocalId, newStateInfo) => {
             dispatch( changeTreeState(pageLocalId, newStateInfo) );
             // dispatch( changeContent(true) );
         },
-        onQuickLevelMove: (direction:string, localPageId:string ) => {
+        onQuickLevelMove: (direction, localPageId) => {
             dispatch( quickLevelMove(direction,localPageId) );
             //dispatch( changeContent(true) );
         },
-        onChangePageInfo: ( localPageId:string, pageInfo:any ) => {
+        onChangePageInfo: ( localPageId, pageInfo ) => {
             dispatch( changePageInfo(localPageId, pageInfo) );
             dispatch( changeContent(true) );
         },
-        onDeletePage: (localPageId:string ) => {
+        onDeletePage: (localPageId ) => {
             dispatch( deletePage(localPageId) );
             //dispatch( changeContent(true) );
         },
-        onClonePage: (localPageId:string, position:number ) => {
+        onClonePage: (localPageId, position ) => {
             dispatch( clonePage(localPageId, position) );
            // dispatch( changeContent(true) );
         },
     }
 }
 
-const mergeProps = (stateProps:any, dispatchProps:any, ownProps:any) => {
-    let ret:any = {}
+const mergeProps = (stateProps, dispatchProps, ownProps) => {
+    let ret = {};
 
     for( let k in ownProps ) {
         ret[k] = ownProps[k]
@@ -72,6 +72,6 @@ export const PagesList = connect(
     mapStateToProps,
     mapDispatchToProps,
     mergeProps
-)(Pages)
+)(Pages);
 
 export default PagesList;

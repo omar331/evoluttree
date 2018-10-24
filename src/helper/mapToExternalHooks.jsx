@@ -58,8 +58,6 @@ export const mapActionToAPIParameters = (store) => (next) => (action) =>  {
             break;
         case 'PAGE_CHANGE_TITLE':
 
-            console.log("titulo da pagina foi alterado enviando para HOOK_CHANGE_PAGE_TITLE")
-
             page = productHelper.getPageByLocalId(currentState, action.localId)
 
             if ( page != null && page.get('id') ){

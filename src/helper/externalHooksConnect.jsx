@@ -5,12 +5,12 @@
  */
 
 
-let config
+let configT = null;
 
 
 export const connect = (config) => {
 
-    // this.config = config
+    configT = config;
 
     return externalHooksMiddleware 
 } 
@@ -23,11 +23,11 @@ export const connect = (config) => {
 const externalHooksMiddleware = (store) => (next) => (action) =>  {
     next(action)
 
-    // if ( this.config.hookActionsToExternal != null ) {
-    //     if ( action.type.match(/HOOK_/) ) {
-    //         this.config.hookActionsToExternal(action)
-    //     }
-    // }
+    if ( configT.hookActionsToExternal != null ) {
+        if ( action.type.match(/HOOK_/) ) {
+            configT.hookActionsToExternal(action)
+        }
+    }
 
 
     switch (action.type) {
@@ -51,9 +51,6 @@ const externalHooksMiddleware = (store) => (next) => (action) =>  {
 
         default:
             break
-
-
-
 
     }
 }

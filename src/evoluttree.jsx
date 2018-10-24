@@ -27,17 +27,6 @@ import { AppProps } from './components/model/AppProps';
 
 class App extends React.Component {
 
-    public static defaultProps = {
-       config: {
-            hookActionsToExternal: undefined,
-            onStartEditPageBody: undefined,
-            onContentChange: undefined,
-            dragDropContextManager: true
-        },
-        editingProduct: undefined,
-        customComponents: {}
-    };
-
     constructor(props) {
         super(props);
 
@@ -54,7 +43,7 @@ class App extends React.Component {
         }
 
         // ---> if no editing information are provided, get the sample
-        if ( editingProduct == undefined ) editingProduct = sampleSettings.editingProduct;
+        if ( editingProduct === undefined ) editingProduct = sampleSettings.editingProduct;
 
         // ensure every editing product has a local id
         editingProduct = productHelper.prepareEditingProduct(editingProduct);

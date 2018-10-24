@@ -4,23 +4,23 @@ import ComponentsBar from '../components/components.bar';
 import { newPage } from "../actions/pages.jsx"
 import { changeContent } from "../actions/products"
 
-const mapStateToProps = (state:any) => {
+const mapStateToProps = (state) => {
 
     return {
         pages: state.getIn(['editing', 'pages']),
         productId: state.getIn(['editing', 'general', 'id'])
     }
-}
+};
 
-const mapDispatchToProps = (dispatch:any) => {
+const mapDispatchToProps = (dispatch) => {
     return {
-        onNewPage: (ownerPageLocalId:string, position:number, productId:number) => {
+        onNewPage: (ownerPageLocalId, position, productId) => {
 
             dispatch( newPage(ownerPageLocalId,  position, productId) );
             dispatch( changeContent(true) );
         }
     }
-}
+};
 
 export default connect(
     mapStateToProps,
