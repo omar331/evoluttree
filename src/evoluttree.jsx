@@ -130,8 +130,6 @@ class App extends React.Component {
 
 
 export class Evoluttree extends React.Component {
-
-
     render() {
         const props = this.props
 
@@ -151,3 +149,7 @@ export class Evoluttree extends React.Component {
         return <C />
     }
 }
+
+
+
+

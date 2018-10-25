@@ -19,7 +19,10 @@ import { PageInfo } from '../components/model/PageInfo'
 export const prepareEditingProduct = (productInfo) => {
     let editing = productInfo;
 
-    editing.general.localId = uuidv4();
+
+    if ( ! editing.general.hasOwnProperty('localId') ) {
+        editing.general.localId = uuidv4();
+    }
     editing = setupEditingPages(editing);
 
     return editing
@@ -33,8 +36,14 @@ export const prepareEditingProduct = (productInfo) => {
  * @returns {any}
  */
 const setupEditingPages = (page) => {
-    page.localId = uuidv4()
-    page.collapsed = true
+    if ( ! page.hasOwnProperty('localId') ) {
+        page.localId = uuidv4()
+    }
+
+    if ( ! page.hasOwnProperty('collapsed') ) {
+        page.collapsed = true
+    }
+
     if ( page.pages && page.pages.length > 0 ) {
         for(let i = 0; i < page.pages.length; i++) {
             page.pages[i] = setupEditingPages(page.pages[i])
