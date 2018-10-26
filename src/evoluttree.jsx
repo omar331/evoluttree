@@ -16,14 +16,12 @@ import { replaceState, pageJustChangedSanitize, changeContent } from './actions/
 import productReducer from './reducers/product';
 
 import * as productHelper from './helper/productHelper';
-import * as externalHooksConnect from './helper/externalHooksConnect.jsx';
-import { mapActionToAPIParameters } from './helper/mapToExternalHooks.jsx';
 
 import * as sampleSettings from './misc/sampleSettings.tsx';
 
 import * as clientApi from './client-api.tsx';
 
-import { AppProps } from './components/model/AppProps';
+import _ from 'lodash'
 
 class App extends React.Component {
 
@@ -31,16 +29,9 @@ class App extends React.Component {
         super(props);
 
         //noinspection TypeScriptUnresolvedVariable
-        const { config } = this.props;
+        const { config, onChange } = this.props;
 
         let editingProduct = props.editingProduct;
-
-        let hookActionsToExternal = undefined;
-
-        // ---> hook frontend actions to a external function?
-        if ( config.hasOwnProperty('hookActionsToExternal') ) {
-            hookActionsToExternal = config.hookActionsToExternal;
-        }
 
         // ---> if no editing information are provided, get the sample
         if ( editingProduct === undefined ) editingProduct = sampleSettings.editingProduct;
@@ -60,21 +51,53 @@ class App extends React.Component {
             contentChanged: false
         });
 
+
+
+        const onChangeMiddleWare = ({getState}) => {
+            return next => action => {
+                const returnValue = next(action)
+
+
+                switch (action.type) {
+                    case 'CHANGE_PRODUCT_TITLE':
+                    case 'PAGE_CHANGE_TITLE':
+                    case 'NEW_PAGE':
+                    case 'MOVE_PAGE':
+                    case 'DELETE_PAGE':
+                    case 'CHANGE_PAGE_INFO':
+                    case 'CLONE_PAGE':
+                        if ( onChange ) onChange( getState().getIn(['editing']).toJS() )
+
+                        break;
+                    default:
+                        break;
+                }
+
+
+                return returnValue
+            }
+        }
+
+
+
+
         this.store = createStore(
             productReducer,
             {},
-            applyMiddleware(mapActionToAPIParameters, externalHooksConnect.connect( {hookActionsToExternal} ))
+            applyMiddleware( onChangeMiddleWare )
         );
 
         // Expose client API 
-        clientApi.expose(this.store);
+        // clientApi.expose(this.store);
 
         this.store.dispatch( replaceState(initialState) );
 
+
+
         // just changed sanitize
-        window.setInterval( () => {
-            this.store.dispatch( pageJustChangedSanitize() );
-        }, 5000 );
+        // window.setInterval( () => {
+        //     this.store.dispatch( pageJustChangedSanitize() );
+        // }, 5000 );
     }
 
     componentDidMount() {
