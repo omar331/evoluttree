@@ -16,9 +16,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         onTitleChange: (id,newTitle) => {
-            console.log("estamos onTitleChange!!!!");
             dispatch( changePageTitle(id, newTitle) );
-            // dispatch( changeContent(true) );
         },
         onNewPage: (ownerPageLocalId, position) => {
             dispatch( newPage(ownerPageLocalId,  position, null) );

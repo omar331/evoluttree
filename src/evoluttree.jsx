@@ -52,17 +52,22 @@ class App extends React.Component {
         });
 
 
-
+        /**
+         * Este middleware mapeia quais ações disparam o onChange do Evoluttree
+         *
+         * @param getState
+         * @returns {function(*): function(*=): *}
+         */
         const onChangeMiddleWare = ({getState}) => {
             return next => action => {
                 const returnValue = next(action)
-
 
                 switch (action.type) {
                     case 'CHANGE_PRODUCT_TITLE':
                     case 'PAGE_CHANGE_TITLE':
                     case 'NEW_PAGE':
                     case 'MOVE_PAGE':
+                    case 'QUICK_LEVEL_MOVE':
                     case 'DELETE_PAGE':
                     case 'CHANGE_PAGE_INFO':
                     case 'CLONE_PAGE':
@@ -72,8 +77,6 @@ class App extends React.Component {
                     default:
                         break;
                 }
-
-
                 return returnValue
             }
         }
