@@ -30,12 +30,7 @@ const productReducer = (state: any, action: any) => {
         case 'DELETE_PAGE':
             return productHelper.removePageByLocalId( state, action.pageLocalId );
         case 'CLONE_PAGE':
-            let info = productHelper.clonePageByLocalId( state, action.pageLocalId, action.position );
-
-            action.localIdPageCloned = info.localId;
-            action.pageCloned = info.pageCloned;
-
-            return info.newState;
+            return  productHelper.clonePageByLocalId( state, action.pageLocalId, action.position );
         case 'PAGE_ITEM_START_DRAG':
             return productHelper.setPageBeingDragged(state, action.pageInfo);
         case 'PAGE_ITEM_END_DRAG':

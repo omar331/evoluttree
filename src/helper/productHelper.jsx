@@ -54,6 +54,29 @@ const setupEditingPages = (page) => {
 };
 
 
+/**
+ * Prepare a page tree after cloning.
+ * @param page
+ * @returns {*}
+ */
+const setupEditingCloneTree = (page) => {
+    page.cloneFrom = page.localId
+    page.localId = uuidv4()
+
+    if ( ! page.hasOwnProperty('collapsed') ) {
+        page.collapsed = true
+    }
+
+    if ( page.pages && page.pages.length > 0 ) {
+        for(let i = 0; i < page.pages.length; i++) {
+            setupEditingCloneTree(page.pages[i])
+        }
+    }
+
+    return page
+};
+
+
 
 /**
  * Changes title of product currently being edited
@@ -357,18 +380,17 @@ export const removePageByLocalId = ( state, localId ) => {
 export const clonePageByLocalId = (state, sourcePageLocalId, position) => {
 
     // get the source page and clone it
-    let sourcePageNode = getPageByLocalId( state, sourcePageLocalId );
+    let clonePageNode = getPageByLocalId( state, sourcePageLocalId ).toJS()
+    setupEditingCloneTree( clonePageNode )
 
-    let sourcePageNodeModify = setupEditingPages( sourcePageNode.toJS() );
+    clonePageNode.title =  clonePageNode.title + ' (clone)';
 
-    sourcePageNodeModify.title =  sourcePageNodeModify.title + ' (clone)';
 
-    let pageCloneLocalId = sourcePageNodeModify.localId;
+    console.log(' =====> clonePageNode = %o ', clonePageNode)
+
 
     // ---> insert the cloned page into new location
-    const newState = insertPage(state, sourcePageLocalId, position + 1, fromJS(sourcePageNodeModify) );
-
-    return {newState: newState, localId: pageCloneLocalId, pageCloned: sourcePageNodeModify }
+    return insertPage(state, sourcePageLocalId, position + 1, fromJS(clonePageNode) );
 };
 
 
