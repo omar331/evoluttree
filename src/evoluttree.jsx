@@ -63,7 +63,7 @@ class App extends React.Component {
                 const returnValue = next(action)
 
                 switch (action.type) {
-                    case 'CHANGE_PRODUCT_TITLE':
+                    case 'PRODUCT_CHANGE_TITLE':
                     case 'PAGE_CHANGE_TITLE':
                     case 'NEW_PAGE':
                     case 'MOVE_PAGE':
@@ -71,6 +71,8 @@ class App extends React.Component {
                     case 'DELETE_PAGE':
                     case 'CHANGE_PAGE_INFO':
                     case 'CLONE_PAGE':
+
+                        console.log('   editou titulo ------ ')
                         if ( onChange ) onChange( getState().getIn(['editing']).toJS() )
 
                         break;
