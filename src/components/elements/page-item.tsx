@@ -23,6 +23,9 @@ import SyntheticEvent = __React.SyntheticEvent;
 import * as classNames from 'classnames';
 import ControlDisplayTitle from './control-display-title';
 
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { faEllipsisH } from "@fortawesome/free-solid-svg-icons";
+
 //const { DragSource, DropTarget } = DragDropContext;
 
 const pageListingSource = {
@@ -366,7 +369,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         }
 
         // is toolbar visible?
-        if ( toolbarVisible ) {
+        // if ( toolbarVisible ) {
             let PageItemToolbarComponent = customComponents.PageItemToolbar || PageItemToolbar
             toolbar = React.createElement(PageItemToolbarComponent,
                 {
@@ -379,7 +382,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                     onNewPage: onNewPage
                 }
             )
-        }
+        // }
 
 
 
@@ -393,8 +396,8 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                                 className={classNames(
                                     'page-tree-item-content', 'page-item-custom', depthClasses, {'just-changed': info.get('justChanged') || false }
                                     )}
-                                onMouseEnter={ this.handleMouseEnter.bind(this) }
-                                onMouseLeave={ this.handleMouseLeave.bind(this) }
+                                // onMouseEnter={ this.handleMouseEnter.bind(this) }
+                                // onMouseLeave={ this.handleMouseLeave.bind(this) }
                             >
                             { hasChildren? this.renderCollapseControl(collapsed) : ''}
                             <div className="page-title page-title-custom" onClick={ (e) => { this.toggleEditingTitle() } }>
@@ -412,9 +415,16 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                                     {/*<TitleDisplay value={ info.get('title') } />*/}
                                 {/*}*/}
                             </div>
-                            <div className="page-tree-item-toolbar">
-                               { toolbar }
-                            </div>
+                        <span className={"btn-options"}
+                            // onMouseEnter={ this.handleMouseEnter.bind(this) }
+                            // onMouseLeave={ this.handleMouseLeave.bind(this) }
+                        >
+                            <FontAwesomeIcon icon={faEllipsisH} />
+
+                        </span>
+
+                        { toolbar }
+
                      </div>)
 
         let dropEnabled = isOver ? 'enabled' : ''

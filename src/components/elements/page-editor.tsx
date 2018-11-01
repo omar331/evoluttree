@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import '../css/general.css';
+import '../css/general.scss';
 
 import * as PageEditorInterfaces from '../model/PageEditor'
 
