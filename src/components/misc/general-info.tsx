@@ -35,7 +35,7 @@ export default class GeneralInfo extends React.Component<{info?: any, onTitleCha
         const { info, onTitleChange } = this.props;
 
         return(
-            <div className="general-info">
+            <div id={"general-info"}>
                 <h3 onClick={ (e) => { this.toggleEditingTitle() } }>
                     { this.state.editingTitle ?
                         <TitleEdit value={ info.get('title') }

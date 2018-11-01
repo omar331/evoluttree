@@ -20,24 +20,6 @@
     margin-bottom: 0.3em;
 }
 
-
-.insert-stuff-area {
-    height: 0.2em;
-    background-color: none;
-    width: 35em;
-    border: none;
-}
-
-
-.insert-stuff-area-over {
-    border: 0.1em dashed #999;
-    background-color: lightblue;
-    height: 5em;
-    margin-bottom: 0.2em;
-    margin-top: 0.2em;
-    width: 35em;
-}
-
 .page-item-holder-custom {
 
 }
