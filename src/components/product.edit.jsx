@@ -36,7 +36,7 @@ export default class ProductEditComponent extends React.Component {
     getBaseModeSettings( mode) {
         const baseSettings = {
             'list': {
-                componentsBarVisible: true,
+                componentsBarVisible: false,
                 sideBarMd: 2,
                 contentMd: 10,
             },
@@ -106,7 +106,7 @@ export default class ProductEditComponent extends React.Component {
         let stylePageListContainer = {display: mode == 'list' ? 'block' : 'none'}
 
         return(
-            <div  id={"page-tree-container"}>
+            <div  id={"page-tree"}>
 
                 <div id={"product-editor-modal"}></div>
 
