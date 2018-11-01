@@ -388,20 +388,15 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         let depthClasses = 'page-item-depth-' + depth
 
         // page item content
-        let pageItemNode = connectDragSource(<div
+        let pageItemNode = connectDragSource(
+                    <div
                                 className={classNames(
-                                    'page-item', 'page-item-custom', depthClasses, {'just-changed': info.get('justChanged') || false }
+                                    'page-tree-item-content', 'page-item-custom', depthClasses, {'just-changed': info.get('justChanged') || false }
                                     )}
-                                style={{marginLeft: depthLeftMargin}}
                                 onMouseEnter={ this.handleMouseEnter.bind(this) }
                                 onMouseLeave={ this.handleMouseLeave.bind(this) }
                             >
-                            <div className="collapse-handler collapse-handler-custom" onClick={this.handleExpandCollapse.bind(this)}>
-                                {  hasChildren ?
-                                    this.renderCollapseControl(collapsed)
-                                    : <span style={{opacity:0}}>*</span>
-                                }
-                            </div>
+                            { hasChildren? this.renderCollapseControl(collapsed) : ''}
                             <div className="page-title page-title-custom" onClick={ (e) => { this.toggleEditingTitle() } }>
 
                                 <ControlDisplayTitle
@@ -417,13 +412,15 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                                     {/*<TitleDisplay value={ info.get('title') } />*/}
                                 {/*}*/}
                             </div>
-                            <div className="toolbar toolbar-custom">
+                            <div className="page-tree-item-toolbar">
                                { toolbar }
                             </div>
                      </div>)
 
+        let dropEnabled = isOver ? 'enabled' : ''
+
         // drop stuff after current item
-        let dropStuffArea = <div style={{marginLeft: depthLeftMargin}}>
+        let dropStuffArea = <div className={"drop-area " + dropEnabled} >
                             <DropStuffAreaContainer
                                 ownerPage={ info }
                                 parentPage={ parentPage }
@@ -436,7 +433,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         // drop stuff before the first item within the level
         let dropStuffAreaPosition0 = null
         if ( pageOrder == 0 ) {
-            dropStuffAreaPosition0 = <div style={{marginLeft: depthLeftMargin}}>
+            dropStuffAreaPosition0 = <div className={"drop-area " + dropEnabled}>
                 <DropStuffAreaContainer
                     ownerPage={ info }
                     parentPage={ parentPage }
@@ -448,7 +445,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         }
 
         return connectDropTarget(
-            <div className={"page-item-holder page-item-holder-custom " + editingTitleStyle}
+            <li className={"page-tree-item page-item-holder page-item-holder-custom " + editingTitleStyle}
                 style={{ opacity: isDragging ? 0.5 : 1 }}>
 
                 {dropStuffAreaPosition0}
@@ -458,18 +455,18 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
                 { (collapsed || !hasChildren) ? dropStuffArea  : <div />}
 
                 {children}
-            </div>
+            </li>
         )
     }
 
     renderCollapseControl(collapsed:boolean) {
-        let content = collapsed ?
-            <Glyphicon glyph="plus" style={{cursor: 'hand'}}/>
-            :
-            <Glyphicon glyph="minus" style={{cursor: 'hand'}}/>
 
-        return <span style={{cursor: 'pointer'}}>
-            { content }
+        return <span className="expand-handler" onClick={this.handleExpandCollapse.bind(this)}>
+            {
+                collapsed ?
+                    <Glyphicon className={"expand-icon"} glyph="plus" /> :
+                    <Glyphicon className={"expand-icon"} glyph="minus" />
+            }
         </span>
     }
 }

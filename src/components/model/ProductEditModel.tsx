@@ -16,5 +16,6 @@ export interface ModeSettings {
 
 export interface ProductEditState {
     mode?: string,
-    modeSettings?: ModeSettings
+    modeSettings?: ModeSettings,
+    collapsed: boolean
 }

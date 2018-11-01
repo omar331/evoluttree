@@ -72,9 +72,7 @@ export default class PagesList extends React.Component<PagesProps, {}> {
 
         let previousPage:any = null
         let pageComponentRes:any
-        return(
-            <div>
-                <div className="content-list">
+        return( <ul className={ 'depth-' + depth }>
                     {pages.map(
 
                         (page:any) => {
@@ -107,8 +105,7 @@ export default class PagesList extends React.Component<PagesProps, {}> {
                         }
 
                     )}
-                </div>
-            </div>
+                </ul>
         );
     }
 }
