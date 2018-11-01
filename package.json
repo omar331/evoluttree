@@ -28,6 +28,7 @@
   "dependencies": {
     "classnames": "2.2.5",
     "immutable": "^3.8.1",
+    "is-descriptor": "^1.0.2",
     "lodash": "^4.17.5",
     "node-uuid": "^1.4.7",
     "react": "^16.5.1",
