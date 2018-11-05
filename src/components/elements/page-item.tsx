@@ -340,7 +340,6 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
             isThereAPageBeingDraggedOverMe = true
         }
 
-
         let temporalyExpanded = (isOver) && isThereAPageBeingDraggedOverMe
 
         const collapsed = (info.get('collapsed') || false) && ( !temporalyExpanded )
@@ -429,6 +428,11 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
 
         let dropEnabled = isOver ? 'enabled' : ''
 
+        let dropAreaEnabled = ""
+        if( pageItemBeingDraggedOverMe != null ) {
+            dropAreaEnabled = (pageItemBeingDraggedOverMe.get('localId') !== info.get('localId')) ? "drop-enabled" : ""
+        }
+
         // drop stuff after current item
         let dropStuffArea = <div className={"drop-area " + dropEnabled} >
                             <DropStuffAreaContainer
@@ -455,7 +459,7 @@ class PageItem extends React.Component<PageItemProps, PageItemState> {
         }
 
         return connectDropTarget(
-            <li className={"page-tree-item page-item-holder page-item-holder-custom " + editingTitleStyle}
+            <li className={"page-tree-item page-item-holder page-item-holder-custom " + editingTitleStyle + dropAreaEnabled}
                 style={{ opacity: isDragging ? 0.5 : 1 }}>
 
                 {dropStuffAreaPosition0}
