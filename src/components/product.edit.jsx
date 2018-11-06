@@ -7,15 +7,13 @@ import './css/contents.css';
 import PagesListContainer from '../containers/pages-list.jsx';
 import ComponentsBarContainer from '../containers/components-bar.jsx';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faAngleDoubleLeft, faAngleDoubleRight} from "@fortawesome/free-solid-svg-icons";
+//import { ProductEditProps,ProductEditState } from './model/ProductEditModel'
 
 export default class ProductEditComponent extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            collapsed: false
         }
     }
 
@@ -71,40 +69,16 @@ export default class ProductEditComponent extends React.Component {
         })
     }
 
-    handleClickCollapsed(e)
-    {
-        e.preventDefault();
-        const {collapsed} = this.state;
-        let show = !collapsed;
-
-        this.setState({
-            collapsed: show
-        }  )
-
-    }
-
-    renderCollapseBar()
-    {
-        return <a onClick={this.handleClickCollapsed.bind(this)} id={"collapse-button"}>
-            <span id={"arrow-left"}><FontAwesomeIcon icon={faAngleDoubleLeft} /></span>
-            <span id={"arrow-right"}><FontAwesomeIcon icon={faAngleDoubleRight}/></span>
-        </a>
-    }
-
     render() {
 
         const { onStartEditPageBody, customComponents, pageStyles } = this.props
-        const { mode, collapsed } = this.state
+        const { mode } = this.state
 
         let stylePageEditor = {display: mode == 'page-edit' ? 'block' : 'none'}
         let stylePageListContainer = {display: mode == 'list' ? 'block' : 'none'}
 
-        let collapseClass = (collapsed)?"collapsed":""
-
         return(
-            <div id={"page-tree"} className={collapseClass}>
-
-                { this.renderCollapseBar() }
+            <div id={"page-tree"}>
 
                 <div id={"product-editor-modal"}></div>
                 {
