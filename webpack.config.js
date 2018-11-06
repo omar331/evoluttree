@@ -42,10 +42,11 @@ var DEFAULT_PARAMS = {
             },
 
             {
-                test: /\.css$/,
+                test: /\.s?css$/,
                 use: [
-                    { loader: "style-loader" },
-                    { loader: "css-loader" }
+                    "style-loader" ,
+                    "css-loader" ,
+                    "sass-loader"
                 ]
             },
             {test: /\.(ico|png|jpg|gif|svg|eot|ttf|woff|woff2)(\?.+)?$/, use:{ loader: 'url-loader'} }

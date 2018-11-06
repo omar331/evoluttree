@@ -4,6 +4,8 @@ import * as ReactDOM from 'react-dom';
 import { Evoluttree } from './evoluttree.jsx';
 import { EvoluttreeConfig } from './components/model/AppProps';
 
+import './components/css/main.scss';
+
 declare var evltree_config: EvoluttreeConfig;
 declare var evltree_editing_product: any;
 
