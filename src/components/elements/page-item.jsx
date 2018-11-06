@@ -390,8 +390,6 @@ class PageItem extends React.Component {
         let editingTitleStyle = this.state.editingTitle ? 'editing-title' : '';
         let depthClasses = 'page-item-depth-' + depth;
 
-        console.log("pageStyles: %o", pageStyles)
-
         let classCurrentPage = (pageStyles && ( pageStyles.pageCurrent.localId ===  info.get('localId')) )
                                         ? pageStyles.pageCurrent.className
                                         : '';
