@@ -4,13 +4,8 @@ import { Grid, Row, Col, ButtonToolbar } from 'react-bootstrap';
 
 import './css/contents.css';
 
-import GeneralInfoContainer from '../containers/general-info';
 import PagesListContainer from '../containers/pages-list';
-
-// import ComponentsBar from './components.bar';
 import ComponentsBarContainer from '../containers/components-bar';
-
-//import { ProductEditProps,ProductEditState } from './model/ProductEditModel'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faAngleDoubleLeft, faAngleDoubleRight} from "@fortawesome/free-solid-svg-icons";
@@ -98,7 +93,7 @@ export default class ProductEditComponent extends React.Component {
 
     render() {
 
-        const { onStartEditPageBody, customComponents } = this.props
+        const { onStartEditPageBody, customComponents, pageStyles } = this.props
         const { mode, collapsed } = this.state
 
         let stylePageEditor = {display: mode == 'page-edit' ? 'block' : 'none'}
@@ -112,13 +107,6 @@ export default class ProductEditComponent extends React.Component {
                 { this.renderCollapseBar() }
 
                 <div id={"product-editor-modal"}></div>
-
-                {/*<Row id={"product-name"}>
-                    <Col md={12}>
-                        <GeneralInfoContainer />
-                        {this.renderCollapseBar()}
-                    </Col>
-                </Row>*/}
                 {
                     this.state.modeSettings.componentsBarVisible ?
                         <Row>
@@ -141,6 +129,7 @@ export default class ProductEditComponent extends React.Component {
                                 customComponents={customComponents}
                                 onPageItemBeginDrag={this.handlePageItemStartDrag.bind(this)}
                                 onPageItemEndDrag={this.handlePageItemEndDrag.bind(this)}
+                                pageStyles={pageStyles}
                             />
                         </div>
                     </div>
