@@ -19,11 +19,19 @@ let custom_components = {
     }
 }
 
+let pageStyles = {
+    pageCurrent: {
+        localId: null,
+        className: 'current'
+    }
+}
+
 ReactDOM.render(
     (
         <Evoluttree config={evltree_config}
                     editingProduct={evltree_editing_product}
                     customComponents={custom_components}
+                    pageStyles={pageStyles}
         />
     ),
     document.getElementById('content')

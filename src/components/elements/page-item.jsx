@@ -365,6 +365,8 @@ class PageItem extends React.Component {
                                   onPageItemEndDrag={onEndDrag}
                                   depth={ depth + 1 }
                                   customComponents={customComponents}
+                                  pageStyles={pageStyles}
+
                         />;
         }
 
