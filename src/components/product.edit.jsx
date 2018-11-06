@@ -4,10 +4,7 @@ import { Grid, Row, Col, ButtonToolbar } from 'react-bootstrap';
 
 import './css/contents.css';
 
-import GeneralInfoContainer from '../containers/general-info';
 import PagesListContainer from '../containers/pages-list';
-
-// import ComponentsBar from './components.bar';
 import ComponentsBarContainer from '../containers/components-bar';
 
 //import { ProductEditProps,ProductEditState } from './model/ProductEditModel'
@@ -74,25 +71,16 @@ export default class ProductEditComponent extends React.Component {
 
     render() {
 
-        const { onStartEditPageBody, customComponents } = this.props
+        const { onStartEditPageBody, customComponents, pageStyles } = this.props
         const { mode } = this.state
 
         let stylePageEditor = {display: mode == 'page-edit' ? 'block' : 'none'}
         let stylePageListContainer = {display: mode == 'list' ? 'block' : 'none'}
 
-
-
         return(
             <div id={"page-tree"}>
 
                 <div id={"product-editor-modal"}></div>
-
-                {/*<Row id={"product-name"}>
-                    <Col md={12}>
-                        <GeneralInfoContainer />
-                        {this.renderCollapseBar()}
-                    </Col>
-                </Row>*/}
                 {
                     this.state.modeSettings.componentsBarVisible ?
                         <Row>
@@ -115,6 +103,7 @@ export default class ProductEditComponent extends React.Component {
                                 customComponents={customComponents}
                                 onPageItemBeginDrag={this.handlePageItemStartDrag.bind(this)}
                                 onPageItemEndDrag={this.handlePageItemEndDrag.bind(this)}
+                                pageStyles={pageStyles}
                             />
                         </div>
                     </div>

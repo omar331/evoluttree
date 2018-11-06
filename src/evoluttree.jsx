@@ -145,13 +145,16 @@ class App extends React.Component {
     render() {
 
         //noinspection TypeScriptUnresolvedVariable
-        const { config, customComponents } = this.props;
+        const { config, customComponents, pageStyles } = this.props;
         let { onStartEditPageBody } = config;
+
+        console.log(this.props)
 
         return <Provider store={this.store}>
             <ProductEditContainer
                 onStartEditPageBody={onStartEditPageBody}
                 customComponents={customComponents}
+                pageStyles={pageStyles}
             />
         </Provider>
     }

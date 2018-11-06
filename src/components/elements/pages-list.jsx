@@ -5,8 +5,8 @@ import {PagesProps} from '../model/PagesProps'
 import { Map, List } from 'immutable'
 
 
-export default class PagesList extends React.Component<PagesProps, {}> {
-    public static defaultProps: PagesProps = {
+export default class PagesList extends React.Component {
+    public static defaultProps = {
         pages: List(),
         generalInfo: {},
         onTitleChange: null,
@@ -25,7 +25,7 @@ export default class PagesList extends React.Component<PagesProps, {}> {
         depth: 0
     }
 
-    constructor(props:any) {
+    constructor(props) {
         super(props);
     }
     handleMovePage(...args) {
@@ -65,17 +65,18 @@ export default class PagesList extends React.Component<PagesProps, {}> {
                 onChangePageInfo, onDeletePage, onClonePage,
                 onStartEditPageBody, onFinishEditPageBody,
                 depth, customComponents,
-                onPageItemBeginDrag, onPageItemEndDrag
+                onPageItemBeginDrag, onPageItemEndDrag,
+                pageStyles
         } = this.props;
 
-        let order = -1
+        let order = -1;
 
-        let previousPage:any = null
-        let pageComponentRes:any
+        let previousPage = null
+        let pageComponentRes = null;
         return( <ul className={ 'depth-' + depth }>
                     {pages.map(
 
-                        (page:any) => {
+                        (page) => {
                             order++
                             pageComponentRes = <PageItemContainer info={page}
                                                       parentPage={parentPage}
@@ -97,6 +98,7 @@ export default class PagesList extends React.Component<PagesProps, {}> {
                                                       depth={ depth }
                                                       customComponents={ customComponents }
                                                       key={page.get('localId')}
+                                                      pageStyles={pageStyles}
                                             />
 
 
