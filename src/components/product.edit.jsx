@@ -80,7 +80,6 @@ export default class ProductEditComponent extends React.Component {
     {
         e.preventDefault();
         const {collapsed} = this.state;
-        const {onHandleClickCollapsed} = this.props;
         let show = !collapsed;
 
         this.setState({
@@ -100,22 +99,26 @@ export default class ProductEditComponent extends React.Component {
     render() {
 
         const { onStartEditPageBody, customComponents } = this.props
-        const { mode } = this.state
+        const { mode, collapsed } = this.state
 
         let stylePageEditor = {display: mode == 'page-edit' ? 'block' : 'none'}
         let stylePageListContainer = {display: mode == 'list' ? 'block' : 'none'}
 
+        let collapseClass = (collapsed)?"collapsed":""
+
         return(
-            <div  id={"page-tree"}>
+            <div id={"page-tree"} className={collapseClass}>
+
+                { this.renderCollapseBar() }
 
                 <div id={"product-editor-modal"}></div>
 
-                <Row id={"product-name"}>
+                {/*<Row id={"product-name"}>
                     <Col md={12}>
                         <GeneralInfoContainer />
                         {this.renderCollapseBar()}
                     </Col>
-                </Row>
+                </Row>*/}
                 {
                     this.state.modeSettings.componentsBarVisible ?
                         <Row>
