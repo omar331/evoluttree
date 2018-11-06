@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import PageItem from '../components/elements/page-item'
+import PageItem from '../components/elements/page-item.jsx'
 
 const mapStateToProps = (state) => {
     return {

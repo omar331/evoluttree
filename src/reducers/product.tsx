@@ -1,5 +1,5 @@
-import * as productHelper from '../helper/productHelper';
-import {searchPageKeyPath} from '../helper/productHelper';
+import * as productHelper from '../helper/productHelper.jsx';
+import {searchPageKeyPath} from '../helper/productHelper.jsx';
 
 const productReducer = (state: any, action: any) => {
     switch (action.type) {

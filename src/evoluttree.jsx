@@ -11,11 +11,11 @@ import { Provider } from 'react-redux';
 
 import { createStore, applyMiddleware } from 'redux';
 
-import { replaceState, pageJustChangedSanitize, changeContent } from './actions/products';
+import { replaceState, pageJustChangedSanitize, changeContent } from './actions/products.jsx';
 
 import productReducer from './reducers/product';
 
-import * as productHelper from './helper/productHelper';
+import * as productHelper from './helper/productHelper.jsx';
 
 import * as sampleSettings from './misc/sampleSettings.tsx';
 
@@ -23,7 +23,7 @@ import * as clientApi from './client-api.tsx';
 
 import _ from 'lodash'
 
-import './components/css/general.scss'
+import './components/css/general.css'
 
 class App extends React.Component {
 
@@ -35,8 +35,10 @@ class App extends React.Component {
 
         let editingProduct = props.editingProduct;
 
+        console.log( editingProduct )
+
         // ---> if no editing information are provided, get the sample
-        if ( editingProduct === undefined ) editingProduct = sampleSettings.editingProduct;
+        if ( editingProduct === undefined || editingProduct === null ) editingProduct = sampleSettings.editingProduct;
 
         // ensure every editing product has a local id
         editingProduct = productHelper.prepareEditingProduct(editingProduct);

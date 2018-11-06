@@ -4,8 +4,8 @@ import { Grid, Row, Col, ButtonToolbar } from 'react-bootstrap';
 
 import './css/contents.css';
 
-import PagesListContainer from '../containers/pages-list';
-import ComponentsBarContainer from '../containers/components-bar';
+import PagesListContainer from '../containers/pages-list.jsx';
+import ComponentsBarContainer from '../containers/components-bar.jsx';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faAngleDoubleLeft, faAngleDoubleRight} from "@fortawesome/free-solid-svg-icons";

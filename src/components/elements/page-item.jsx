@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom';
 
 import { Glyphicon, Row, Col } from 'react-bootstrap';
 
-import PagesList from './pages-list';
+import PagesList from './pages-list.jsx';
 import PageItemToolbar from './page-item-toolbar'
 
 import PageEditor from './page-editor'
@@ -390,7 +390,7 @@ class PageItem extends React.Component {
         let editingTitleStyle = this.state.editingTitle ? 'editing-title' : '';
         let depthClasses = 'page-item-depth-' + depth;
 
-        let classCurrentPage = (pageStyles && ( pageStyles.pageCurrent.localId ===  info.get('localId')) )
+        let classCurrentPage = (pageStyles && info && ( pageStyles.pageCurrent.localId ===  info.get('localId')) )
                                         ? pageStyles.pageCurrent.className
                                         : '';
 

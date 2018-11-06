@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import Pages from '../components/elements/pages-list'
+import Pages from '../components/elements/pages-list.jsx'
 import {changePageTitle, newPage, movePage, changeTreeState,
         quickLevelMove, changePageInfo, deletePage, clonePage } from "../actions/pages.jsx"
 import { changeContent } from "../actions/products.jsx"
