@@ -6,24 +6,24 @@ import { Map, List } from 'immutable'
 
 
 export default class PagesList extends React.Component {
-    // public static defaultProps = {
-    //     pages: List(),
-    //     generalInfo: {},
-    //     onTitleChange: null,
-    //     onNewPage: null,
-    //     onChangeTreeState: null,
-    //     onQuickLevelMove: null,
-    //     onChangePageInfo: null,
-    //     onDeletePage: null,
-    //     onClonePage: null,
-    //     onStartEditPageBody: null,
-    //     onFinishEditPageBody: null,
-    //     onPageItemBeginDrag: null,
-    //     onPageItemEndDrag: null,
-    //     parentPage: null,
-    //     onMovePage: null,
-    //     depth: 0
-    // }
+    public static defaultProps = {
+        pages: List(),
+        generalInfo: {},
+        onTitleChange: null,
+        onNewPage: null,
+        onChangeTreeState: null,
+        onQuickLevelMove: null,
+        onChangePageInfo: null,
+        onDeletePage: null,
+        onClonePage: null,
+        onStartEditPageBody: null,
+        onFinishEditPageBody: null,
+        onPageItemBeginDrag: null,
+        onPageItemEndDrag: null,
+        parentPage: null,
+        onMovePage: null,
+        depth: 0
+    }
 
     constructor(props) {
         super(props);
