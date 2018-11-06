@@ -23,7 +23,7 @@ import * as clientApi from './client-api.tsx';
 
 import _ from 'lodash'
 
-// import './components/css/general.css'
+import './components/css/general.css'
 
 class App extends React.Component {
 
