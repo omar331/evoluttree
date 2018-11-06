@@ -35,8 +35,6 @@ class App extends React.Component {
 
         let editingProduct = props.editingProduct;
 
-        console.log( editingProduct )
-
         // ---> if no editing information are provided, get the sample
         if ( editingProduct === undefined || editingProduct === null ) editingProduct = sampleSettings.editingProduct;
 
@@ -149,8 +147,6 @@ class App extends React.Component {
         //noinspection TypeScriptUnresolvedVariable
         const { config, customComponents, pageStyles } = this.props;
         let { onStartEditPageBody } = config;
-
-        console.log(this.props)
 
         return <Provider store={this.store}>
             <ProductEditContainer
