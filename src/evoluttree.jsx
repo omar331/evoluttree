@@ -19,10 +19,10 @@ import * as productHelper from './helper/productHelper.jsx';
 
 import * as sampleSettings from './misc/sampleSettings.tsx';
 
-import * as clientApi from './client-api.tsx';
+// import * as clientApi from './client-api.tsx';
+// import _ from 'lodash'
 
-import _ from 'lodash'
-
+import './components/css/main.scss'
 import './components/css/general.css'
 
 class App extends React.Component {

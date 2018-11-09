@@ -29,8 +29,8 @@ export default class ProductEditComponent extends React.Component {
     getBaseModeSettings( mode) {
         const baseSettings = {
             'list': {
-                componentsBarVisible: false,
-                sideBarMd: 2,
+                componentsBarVisible: true,
+                sideBarMd: 12,
                 contentMd: 10,
             },
             'page-edit': {

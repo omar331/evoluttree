@@ -5,6 +5,10 @@ import { DragSource } from 'react-dnd';
 
 import { ItemTypes } from './constants';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus as addPagina, faExclamationCircle as noPages} from '@fortawesome/free-solid-svg-icons'
+
+
 const newElementSource = {
     beginDrag(props:any) {
         return {};
@@ -80,10 +84,21 @@ export default class ComponentsBar extends React.Component<{ onNewPage?: any, pr
         const { onNewPage, productId } = this.props;
 
         return(
-            <div className="components-list">
+            <div className='components-list'>
                 <div className="component">
-                    { typeof this.props.pages == 'undefined' || this.props.pages.size == 0
-                        ? <Button bsStyle="success" onClick={ () => onNewPage(null, 0, productId) }>+</Button>
+
+                    { typeof this.props.pages === 'undefined' || this.props.pages.size == 0
+                        ?
+                        <div id={"no-pages"}>
+
+                            <p>
+                                <FontAwesomeIcon icon={noPages}/>
+                                Seu produto não possui nenhuma página.
+                            </p>
+                            <Button id={'btn-newpage'} bsStyle='success' onClick={ () => onNewPage(null, 0, productId) }>
+                                <FontAwesomeIcon icon={addPagina} /> Adicionar página
+                            </Button>
+                        </div>
                         : ''
                     }
 
