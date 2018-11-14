@@ -69,6 +69,10 @@ export default class ProductEditComponent extends React.Component {
         })
     }
 
+    handleChangeTreeState(localId,info) {
+        console.log( "     change tree state =   %s     %o", localId, info )
+    }
+
     render() {
 
         const { onStartEditPageBody, customComponents, pageStyles } = this.props
@@ -104,6 +108,7 @@ export default class ProductEditComponent extends React.Component {
                                 onPageItemBeginDrag={this.handlePageItemStartDrag.bind(this)}
                                 onPageItemEndDrag={this.handlePageItemEndDrag.bind(this)}
                                 pageStyles={pageStyles}
+                                onChangeTreeState={ this.handleChangeTreeState.bind(this) }
                             />
                         </div>
                     </div>

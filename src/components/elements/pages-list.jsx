@@ -6,7 +6,7 @@ import { Map, List } from 'immutable'
 
 
 export default class PagesList extends React.Component {
-    public static defaultProps = {
+    static defaultProps = {
         pages: List(),
         generalInfo: {},
         onTitleChange: null,

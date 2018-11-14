@@ -407,6 +407,10 @@ export const changePageTreeState = ( state, pageLocalId, newStateInfo ) => {
     let sourcePageKeyPath = searchPageKeyPath(state.get('editing'), pageLocalId);
     let sourceKeyPath = ['editing'].concat(sourcePageKeyPath);
 
+console.log('   changePageTreeState  = %s   %o  ', pageLocalId, newStateInfo )
+
+    // let collapsed = newStateInfo && newStateInfo.hasOwnProperty("collapsed") ? newStateInfo.collapsed : false
+
     const newState = state.setIn( sourceKeyPath.concat(['collapsed']), newStateInfo.collapsed );
 
     return newState
@@ -559,3 +563,25 @@ export const anyContentHasChanged = ( state, value ) => {
     state = state.setIn(['contentChanged'], value);
     return state;
 }
+
+
+
+export const getExpandCollapseTreeState = (page) => {
+    let expanded = []
+
+    if ( page.get('collapsed') !== true ) {
+        expanded.push( page.get('localId') )
+    }
+
+    let childPage = null
+
+    if ( page.get('pages') ) {
+        page.get('pages').map( (childPage) => {
+            expanded = expanded.concat( getExpandCollapseTreeState(childPage) )
+        })
+    }
+
+    return expanded
+}
+
+

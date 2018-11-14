@@ -110,32 +110,6 @@ function collect(connect, monitor) {
 
 
 class PageItem extends React.Component {
-    public static defaultProps = {
-        connectDragSource: null,
-        connectDropTarget: null,
-        isDragging: false,
-        onTitleChange: null,
-        onNewPage: null,
-        onMovePage: null,
-        onChangeTreeState: null,
-        onQuickLevelMove: null,
-        onChangePageInfo: null,
-        onDeletePage: null,
-        onClonePage: null,
-        onStartEditPageBody: null,
-        onFinishEditPageBody: null,
-        onBeginDrag: null,
-        onEndDrag: null,
-        info: {},
-        parentPage: null,
-        previousPage: null,
-        depth: 0,
-        customComponents: {},
-
-        pageItemBeingDraggedOverMe: null,
-        isOver: false
-    }
-
     constructor(props) {
         super(props);
 
@@ -182,7 +156,6 @@ class PageItem extends React.Component {
     }
 
     handleExpandCollapse(e) {
-
         const { onChangeTreeState, info } = this.props
 
         const newCollapsedState = ! info.get('collapsed')
@@ -354,7 +327,7 @@ class PageItem extends React.Component {
                                   onNewPage={onNewPage}
                                   onMovePage={onMovePage}
                                   parentPage={info}
-                                  onChangeTreeState={onChangeTreeState}
+                                  onChangeTreeState={ onChangeTreeState }
                                   onQuickLevelMove={onQuickLevelMove}
                                   onChangePageInfo={onChangePageInfo}
                                   onDeletePage={onDeletePage}

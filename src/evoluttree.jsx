@@ -5,6 +5,8 @@ import { DragDropContext } from 'react-dnd';
 
 import { fromJS } from 'immutable';
 
+import { PropTypes } from 'prop-types'
+
 import ProductEditContainer from './containers/product-edit.jsx';
 
 import { Provider } from 'react-redux';
@@ -19,6 +21,9 @@ import * as productHelper from './helper/productHelper.jsx';
 
 import * as sampleSettings from './misc/sampleSettings.tsx';
 
+import onChangeMiddleWare from './middlewares/content-change-middleware'
+import onExpandCollapseCallback from './middlewares/expand-collapse-nodes-middleware'
+
 // import * as clientApi from './client-api.tsx';
 // import _ from 'lodash'
 
@@ -29,6 +34,8 @@ class App extends React.Component {
 
     constructor(props) {
         super(props);
+
+        console.log( ' Evoluttreeroot   constructor ' )
 
         //noinspection TypeScriptUnresolvedVariable
         const { config, onChange } = this.props;
@@ -54,44 +61,15 @@ class App extends React.Component {
         });
 
 
-        /**
-         * Este middleware mapeia quais ações disparam o onChange do Evoluttree
-         *
-         * @param getState
-         * @returns {function(*): function(*=): *}
-         */
-        const onChangeMiddleWare = ({getState}) => {
-            return next => action => {
-                const returnValue = next(action)
-
-                switch (action.type) {
-                    case 'PRODUCT_CHANGE_TITLE':
-                    case 'PAGE_CHANGE_TITLE':
-                    case 'NEW_PAGE':
-                    case 'MOVE_PAGE':
-                    case 'QUICK_LEVEL_MOVE':
-                    case 'DELETE_PAGE':
-                    case 'CHANGE_PAGE_INFO':
-                    case 'CLONE_PAGE':
-
-                        console.log('   editou titulo ------ ')
-                        if ( onChange ) onChange( getState().getIn(['editing']).toJS() )
-
-                        break;
-                    default:
-                        break;
-                }
-                return returnValue
-            }
-        }
-
-
-
+        const middlewareChain = applyMiddleware(
+            onChangeMiddleWare(onChange),
+            onExpandCollapseCallback(this.handleExpandCollapse.bind(this))
+        )
 
         this.store = createStore(
             productReducer,
             {},
-            applyMiddleware( onChangeMiddleWare )
+            middlewareChain
         );
 
         // Expose client API 
@@ -105,41 +83,35 @@ class App extends React.Component {
         // window.setInterval( () => {
         //     this.store.dispatch( pageJustChangedSanitize() );
         // }, 5000 );
-    }
 
-    componentDidMount() {
-        //noinspection TypeScriptUnresolvedVariable
-        const { config } = this.props;
-
-        var that = this;
-        /**
-         * Subscribe for content changes
-         */
-        if ( config.onContentChange ) {
-
-            let store = this.store;
-
-            this.unsubscribe = store.subscribe( () => {
-                if(store.getState().get('contentChanged')) {
-                    let productState = store.getState().get('editing').toJS();
-                    config.onContentChange(productState);
-                    this.handleChangeOccured(false);
-                }
-            });
+        this.state = {
+            treeState: []
         }
-        that.forceUpdate();
     }
+
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({treeState: nextProps.treeState})
+    }
+
+
+    /**
+     * Quando ocorre uma atualização no estado de contração/expansão da árvore
+     */
+    handleExpandCollapse() {
+        const { onExpandCollapseNode } = this.props
+
+        const expandedNodes = productHelper.getExpandCollapseTreeState( this.store.getState().get('editing') )
+
+        if ( onExpandCollapseNode ) onExpandCollapseNode({expandedNodes})
+    }
+
 
     handleChangeOccured(value) {
         this.store.dispatch( changeContent( value ) );
     }
 
     componentWillUnmount() {
-        if (this.unsubscribe) { // don't forget to unsubscribe when unmounting
-
-            this.unsubscribe();
-            this.unsubscribe = undefined;
-        }
     }
 
     render() {
@@ -147,6 +119,9 @@ class App extends React.Component {
         //noinspection TypeScriptUnresolvedVariable
         const { config, customComponents, pageStyles } = this.props;
         let { onStartEditPageBody } = config;
+
+
+        console.log( ' Evoluttreeroot render  state.treeState    = %o ', this.state.treeState )
 
         return <Provider store={this.store}>
             <ProductEditContainer
@@ -161,26 +136,55 @@ class App extends React.Component {
 
 
 export class Evoluttree extends React.Component {
-    render() {
-        const props = this.props
+    constructor(props) {
+        super(props)
 
-
-        let C = class extends React.Component {
+        this.C = class extends React.Component {
             render() {
+                const props = this.props
+                console.log("   c render props = %o", this.props)
+
+
                 return <App {...props}  />
             }
         }
 
-
         if ( props.config.dragDropContextManager === true) {
-            C = DragDropContext(HTML5Backend)(C)
+            this.C = DragDropContext(HTML5Backend)(this.C)
         }
 
 
-        return <C />
+
+        this.state = {
+            props
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({props: nextProps})
+    }
+
+    render() {
+        const props = this.state.props
+
+        let C = this.C
+
+
+        return <C {...props}/>
     }
 }
 
+
+Evoluttree.propTypes = {
+    /* estado da árvore
+            <code>
+                {
+                    expandedNodes: []
+                }
+            </code>
+     */
+    treeState: PropTypes.object
+}
 
 
 

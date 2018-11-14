@@ -26,6 +26,8 @@ const mapDispatchToProps = (dispatch) => {
             //dispatch( changeContent(true) );
         },
         onChangeTreeState: (pageLocalId, newStateInfo) => {
+            console.log( "  -x-x-x   change collapse (container) %s  %o   ", pageLocalId, newStateInfo)
+
             dispatch( changeTreeState(pageLocalId, newStateInfo) );
             // dispatch( changeContent(true) );
         },
