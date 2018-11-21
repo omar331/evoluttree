@@ -84,6 +84,14 @@ class App extends React.Component {
         //     this.store.dispatch( pageJustChangedSanitize() );
         // }, 5000 );
 
+        this.state = {
+            treeState: []
+        }
+    }
+
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({treeState: nextProps.treeState})
     }
 
 
@@ -164,7 +172,14 @@ export class Evoluttree extends React.Component {
 
 
 Evoluttree.propTypes = {
-
+    /* estado da árvore
+            <code>
+                {
+                    expandedNodes: []
+                }
+            </code>
+     */
+    treeState: PropTypes.object
 }
 
 
