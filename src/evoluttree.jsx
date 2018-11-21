@@ -84,14 +84,6 @@ class App extends React.Component {
         //     this.store.dispatch( pageJustChangedSanitize() );
         // }, 5000 );
 
-        this.state = {
-            treeState: []
-        }
-    }
-
-
-    componentWillReceiveProps(nextProps) {
-        this.setState({treeState: nextProps.treeState})
     }
 
 
@@ -115,13 +107,9 @@ class App extends React.Component {
     }
 
     render() {
-
-        //noinspection TypeScriptUnresolvedVariable
         const { config, customComponents, pageStyles } = this.props;
+
         let { onStartEditPageBody } = config;
-
-
-        console.log( ' Evoluttreeroot render  state.treeState    = %o ', this.state.treeState )
 
         return <Provider store={this.store}>
             <ProductEditContainer
@@ -176,14 +164,7 @@ export class Evoluttree extends React.Component {
 
 
 Evoluttree.propTypes = {
-    /* estado da árvore
-            <code>
-                {
-                    expandedNodes: []
-                }
-            </code>
-     */
-    treeState: PropTypes.object
+
 }
 
 
