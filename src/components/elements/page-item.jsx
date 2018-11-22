@@ -300,6 +300,7 @@ class PageItem extends React.Component {
                     style={ style }
                     cssClasses={orientation}
                     onMouseLeave={this.hideToolbar.bind(this)}
+                    onClickOutside={this.hideToolbar.bind(this)}
                     >
                     { toolbar }
                 </GlobalPortal>
