@@ -1,7 +1,5 @@
 import * as React from 'react';
 
-import '../css/general.css';
-
 import * as PageEditorInterfaces from '../model/PageEditor'
 
 import { Glyphicon, Modal, Button, Row, Col, Grid } from 'react-bootstrap'

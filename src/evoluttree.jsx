@@ -28,7 +28,6 @@ import onExpandCollapseCallback from './middlewares/expand-collapse-nodes-middle
 // import _ from 'lodash'
 
 import './components/css/main.scss'
-import './components/css/general.css'
 
 class App extends React.Component {
 
