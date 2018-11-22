@@ -34,7 +34,7 @@ class App extends React.Component {
     constructor(props) {
         super(props);
 
-        //console.log( ' Evoluttreeroot   constructor ' )
+        console.log( ' Evoluttreeroot   constructor ' )
 
         //noinspection TypeScriptUnresolvedVariable
         const { config, onChange } = this.props;
@@ -114,13 +114,9 @@ class App extends React.Component {
     }
 
     render() {
-
-        //noinspection TypeScriptUnresolvedVariable
         const { config, customComponents, pageStyles } = this.props;
+
         let { onStartEditPageBody } = config;
-
-
-       // console.log( ' Evoluttreeroot render  state.treeState    = %o ', this.state.treeState )
 
         return <Provider store={this.store}>
             <ProductEditContainer
@@ -141,7 +137,7 @@ export class Evoluttree extends React.Component {
         this.C = class extends React.Component {
             render() {
                 const props = this.props
-                //console.log("   c render props = %o", this.props)
+                console.log("   c render props = %o", this.props)
 
 
                 return <App {...props}  />
