@@ -28,7 +28,6 @@ import onExpandCollapseCallback from './middlewares/expand-collapse-nodes-middle
 // import _ from 'lodash'
 
 import './components/css/main.scss'
-import './components/css/general.css'
 
 class App extends React.Component {
 
@@ -115,13 +114,9 @@ class App extends React.Component {
     }
 
     render() {
-
-        //noinspection TypeScriptUnresolvedVariable
         const { config, customComponents, pageStyles } = this.props;
+
         let { onStartEditPageBody } = config;
-
-
-        // console.log( ' Evoluttreeroot render  state.treeState    = %o ', this.state.treeState )
 
         return <Provider store={this.store}>
             <ProductEditContainer

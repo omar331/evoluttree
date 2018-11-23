@@ -16,14 +16,14 @@ import { PageInfo } from '../components/model/PageInfo'
  * In this stage, editing product must be just a plai javascript object.
  *
  */
-export const prepareEditingProduct = (productInfo) => {
+export const prepareEditingProduct = (productInfo, treeState) => {
     let editing = productInfo;
 
 
     if ( ! editing.general.hasOwnProperty('localId') ) {
         editing.general.localId = uuidv4();
     }
-    editing = setupEditingPages(editing);
+    editing = setupEditingPages(editing, treeState);
 
     return editing
 };
@@ -33,9 +33,9 @@ export const prepareEditingProduct = (productInfo) => {
  * Add a local id to page and to its children pages
  *
  * @param page
- * @returns {any}
+ * @returns {any}   
  */
-const setupEditingPages = (page) => {
+const setupEditingPages = (page, treeState) => {
     if ( ! page.hasOwnProperty('localId') ) {
         page.localId = uuidv4()
     }
@@ -46,7 +46,7 @@ const setupEditingPages = (page) => {
 
     if ( page.pages && page.pages.length > 0 ) {
         for(let i = 0; i < page.pages.length; i++) {
-            page.pages[i] = setupEditingPages(page.pages[i])
+            page.pages[i] = setupEditingPages(page.pages[i], treeState)
         }
     }
 
