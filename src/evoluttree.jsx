@@ -28,12 +28,13 @@ import onExpandCollapseCallback from './middlewares/expand-collapse-nodes-middle
 import _ from 'lodash'
 
 import './components/css/main.scss'
-import './components/css/general.css'
 
 class App extends React.Component {
 
     constructor(props) {
         super(props);
+
+        console.log( ' Evoluttreeroot   constructor ' )
 
         //noinspection TypeScriptUnresolvedVariable
         const { config, onChange } = this.props;
@@ -144,6 +145,9 @@ export class Evoluttree extends React.Component {
         this.C = class extends React.Component {
             render() {
                 const props = this.props
+                // console.log("   c render props = %o", this.props)
+
+
                 return <App {...props}  />
             }
         }
