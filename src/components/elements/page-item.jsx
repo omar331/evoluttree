@@ -14,18 +14,10 @@ import { QuickLevelMove, ItemTypes } from '../constants';
 
 import { DropStuffAreaContainer } from '../../containers/drop-stuff-area.jsx';
 
-import { TitleEdit } from '../misc/title-edit'
-import { TitleDisplay } from '../misc/title-display'
-
 import SyntheticEvent = __React.SyntheticEvent;
 
 import * as classNames from 'classnames';
 import ControlDisplayTitle from './control-display-title';
-
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import { faEllipsisH } from "@fortawesome/free-solid-svg-icons";
-
-import { GlobalPortal } from "common/components/global-portal"
 
 import "../css/page-item.scss"
 
@@ -115,7 +107,6 @@ class PageItem extends React.Component {
         super(props);
 
         this.state = {
-            showToolbar: false,
             editingTitle: false,
             temporalyExpanded: false,
             justChanged: false
@@ -258,55 +249,6 @@ class PageItem extends React.Component {
         clearInterval( intervalId )
     }
 
-    showToolBar() {
-        this.setState({showToolbar: true})
-    }
-
-    hideToolbar()
-    {
-        this.setState({showToolbar: false})
-    }
-
-    getPositions(portalRefClass){
-
-        let e = document.getElementById(portalRefClass)
-
-        if(e) return e.getBoundingClientRect()
-
-    }
-
-    renderToolbar(toolbar, portalRefClass, depth){
-
-        let position = this.getPositions(portalRefClass)
-        let toolbarHeight = 206
-
-        let h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-
-        let orientation = ( h - position.y < toolbarHeight ) ? "reverse" : "normal"
-        let depthHeight = (depth > 0) ? 30 : 0
-
-        const style = {
-            top : (orientation === "reverse")
-                ? ( ( (position.y - toolbarHeight) + position.height + depthHeight  )+'px' )
-                : position.y+'px',
-
-            left: ( position.width + position.x )+'px',
-            position: 'absolute',
-        }
-
-        return  <GlobalPortal
-                    targetElement={"editing-product"}
-                    portalName={"toolbar"}
-                    style={ style }
-                    cssClasses={orientation}
-                    onMouseLeave={this.hideToolbar.bind(this)}
-                    onClickOutside={this.hideToolbar.bind(this)}
-                    >
-                    { toolbar }
-                </GlobalPortal>
-
-    }
-
     render() {
         const { info, connectDragSource,
                 connectDropTarget,
@@ -322,8 +264,6 @@ class PageItem extends React.Component {
                 pageStyles,
                 id
         } = this.props;
-
-        let { showToolbar } = this.state
 
         // does this node have children nodes?
         let children = null
@@ -393,7 +333,7 @@ class PageItem extends React.Component {
             }
         )
 
-        let portalRefClass = "portal-ref-"+id;
+        // let portalRefClass = "portal-ref-"+id;
         let editingTitleStyle = this.state.editingTitle ? 'editing-title' : '';
         let depthClasses = 'page-item-depth-' + depth;
 
@@ -402,13 +342,15 @@ class PageItem extends React.Component {
                                         : '';
 
 
-        let pageTreeItemActive = (showToolbar) ?"active":""
+        let portalRefClass = "portal-ref-" + id;
+
+        // let pageTreeItemActive = (showToolbar) ?"active":""
 
         // page item content
         let pageItemNode = connectDragSource(
                     <div id={portalRefClass}
-                        className={classNames(
-                            'page-tree-item-content', 'page-item-custom', pageTreeItemActive , depthClasses, {'just-changed': info.get('justChanged') || false }, classCurrentPage
+                         className={classNames(
+                            'page-tree-item-content', 'page-item-custom' , depthClasses, {'just-changed': info.get('justChanged') || false }, classCurrentPage
                             )}
                         >
                         { hasChildren? this.renderCollapseControl(collapsed) : ''}
@@ -421,13 +363,7 @@ class PageItem extends React.Component {
                             />
                         </div>
 
-                        <span className={"btn-options"}
-                              onClick={this.showToolBar.bind(this)}
-                        >
-                            <FontAwesomeIcon icon={faEllipsisH} />
-                        </span>
-
-                        { showToolbar ? this.renderToolbar(toolbar, portalRefClass, depth ) : '' }
+                        { toolbar }
 
                      </div>)
 
