@@ -42,3 +42,12 @@ export const changeContent = (value) => {
         value
     }
 };
+
+
+
+export const updateExpandCollapseState = (newExpandedCollapsedState) => {
+    return {
+        type: 'UPDATE_TREE_EXPAND_COLLAPSE_STATE',
+        newExpandedCollapsedState
+    }
+}

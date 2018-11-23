@@ -39,6 +39,8 @@ const productReducer = (state: any, action: any) => {
             return productHelper.pageHasJustChangedSanitize( state );
         case 'ANY_CONTENT_HAS_CHANGED':
             return productHelper.anyContentHasChanged( state, action.value );
+        case 'UPDATE_TREE_EXPAND_COLLAPSE_STATE':
+            return productHelper.updateTree( state, action.newExpandedCollapsedState );
         default:
             return state;
     }

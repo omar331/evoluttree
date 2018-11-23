@@ -25,7 +25,7 @@ import onChangeMiddleWare from './middlewares/content-change-middleware'
 import onExpandCollapseCallback from './middlewares/expand-collapse-nodes-middleware'
 
 // import * as clientApi from './client-api.tsx';
-// import _ from 'lodash'
+import _ from 'lodash'
 
 import './components/css/main.scss'
 
@@ -76,8 +76,6 @@ class App extends React.Component {
 
         this.store.dispatch( replaceState(initialState) );
 
-
-
         // just changed sanitize
         // window.setInterval( () => {
         //     this.store.dispatch( pageJustChangedSanitize() );
@@ -91,11 +89,19 @@ class App extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         this.setState({treeState: nextProps.treeState})
+
+        if ( ! _.isEqual(this.state.treeCollapseExpandedState, nextProps.treeCollapseExpandedState) ) {
+            this.setState({treeCollapseExpandedState: nextProps.treeCollapseExpandedState} )
+        }
     }
 
 
     /**
-     * Quando ocorre uma atualização no estado de contração/expansão da árvore
+     * Quando ocorre uma atualização no estado de contração/expansão da árvore,
+     * os nós que estão expandidos são obtidos a partir do estado da aplicação,
+     * do produto que está sendo editado.
+     *
+     *
      */
     handleExpandCollapse() {
         const { onExpandCollapseNode } = this.props
@@ -115,6 +121,7 @@ class App extends React.Component {
 
     render() {
         const { config, customComponents, pageStyles } = this.props;
+        const { treeCollapseExpandedState } = this.state
 
         let { onStartEditPageBody } = config;
 
@@ -123,6 +130,7 @@ class App extends React.Component {
                 onStartEditPageBody={onStartEditPageBody}
                 customComponents={customComponents}
                 pageStyles={pageStyles}
+                treeCollapseExpandedState={treeCollapseExpandedState}
             />
         </Provider>
     }
@@ -178,7 +186,15 @@ Evoluttree.propTypes = {
                 }
             </code>
      */
-    treeState: PropTypes.object
+
+    /* TODO: isso ainda vale? */
+    treeState: PropTypes.object,
+
+    /* Estado de contração/expansão dos nós da árvore */
+    treeCollapseExpandedState: PropTypes.object,
+
+    /* Quando nós da árvore forem expandidos/colapsados */
+    onExpandCollapseNode: PropTypes.function,
 }
 
 

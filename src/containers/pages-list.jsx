@@ -5,9 +5,7 @@ import {changePageTitle, newPage, movePage, changeTreeState,
         quickLevelMove, changePageInfo, deletePage, clonePage } from "../actions/pages.jsx"
 import { changeContent } from "../actions/products.jsx"
 
-
-
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps ) => {
     return {
         pages: state.get('editing').get('pages')
     }
@@ -26,8 +24,6 @@ const mapDispatchToProps = (dispatch) => {
             //dispatch( changeContent(true) );
         },
         onChangeTreeState: (pageLocalId, newStateInfo) => {
-            console.log( "  -x-x-x   change collapse (container) %s  %o   ", pageLocalId, newStateInfo)
-
             dispatch( changeTreeState(pageLocalId, newStateInfo) );
             // dispatch( changeContent(true) );
         },

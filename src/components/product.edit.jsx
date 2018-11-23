@@ -2,6 +2,9 @@ import * as React from 'react';
 
 import { Grid, Row, Col, ButtonToolbar } from 'react-bootstrap';
 
+import * as _ from 'lodash'
+import { PropTypes } from 'prop-types'
+
 import './css/contents.css';
 
 import PagesListContainer from '../containers/pages-list.jsx';
@@ -9,17 +12,31 @@ import ComponentsBarContainer from '../containers/components-bar.jsx';
 
 //import { ProductEditProps,ProductEditState } from './model/ProductEditModel'
 
+
 export default class ProductEditComponent extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            treeCollapseExpandedState: props.treeCollapseExpandedState
         }
     }
 
     componentWillMount() {
         this.enterPageListMode()
     }
+
+    componentWillReceiveProps(nextProps) {
+        const { onChangeExpandedCollapseTreeState } = this.props
+
+        if ( ! _.isEqual(this.state.treeCollapseExpandedState, nextProps.treeCollapseExpandedState) ) {
+
+            if ( onChangeExpandedCollapseTreeState ) onChangeExpandedCollapseTreeState(nextProps.treeCollapseExpandedState)
+
+        }
+    }
+
+
 
     /**
      * Get the base settings for each mode
@@ -74,7 +91,6 @@ export default class ProductEditComponent extends React.Component {
     }
 
     render() {
-
         const { onStartEditPageBody, customComponents, pageStyles } = this.props
         const { mode } = this.state
 
@@ -117,4 +133,10 @@ export default class ProductEditComponent extends React.Component {
             </div>
         );
     }
+}
+
+ProductEditComponent.propTypes = {
+
+    /* Estado de expansão/colapso da árvore */
+    treeCollapseExpandedState: PropTypes.object,
 }

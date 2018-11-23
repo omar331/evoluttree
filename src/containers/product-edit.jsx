@@ -15,6 +15,9 @@ const mapDispatchToProps = (dispatch) => {
         onPageItemEndDrag: (pageInfo) => {
             dispatch( productActions.pageItemEndDrag(pageInfo) );
         },
+        onChangeExpandedCollapseTreeState( newExpandedCollapsedState ) {
+            dispatch( productActions.updateExpandCollapseState(newExpandedCollapsedState) );
+        }
     }
 }
 

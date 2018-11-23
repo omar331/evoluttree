@@ -44,6 +44,12 @@ const setupEditingPages = (page, treeState) => {
         page.collapsed = true
     }
 
+    if ( true ) {
+
+    }
+
+
+
     if ( page.pages && page.pages.length > 0 ) {
         for(let i = 0; i < page.pages.length; i++) {
             page.pages[i] = setupEditingPages(page.pages[i], treeState)
@@ -128,7 +134,7 @@ export const searchPageKeyPath = (node, localId, position = 0, acc = [] ) => {
  * @param info
  * @returns {any}
  */
-export const createPageNode = (info  => {
+export const createPageNode = (info) => {
     if (!info.hasOwnProperty('localId')) info.localId = uuidv4();
 
     return Map(info);
@@ -407,10 +413,6 @@ export const changePageTreeState = ( state, pageLocalId, newStateInfo ) => {
     let sourcePageKeyPath = searchPageKeyPath(state.get('editing'), pageLocalId);
     let sourceKeyPath = ['editing'].concat(sourcePageKeyPath);
 
-console.log('   changePageTreeState  = %s   %o  ', pageLocalId, newStateInfo )
-
-    // let collapsed = newStateInfo && newStateInfo.hasOwnProperty("collapsed") ? newStateInfo.collapsed : false
-
     const newState = state.setIn( sourceKeyPath.concat(['collapsed']), newStateInfo.collapsed );
 
     return newState
@@ -565,11 +567,15 @@ export const anyContentHasChanged = ( state, value ) => {
 }
 
 
-
+/**
+ * Obtem os local-ids das páginas que estão expandidas
+ * @param page
+ * @returns {Array}
+ */
 export const getExpandCollapseTreeState = (page) => {
     let expanded = []
 
-    if ( page.get('collapsed') !== true ) {
+    if ( page.get('collapsed') != true ) {
         expanded.push( page.get('localId') )
     }
 
@@ -582,6 +588,71 @@ export const getExpandCollapseTreeState = (page) => {
     }
 
     return expanded
+}
+
+
+/**
+ * Atualiza o estado expansão/colapso dos nós da árvore
+ *
+ * @param pages
+ * @param expandedNodes
+ * @param basePath
+ */
+const updateExpandCollapsePageList = (pages, expandedNodes, basePath = [] ) => {
+    let n = 0
+
+    let bPages = basePath.length == 0 ? pages : pages.getIn(basePath))
+
+    if ( typeof bPages == 'undefined' ) return
+
+
+    bPages.map( (page) => {
+        const localId = page.get('localId')
+        let collapsed = true
+
+        if ( expandedNodes.indexOf(localId) != -1 ) {
+            collapsed = false
+        }
+
+        let path = basePath.concat([n])
+
+        pages.setIn(path.concat(['collapsed']), collapsed )
+
+        updateExpandCollapsePageList( pages, expandedNodes, path.concat(['pages']) )
+
+        n++
+    })
+}
+
+
+/**
+ * Atualiza o estado expansão/colapso dos nós da árvore
+ *
+ * @param pages
+ * @param expandedNodes
+ * @param basePath
+ */
+export const updateExpandCollapseTreeState = (pages, expandCollapseState) => {
+    let expandedNodes = expandCollapseState.hasOwnProperty('expandedNodes') ? expandCollapseState.expandedNodes : []
+
+    return pages.withMutations( (npages) => {
+        updateExpandCollapsePageList(npages, expandedNodes)
+    })
+}
+
+
+/**
+ * Atualiza a arvore de acordo com o estado de abertura e fechamento de seus nós
+ *
+ * @param state
+ * @param newExpandedCollapsedState
+ * @returns {*}
+ */
+export const updateTree = (state, newExpandedCollapsedState) => {
+    return state.withMutations( (nstate) => {
+        let npages = updateExpandCollapseTreeState( state.getIn(['editing', 'pages']), newExpandedCollapsedState )
+        nstate.setIn(['editing', 'pages'], npages)
+    })
 }
 
 
