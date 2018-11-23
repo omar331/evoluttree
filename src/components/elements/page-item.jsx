@@ -14,8 +14,6 @@ import { QuickLevelMove, ItemTypes } from '../constants';
 
 import { DropStuffAreaContainer } from '../../containers/drop-stuff-area.jsx';
 
-import SyntheticEvent = __React.SyntheticEvent;
-
 import * as classNames from 'classnames';
 import ControlDisplayTitle from './control-display-title';
 
@@ -31,7 +29,6 @@ const pageListingSource = {
 
         // component.handleEndDrag( { deltaX: offset.x, deltaY: offset.y });
         // if (typeof component.handleEndDrag == 'function')
-            console.log('inicio = %o', component);
             component.handleEndDrag( { deltaX: offset.x, deltaY: offset.y } )
     },
     beginDrag(props) {
@@ -159,8 +156,6 @@ class PageItem extends React.Component {
         const { info, onQuickLevelMove } = this.props
 
         let quickLevelMoveInfo = this.getQuickLevelMoveInfo(dragInfo.deltaX, dragInfo.deltaY)
-
-        console.log(" ---- QLM info = %o ", quickLevelMoveInfo)
 
         // Is it a quick level move?
         if ( quickLevelMoveInfo.direction != QuickLevelMove.DIRECTION_NONE ) {
