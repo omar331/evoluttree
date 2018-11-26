@@ -22,6 +22,7 @@ import * as productHelper from './helper/productHelper.jsx';
 import * as sampleSettings from './misc/sampleSettings.tsx';
 
 import onChangeMiddleWare from './middlewares/content-change-middleware'
+import onTitleChangeCallback from './middlewares/title-change-middleware'
 import onExpandCollapseCallback from './middlewares/expand-collapse-nodes-middleware'
 
 // import * as clientApi from './client-api.tsx';
@@ -35,7 +36,7 @@ class App extends React.Component {
         super(props);
 
         //noinspection TypeScriptUnresolvedVariable
-        const { config, onChange } = this.props;
+        const { config, onChange, onTitleChange } = this.props;
 
         let editingProduct = props.editingProduct;
 
@@ -60,6 +61,7 @@ class App extends React.Component {
 
         const middlewareChain = applyMiddleware(
             onChangeMiddleWare(onChange),
+            onTitleChangeCallback(onTitleChange),
             onExpandCollapseCallback(this.handleExpandCollapse.bind(this))
         )
 
