@@ -635,6 +635,8 @@ const updateExpandCollapsePageList = (pages, expandedNodes, basePath = [] ) => {
 export const updateExpandCollapseTreeState = (pages, expandCollapseState) => {
     let expandedNodes = expandCollapseState.hasOwnProperty('expandedNodes') ? expandCollapseState.expandedNodes : []
 
+    if(typeof pages === "undefined") pages = List()
+
     return pages.withMutations( (npages) => {
         updateExpandCollapsePageList(npages, expandedNodes)
     })
@@ -650,6 +652,7 @@ export const updateExpandCollapseTreeState = (pages, expandCollapseState) => {
  */
 export const updateTree = (state, newExpandedCollapsedState) => {
     return state.withMutations( (nstate) => {
+
         let npages = updateExpandCollapseTreeState( state.getIn(['editing', 'pages']), newExpandedCollapsedState )
         nstate.setIn(['editing', 'pages'], npages)
     })
