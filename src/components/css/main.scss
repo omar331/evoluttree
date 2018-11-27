@@ -101,16 +101,20 @@
 
     .page-tree-item {
 
-      margin-bottom: 0;
       display: block;
       position: relative;
       width: 95%;
       margin: 0 auto;
 
+      //esconde o drop-area abaixo do primeiro item
+      &:first-child .page-tree-item-content + .drop-area {
+      //  display: none !important;
+      }
+
       .page-tree-item-content{
         background-color: white;
         border-bottom: 1px solid #d7d7d7;
-        box-shadow:0px 1px 6px -4px #58697C;
+        box-shadow:0 1px 6px -4px #58697C;
         border-radius: 2px;
 
         &.current .page-title span{
@@ -171,41 +175,43 @@
 
       }
 
-      &.drop-enabled .drop-area {
-        display: block !important;
+      &.drop-enabled > .drop-area {
+        display: block;
       }
 
       .drop-area {
         display: none;
-        height: 0;
+        height: auto;
+
+        -webkit-transition: all .4s ease;
+        -moz-transition: all .4s ease;
+        transition: all .4s ease;
 
         .insert-stuff-area{
-          height: 0.2em;
-          background-color: none;
+          height: 0;
+          background-color: transparent;
           width: 100%;
           border: none;
 
-          -webkit-transition: all 0.25s;
-          -moz-transition: all 0.25s;
-          transition: all 0.25s;
+          -webkit-transition: all .4s ease;
+          -moz-transition: all .4s ease;
+          transition: all .4s ease;
         }
 
         &.enabled {
-          height: auto;
-        }
 
-        &.enabled .insert-stuff-area {
-          border: 1px dashed #9CAF3F;
-          background: #e7e7e7;
-          height: 3em;
-          margin-bottom: 0.2em;
-          margin-top: 0.2em;
+          .insert-stuff-area {
+            border: 1px dashed #9CAF3F;
+            background: #e7e7e7;
+            height: 3em;
+            margin-bottom: 0.2em;
+            margin-top: 0.2em;
 
-          &:hover {
-            background: #f7f7f7;
+            &:hover {
+              background: #f7f7f7;
+            }
           }
         }
-
       }
 
       .page-title {

@@ -45,13 +45,6 @@ const pageListingSource = {
     }
 };
 
-function collect(connect, monitor) {
-    return {
-        connectDragSource: connect.dragSource(),
-        isDragging: monitor.isDragging()
-    }
-}
-
 
 // /**
 //  * Represents a page item in product content hierarchy
@@ -269,20 +262,19 @@ class PageItem extends React.Component {
 
         let enableExpand = false //False for never expand item
 
-
         /*
              expand item temporarily,
              when a page is being dragged over this item.
              Ignores when it's the page itself
          */
         let isThereAPageBeingDraggedOverMe = false
-        if ( (pageItemBeingDraggedOverMe != null) &&
-             (pageItemBeingDraggedOverMe.get('localId') != info.get('localId') ) &&
-             (enableExpand != false )
+
+        if (
+            (pageItemBeingDraggedOverMe != null) &&
+            (pageItemBeingDraggedOverMe.get('localId') != info.get('localId') ) &&
+            (enableExpand != false )
         )
-        {
-            isThereAPageBeingDraggedOverMe = true
-        }
+        { isThereAPageBeingDraggedOverMe = true }
 
         let temporalyExpanded = (isOver) && isThereAPageBeingDraggedOverMe
 
@@ -362,47 +354,59 @@ class PageItem extends React.Component {
 
                      </div>)
 
-        let dropEnabled = isOver ? 'enabled' : '';
 
-        let dropAreaEnabled = "";
+
+
+        let dropEnabled = isOver ? 'enabled' : '';
+        let dropAreaAllEnabled = "drop-enabled";
+
+        //only show if first item
+        let dropAreaBeforeEnabled = (info.get("ordem") === 1)
+        let dropAreaAfterEnabled = true;
+
+        //if dragging something
         if( pageItemBeingDraggedOverMe != null ) {
-            dropAreaEnabled = (pageItemBeingDraggedOverMe.get('localId') !== info.get('localId')) ? "drop-enabled" : ""
+
+            //hides dropArea if DragSource is over itself
+            dropAreaAllEnabled = (pageItemBeingDraggedOverMe.get('localId') !== info.get('localId')) ? "drop-enabled" : ""
+
+            //if pageItemBeingDraggedOverMe is afterthe item, hide the droparea
+           /* if( pageItemBeingDraggedOverMe.get('ordem') == ( info.get("ordem") + 1) )
+            { dropAreaAfterEnabled = false }*/
+
         }
+
+        // drop area before the first item within the level
+        let dropAreaBefore = <div className={"drop-area " + dropEnabled }>
+            <DropStuffAreaContainer
+                ownerPage={ info }
+                parentPage={ parentPage }
+                previousPage={ null }
+                onDrop={this.handleDropItem.bind(this)}
+                pageOrder={-1}/>
+        </div>
+
 
         // drop stuff after current item
-        let dropStuffArea = <div className={"drop-area " + dropEnabled} >
-                            <DropStuffAreaContainer
-                                ownerPage={ info }
-                                parentPage={ parentPage }
-                                previousPage={ previousPage }
-                                onDrop={this.handleDropItem.bind(this)}
-                                pageOrder={pageOrder}
-                            />
-                        </div>
-
-        // drop stuff before the first item within the level
-        let dropStuffAreaPosition0 = null
-        if ( pageOrder === 0 ) {
-            dropStuffAreaPosition0 = <div className={"drop-area " + dropEnabled}>
-                <DropStuffAreaContainer
-                    ownerPage={ info }
-                    parentPage={ parentPage }
-                    previousPage={ null }
-                    onDrop={this.handleDropItem.bind(this)}
-                    pageOrder={-1}
-                style={{border: '1px solid green'}} />
-            </div>
-        }
+        let dropAreaAfter =  <div className={"drop-area " + dropEnabled } >
+            <DropStuffAreaContainer
+                ownerPage={ info }
+                parentPage={ parentPage }
+                previousPage={ previousPage }
+                onDrop={this.handleDropItem.bind(this)}
+                pageOrder={pageOrder}
+            />
+        </div>
 
         return connectDropTarget(
-            <li className={"page-tree-item page-item-holder page-item-holder-custom " + editingTitleStyle + dropAreaEnabled}
+            <li className={"page-tree-item page-item-holder page-item-holder-custom " + editingTitleStyle + dropAreaAllEnabled}
                 style={{ opacity: isDragging ? 0.5 : 1 }}>
 
-                {dropStuffAreaPosition0}
+                {(dropAreaBeforeEnabled) ? dropAreaBefore : null}
 
                 {pageItemNode}
 
-                { (collapsed || !hasChildren) ? dropStuffArea  : <div />}
+                { ((collapsed || !hasChildren) && dropAreaAfterEnabled) ? dropAreaAfter  : null }
 
                 {children}
             </li>
@@ -420,15 +424,22 @@ class PageItem extends React.Component {
         </span>
     }
 }
+
+
+function collect(connect, monitor) {
+
+    return {
+        connectDragSource: connect.dragSource(),
+        isDragging: monitor.isDragging()
+    }
+}
+
+//DragSource / Draggable = PageItem
 let pageItemDragSource =  DragSource(ItemTypes.MOVE_PAGE, pageListingSource, collect)(PageItem)
 
 
-
-
-
-
-
 const pageItemTarget = {
+
     canDrop(props) {
         // TODO: check what type of object may be dropped here
         return true;
@@ -446,6 +457,7 @@ const pageItemTarget = {
 
         component.handleEndDrag({deltaX: offset.x, deltaY: offset.y});
     }
+
 };
 
 
@@ -469,14 +481,3 @@ const pageItemCollect = (connect, monitor) => {
 
 
 export default DropTarget( [ItemTypes.MOVE_PAGE, ItemTypes.NEW_PAGE, ItemTypes.NEW_TASK] , pageItemTarget, pageItemCollect )(pageItemDragSource)
-
-
-
-
-
-
-
-
-
-
-
