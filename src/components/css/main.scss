@@ -28,6 +28,13 @@
     width: 80%;
     margin: 20px auto 0;
     text-align: center;
+    opacity: 1;
+
+    -webkit-transition: opacity .2s ease;
+    -moz-transition: opacity .2s ease;
+    -ms-transition: opacity .2s ease;
+    -o-transition: opacity .2s ease;
+    transition: opacity .2s ease;
 
     p{
 
@@ -114,7 +121,7 @@
       .page-tree-item-content{
         background-color: white;
         border-bottom: 1px solid #d7d7d7;
-        box-shadow:0 1px 6px -4px #58697C;
+        //box-shadow:0 1px 6px -4px #58697C;
         border-radius: 2px;
 
         &.current .page-title span{
@@ -124,7 +131,7 @@
 
         &:hover, &.active{
           border-right: 4px solid #33547C;
-          background: #f2f3f5;
+          background: #f5f6f8;
           text-decoration: none;
 
           .page-title span{
@@ -251,9 +258,13 @@
 
   &.collapsed{
     width:0;
-    overflow-y: visible;
-    overflow-x: visible;
+    overflow: hidden;
     margin-right: 0;
+
+    #no-pages{
+      opacity: 0;
+    }
+
   }
 
   &.collapsed + #collapse-bar #collapse-button{
