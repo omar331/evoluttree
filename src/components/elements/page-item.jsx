@@ -329,7 +329,7 @@ class PageItem extends React.Component {
                                         : '';
 
 
-        let portalRefClass = "portal-ref-" + id;
+        let portalRefClass = "portal-ref-" + depth+"_"+pageOrder;
 
         // let pageTreeItemActive = (showToolbar) ?"active":""
 
