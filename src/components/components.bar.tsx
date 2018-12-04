@@ -95,7 +95,7 @@ export default class ComponentsBar extends React.Component<{ onNewPage?: any, pr
                                 <FontAwesomeIcon icon={noPages}/>
                                 Seu produto não possui nenhuma página.
                             </p>
-                            <Button id={'btn-newpage'} bsStyle='success' onClick={ () => onNewPage(null, 0, productId) }>
+                            <Button id={'btn-newpage'} bsStyle='success' className={'bold light-border'} onClick={ () => onNewPage(null, 0, productId) }>
                                 <FontAwesomeIcon icon={addPagina} /> Adicionar página
                             </Button>
                         </div>
