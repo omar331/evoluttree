@@ -97,10 +97,10 @@ class App extends React.Component {
         }
 
         /* Criado para facilitar o mecanismo de undo */
-        this.store.dispatch( {
-            type: 'UPDATE_EDITING_PAGES',
-            editingPages: fromJS(nextProps.editingProduct.pages)
-        } )
+        // this.store.dispatch( {
+        //     type: 'UPDATE_EDITING_PAGES',
+        //     editingPages: fromJS(nextProps.editingProduct.pages)
+        // } )
     }
 
 

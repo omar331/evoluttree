@@ -455,7 +455,11 @@ const pageItemTarget = {
             return;
         }
 
-        component.handleEndDrag({deltaX: offset.x, deltaY: offset.y});
+        console.log( '  component = %o', component )
+
+        if ( component.hasOwnProperty('handleEndDrag') ) {
+            component.handleEndDrag({deltaX: offset.x, deltaY: offset.y});
+        }
     }
 
 };
