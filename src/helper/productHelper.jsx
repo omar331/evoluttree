@@ -659,3 +659,9 @@ export const updateTree = (state, newExpandedCollapsedState) => {
 }
 
 
+
+/** Atualiza informações sobre o conjunto de páginas sendo editado */
+export const updateEditingPages = (state, editingPages) => {
+    return state.setIn(['editing', 'pages'], editingPages)
+}
+

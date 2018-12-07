@@ -76,6 +76,7 @@ class App extends React.Component {
 
         this.store.dispatch( replaceState(initialState) );
 
+
         // just changed sanitize
         // window.setInterval( () => {
         //     this.store.dispatch( pageJustChangedSanitize() );
@@ -90,9 +91,16 @@ class App extends React.Component {
     componentWillReceiveProps(nextProps) {
         this.setState({treeState: nextProps.treeState})
 
+
         if ( ! _.isEqual(this.state.treeCollapseExpandedState, nextProps.treeCollapseExpandedState) ) {
             this.setState({treeCollapseExpandedState: nextProps.treeCollapseExpandedState} )
         }
+
+        /* Criado para facilitar o mecanismo de undo */
+        this.store.dispatch( {
+            type: 'UPDATE_EDITING_PAGES',
+            editingPages: fromJS(nextProps.editingProduct.pages)
+        } )
     }
 
 
@@ -143,11 +151,17 @@ export class Evoluttree extends React.Component {
         super(props)
 
         this.C = class extends React.Component {
+            constructor(props) {
+                super(props)
+
+                this.state = {props}
+            }
+            componentWillReceiveProps(nextProps) {
+                this.setState({props: nextProps})
+            }
+
             render() {
-                const props = this.props
-                // console.log("   c render props = %o", this.props)
-
-
+                const props = this.state.props
                 return <App {...props}  />
             }
         }

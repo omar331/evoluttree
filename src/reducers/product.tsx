@@ -5,6 +5,8 @@ const productReducer = (state: any, action: any) => {
     switch (action.type) {
         case 'REPLACE_STATE':
             return action.newState;
+        case 'UPDATE_EDITING_PAGES':
+            return productHelper.updateEditingPages(state, action.editingPages );
         case 'PRODUCT_CHANGE_TITLE':
             return productHelper.changeProductTitle(state, action.newTitle);
         case 'PAGE_CHANGE_TITLE':
