@@ -118,6 +118,7 @@
       }
 
       .page-tree-item-content{
+
         position: relative;
         background-color: white;
         border-bottom: 1px solid #d7d7d7;
@@ -146,6 +147,16 @@
             opacity: 1;
           }
         }
+
+
+        .page-title{
+
+          input {
+
+          }
+
+        }
+
 
         .btn-options{
 
@@ -352,4 +363,8 @@
     }
 
   }
+}
+
+.evltr-modal {
+  width: 75vw;
 }

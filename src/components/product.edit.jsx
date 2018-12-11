@@ -5,8 +5,6 @@ import { Grid, Row, Col, ButtonToolbar } from 'react-bootstrap';
 import * as _ from 'lodash'
 import { PropTypes } from 'prop-types'
 
-import './css/contents.css';
-
 import PagesListContainer from '../containers/pages-list.jsx';
 import ComponentsBarContainer from '../containers/components-bar.jsx';
 
