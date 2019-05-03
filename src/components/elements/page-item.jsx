@@ -21,15 +21,15 @@ import "../css/page-item.scss"
 
 const pageListingSource = {
     endDrag(props, monitor, component) {
+
         let offset = monitor.getDifferenceFromInitialOffset()
 
         props.onEndDrag && props.onEndDrag(props.info)
 
         if ( offset == null ) return;
 
-        // component.handleEndDrag( { deltaX: offset.x, deltaY: offset.y });
         // if (typeof component.handleEndDrag == 'function')
-            component.handleEndDrag( { deltaX: offset.x, deltaY: offset.y } )
+        component.handleEndDrag( { deltaX: offset.x, deltaY: offset.y } )
     },
     beginDrag(props) {
 
@@ -146,6 +146,7 @@ class PageItem extends React.Component {
     }
 
     handleEndDrag(dragInfo) {
+
         const { info, onQuickLevelMove } = this.props
 
         let quickLevelMoveInfo = this.getQuickLevelMoveInfo(dragInfo.deltaX, dragInfo.deltaY)
@@ -447,19 +448,14 @@ const pageItemTarget = {
     drop: function (props, monitor, component) {
         let offset = monitor.getDifferenceFromInitialOffset();
 
-        // console.log('props = %o', props);
-
-        // console.log('DROP   offset = %o   component = %o', offset, component);
-
         if (offset === null) {
             return;
         }
 
-        console.log( '  component = %o', component )
+        //IF REMOVIDO, ESTAVA PREJUDICANDO O COMPORTAMENTO DE QLM
+        //   if ( component.hasOwnProperty('handleEndDrag') ) {
+        component.handleEndDrag({deltaX: offset.x, deltaY: offset.y});
 
-        if ( component.hasOwnProperty('handleEndDrag') ) {
-            component.handleEndDrag({deltaX: offset.x, deltaY: offset.y});
-        }
     }
 
 };

@@ -21,9 +21,9 @@ import * as productHelper from './helper/productHelper.jsx';
 
 import * as sampleSettings from './misc/sampleSettings.tsx';
 
-import onChangeMiddleWare from './middlewares/content-change-middleware'
-import onTitleChangeCallback from './middlewares/title-change-middleware'
-import onExpandCollapseCallback from './middlewares/expand-collapse-nodes-middleware'
+import onChangeMiddleWare from './middlewares/content-change-middleware.jsx'
+import onTitleChangeCallback from './middlewares/title-change-middleware.jsx'
+import onExpandCollapseCallback from './middlewares/expand-collapse-nodes-middleware.jsx'
 
 // import * as clientApi from './client-api.tsx';
 import _ from 'lodash'
