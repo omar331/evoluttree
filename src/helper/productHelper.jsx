@@ -601,7 +601,7 @@ export const getExpandCollapseTreeState = (page) => {
 const updateExpandCollapsePageList = (pages, expandedNodes, basePath = [] ) => {
     let n = 0
 
-    let bPages = basePath.length == 0 ? pages : pages.getIn(basePath))
+    let bPages = basePath.length == 0 ? pages : pages.getIn(basePath)
 
     if ( typeof bPages == 'undefined' ) return
 
