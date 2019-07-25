@@ -603,7 +603,7 @@ const updateExpandCollapsePageList = (pages, expandedNodes, basePath = [] ) => {
 
     let bPages = basePath.length == 0 ? pages : pages.getIn(basePath)
 
-    if ( typeof bPages == 'undefined' ) return
+    if ( bPages == null || typeof bPages == 'undefined' ) return
 
 
     bPages.map( (page) => {
