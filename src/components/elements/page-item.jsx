@@ -453,8 +453,8 @@ const pageItemTarget = {
         }
 
         //IF REMOVIDO, ESTAVA PREJUDICANDO O COMPORTAMENTO DE QLM
-        //   if ( component.hasOwnProperty('handleEndDrag') ) {
-        component.handleEndDrag({deltaX: offset.x, deltaY: offset.y});
+        if ( component.hasOwnProperty('handleEndDrag') )
+            component.handleEndDrag({deltaX: offset.x, deltaY: offset.y});
 
     }
 

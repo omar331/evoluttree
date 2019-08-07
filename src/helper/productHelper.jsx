@@ -116,7 +116,8 @@ export const searchPageKeyPath = (node, localId, position = 0, acc = [] ) => {
 
     // otherwise keep searching
     let childrenPages = node.get('pages')
-    if ( typeof childrenPages === 'undefined' ) return null
+
+    if ( typeof childrenPages === 'undefined' || childrenPages === null ) return null
 
     for(let position = 0; position < childrenPages.size; position++ ) {
         let page = childrenPages.get( position )
@@ -601,7 +602,7 @@ export const getExpandCollapseTreeState = (page) => {
 const updateExpandCollapsePageList = (pages, expandedNodes, basePath = [] ) => {
     let n = 0
 
-    let bPages = basePath.length == 0 ? pages : pages.getIn(basePath)
+    let bPages = basePath.length === 0 ? pages : pages.getIn(basePath)
 
     if ( bPages == null || typeof bPages == 'undefined' ) return
 
