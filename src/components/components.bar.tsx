@@ -5,6 +5,7 @@ import { DragSource } from 'react-dnd';
 
 import { ItemTypes } from './constants';
 
+import i18n from '../../translations/i18n'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus as addPagina, faExclamationCircle as noPages} from '@fortawesome/free-solid-svg-icons'
 
@@ -40,7 +41,7 @@ class NewPageElement extends React.Component<{connectDragSource: any, isDragging
                         fontWeight: 'bold',
                         cursor: 'move'
               }}>
-                <Label bsStyle="primary"> página</Label>
+                <Label bsStyle="primary"> {i18n.t('pagina')}</Label>
             </div>
         );
     }
@@ -93,10 +94,10 @@ export default class ComponentsBar extends React.Component<{ onNewPage?: any, pr
 
                             <p>
                                 <FontAwesomeIcon icon={noPages}/>
-                                Seu produto não possui nenhuma página.
+                                {i18n.t('seu_produto_nao_possui_nenhuma_pagina_')}
                             </p>
                             <Button id={'btn-newpage'} bsStyle='success' className={'bold light-border'} onClick={ () => onNewPage(null, 0, productId) }>
-                                <FontAwesomeIcon icon={addPagina} /> Adicionar página
+                                <FontAwesomeIcon icon={addPagina} /> {i18n.t('adicionar_pagina')}
                             </Button>
                         </div>
                         : ''

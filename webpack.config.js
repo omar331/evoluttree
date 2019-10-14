@@ -10,6 +10,9 @@ var DEFAULT_TARGET = 'DEV';
 
 var DEFAULT_PARAMS = {
     resolve: {
+        // alias: {
+        //     'translations': path.resolve( __dirname, './translations' ),
+        // },
         extensions: [' ', '.ts', '.tsx', '.js'],
     },
     entry: {
