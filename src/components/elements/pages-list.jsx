@@ -71,9 +71,11 @@ export default class PagesList extends React.Component {
 
         let order = -1;
 
+        let computedDepth = ( typeof depth !== "undefined") ? depth : 0;
+
         let previousPage = null
         let pageComponentRes = null;
-        return( <ul className={ 'depth-' + depth }>
+        return( <ul className={ 'depth-' + computedDepth }>
                     {pages.map(
 
                         (page) => {
@@ -95,7 +97,7 @@ export default class PagesList extends React.Component {
                                                       onEndDrag={onPageItemEndDrag}
                                                       onStartEditPageBody={onStartEditPageBody}
                                                       onFinishEditPageBody={onFinishEditPageBody}
-                                                      depth={ depth }
+                                                      depth={ computedDepth }
                                                       customComponents={ customComponents }
                                                       key={page.get('localId')}
                                                       pageStyles={pageStyles}
