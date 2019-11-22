@@ -89,18 +89,20 @@ class App extends React.Component {
 
 
     componentWillReceiveProps(nextProps) {
-        this.setState({treeState: nextProps.treeState})
 
+        console.log("evolutree_app_nextprops", nextProps);
+
+        this.setState({treeState: nextProps.treeState})
 
         if ( ! _.isEqual(this.state.treeCollapseExpandedState, nextProps.treeCollapseExpandedState) ) {
             this.setState({treeCollapseExpandedState: nextProps.treeCollapseExpandedState} )
         }
 
         /* Criado para facilitar o mecanismo de undo */
-         this.store.dispatch( {
-             type: 'UPDATE_EDITING_PAGES',
-             editingPages: fromJS(nextProps.editingProduct.pages)
-         } )
+         // this.store.dispatch( {
+         //     type: 'UPDATE_EDITING_PAGES',
+         //     editingPages: fromJS(nextProps.editingProduct.pages)
+         // } )
     }
 
 
@@ -157,6 +159,10 @@ export class Evoluttree extends React.Component {
                 this.state = {props}
             }
             componentWillReceiveProps(nextProps) {
+
+                console.log("evolutree_nextprops", nextProps);
+
+
                 this.setState({props: nextProps})
             }
 
