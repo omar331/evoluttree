@@ -75,6 +75,8 @@ export default class PagesList extends React.Component {
 
         let previousPage = null
         let pageComponentRes = null;
+        console.log("pages", pages);
+
         return( <ul className={ 'depth-' + computedDepth }>
                     {pages.map(
 
