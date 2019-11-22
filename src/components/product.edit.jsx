@@ -95,6 +95,8 @@ export default class ProductEditComponent extends React.Component {
         let stylePageEditor = {display: mode == 'page-edit' ? 'block' : 'none'}
         let stylePageListContainer = {display: mode == 'list' ? 'block' : 'none'}
 
+        console.log('props',this.props);
+
         return(
             <div id={"page-tree"}>
 

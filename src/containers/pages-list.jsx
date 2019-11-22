@@ -7,7 +7,7 @@ import { changeContent } from "../actions/products.jsx"
 
 const mapStateToProps = (state, ownProps ) => {
 
-    //console.log("asdasdsa", state.get('editing').get('pages').toJS());
+    console.log("asdasdsa", state.toJS());
 
     return {
         pages: state.get('editing').get('pages')
