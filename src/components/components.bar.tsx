@@ -89,22 +89,21 @@ export default class ComponentsBar extends React.Component<{ onNewPage?: any, pr
                 <div className="component">
 
                     { typeof this.props.pages === 'undefined' || this.props.pages.size == 0
-                        ?
-                        <div id={"no-pages"}>
-
+                        ? <div id={"no-pages"}>
                             <p>
                                 <FontAwesomeIcon icon={noPages}/>
                                 {i18n.t('seu_produto_nao_possui_nenhuma_pagina_')}
                             </p>
-                            <Button id={'btn-newpage'} bsStyle='success' className={'bold light-border'} onClick={ () => onNewPage(null, 0, productId) }>
-                                <FontAwesomeIcon icon={addPagina} /> {i18n.t('adicionar_pagina')}
-                            </Button>
                         </div>
                         : ''
                     }
-
-
                     {/*<DraggableNewPageElement />*/}
+                </div>
+
+                <div id={'new-page'}>
+                    <Button id={'btn-newpage'} bsStyle='success' className={'btn-sm bold light-border'} onClick={ () => onNewPage(null, 0, productId) }>
+                        <FontAwesomeIcon icon={addPagina} /> {i18n.t('adicionar_pagina')}
+                    </Button>
                 </div>
                 {/*
                 <div className="component">

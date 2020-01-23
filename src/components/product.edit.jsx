@@ -100,17 +100,6 @@ export default class ProductEditComponent extends React.Component {
         return(
             <div id={"page-tree"}>
 
-                <div id={"product-editor-modal"}></div>
-                {
-                    this.state.modeSettings.componentsBarVisible ?
-                        <Row>
-                            <Col md={this.state.modeSettings.sideBarMd} className="component-bar">
-                                <ComponentsBarContainer />
-                            </Col>
-                        </Row>
-                        :
-                        null
-                }
                 <div id={"page-tree-list"}>
                     <div md={12}>
                         {/* Custom editor */}
@@ -129,6 +118,18 @@ export default class ProductEditComponent extends React.Component {
                         </div>
                     </div>
                 </div>
+
+                <div id={"product-editor-modal"}></div>
+                    {
+                        this.state.modeSettings.componentsBarVisible ?
+                            <Row>
+                                <Col md={this.state.modeSettings.sideBarMd} className="component-bar">
+                                    <ComponentsBarContainer />
+                                </Col>
+                            </Row>
+                            :
+                            null
+                    }
 
             </div>
         );

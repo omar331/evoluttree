@@ -272,7 +272,7 @@ export const insertPageInEditingEmpty = ( state, pageNodeToInsert ) => {
 
     let editing = state.get('editing').toJS();
 
-    editing.pages = [ pageNodeToInsert ];
+    editing.pages.push(pageNodeToInsert)
 
     return state.setIn( ['editing'], fromJS(editing) );
 };
